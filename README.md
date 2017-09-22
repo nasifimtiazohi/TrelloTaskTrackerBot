@@ -92,26 +92,26 @@ A1: If too many information is missing, It doesn’t produce results, and notify
   
   Trello, the most popular task management platform, allow team members to cooperate and manage their tasks. The goal of our application is to generate a Bot that resides in Trello, which can help programmers collaborate and also ease the burden of project manager on assigning tasks to team members. Figure 1 depicts the general architecture of our Bot. Since the front-end design is already achieved by Trello, we will mainly focus on the data and control flow. The data flow begins with a user’s interaction with the front-end, with user’s input detected by the bot, the input is parsed to be a command which will trigger one of the bot services. When a bot service is triggered, it calls Trello API to retrieve data from Trello and also the Central Database.
 
-*Command Parser*
+**Command Parser**
 
 This component handles the input statements, recognizes what the user want to do. Then pass the user’s intention to the bot. So the bot can understand what the user wants to do and then call the certain version.
   
   
   ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/otto/architecture/architecture2.png)
   
-*Notification Service*
+**Notification Service**
 
 The Notification Service is corresponding to Use Case 1. In our design, we create independent service for these three use cases. The notification service will be running all the time, tracking user’s task progress change. When the alert time is reached but the user still not finish the task, we will send a notification to the user, inform him to start working with the task.
   
   ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/otto/architecture/architecture3.png)
   
-*Performance Evaluation Service*
+**Performance Evaluation Service**
 
 In this service, first, the bot get the team member’s Trello user name from the parser. Then, it will use the Trello API to gather relevant information to generate a score for this person. This score could reflect the person’s performance. Relevant personal information may include the total number of finished tasks at each difficulty level (easy, medium, hard) during a certain period, the total number of overdue tasks during a certain period, working efficiency, etc. Then the bot will push this score to the user.
   
   ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/otto/architecture/architecture4.png)
   
-*Task Assignment Helper Service*
+**Task Assignment Helper Service**
 
 In this service, first, the bot gets the task name/number from the parser. Then it will call Trello API to get required skills and difficulty level from the task label. Then the bot looks up this central service database to get team members skills sets and their available time to generate a recommendation list and push this list to the team manager. Then, with the help of this recommendation list and the team manager’s personal preference, he/she could easily assign this new task to someone in the team.
 
