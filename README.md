@@ -17,14 +17,30 @@ Our bot does not have a conversation in the typical meaning with the user, but i
   3. Intelligent Tasks Assignment
 
 ### Design Sketches ###
-  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/otto/use_case1.jpg)
-  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/otto/use_case2.jpg)
-  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/otto/use_case3.jpg)
+  *Wireframe*
+  
+  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/otto/wireframe/use_case1.jpg)
+  
+  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/otto/wireframe/use_case2.jpg)
+  
+  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/otto/wireframe/use_case3.jpg)
+  
+  *Storyboard*
+  
+  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/otto/storyboard/storyboard1.png)
+  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/otto/storyboard/storyboard2.png)
+  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/otto/storyboard/storyboard3.png)
+  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/otto/storyboard/storyboard4.png)
+  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/otto/storyboard/storyboard5.png)
+  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/otto/storyboard/storyboard6.png)
 ### Architecture Design ###
-  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/otto/architecture1.png)
-  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/otto/architecture2.png)
-  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/otto/architecture3.png)
-  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/otto/architecture4.png)
+  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/otto/architecture/architecture1.png)
+  
+  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/otto/architecture/architecture2.png)
+  
+  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/otto/architecture/architecture3.png)
+  
+  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/otto/architecture/architecture4.png)
 ### Additional Patterns ###
 
 *Design patterns*
