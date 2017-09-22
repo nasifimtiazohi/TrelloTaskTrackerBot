@@ -24,6 +24,7 @@ Our bot does not have a conversation in the typical meaning with the user, but i
   ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/otto/architecture1.png)
   ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/otto/architecture2.png)
   ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/otto/architecture3.png)
+  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/otto/architecture4.png)
 ### Additional Patterns ###
 
 *Design patterns*
