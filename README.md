@@ -1,5 +1,8 @@
 # Task Manager BOT #
 
+### Xiaoting Fu(xfu7), Vinay Gupta(vgupta8), Nasif Imtiaz(simtiaz), Yu-Ching Hu(yhu22), Guanxu Yu(gyu9)
+
+
 ## Milestone 1 ##
 ### Problem Statement ###
 Efficient task management for a team, or even for a person, is one of the major challenges in software engineering. There are many platforms (e.g. trello, github) which help in this cause by allowing users to maintain lists of their “To do” tasks alongside with necessary information. But sometimes an engaging interaction may be helpful for the user to really help him/her follow up their work. For example, a person may write down his “To do” list but in real can have no impetus to further checking it in due time. But if there were an entity like a real life person who would constantly and efficiently track the progress and notify the user working as a smart reminder, more can be gained.
