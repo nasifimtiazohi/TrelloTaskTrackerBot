@@ -4,8 +4,11 @@
 | Deliverable   | Item/Status   |  Issues/Tasks
 | ------------- | ------------  |  ------------
 | Use Case      | Get Meeting Availability          | &nbsp;
-| Subflow      | 1             |  
-| Subflow      | 2             |  
-| Subflow      | 3             |  [Trello Card](https://trello.com/c/diA1DaMw)
-| Subflow      | &nbsp;        | &nbsp;
-| Selenium Tests| Incomplete    | 
+| Mocking      | Research             |  
+| Bot Implementation     | Research            |  
+| Selenium testing      | Research            |  [Trello Card](https://trello.com/c/diA1DaMw)
+| Subflow      |     1    | &nbsp;
+| Subflow      |     2    | &nbsp;
+| Subflow      |     3    | &nbsp;
+|Task Tracking|    this   | &nbsp;
+|Screencast|     this   | &nbsp;
