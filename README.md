@@ -19,7 +19,7 @@ Although efficiently performing these jobs can directly contribute to the eventu
 Our bot does not have a conversation in the typical meaning with the user, but it would ask the users for different inputs from time to time, store them in its memory,  and send reminders/suggestions/motivations in a message-like manner. The best fit for the bot could be the “Space Responder” category.
 ### Use Cases ###    
 
-  1. Smart Reminder
+  1. Send Nagging Reminder 
 ```  
     Precondition: User must give the due date and optionally expected hours for completion when adding a new task to the list. The user optionally is expected to update the progress of the task also.
  
@@ -33,42 +33,40 @@ Our bot does not have a conversation in the typical meaning with the user, but i
     Alternative flow:
     A1: If the user hasn’t added a due date and other information for a task in the list, it will continue asking those information (via email) at certain intervals.
 ```  
-  2. Team Members' Performance Evaluation
+  2. Calculate Rewards based on Team Members’ Performance
   
  ``` 
-  Precondition: Users must add their tasks in the list with its due date, completion date,
-prediction time and required number of hours for completion of the task in the platform.
+  Precondition: With addition to the preconditions for use case 1 where user add tasks with due date and predicted no. of hours to complete it and optionally updating progress,
+User must also input the completion date and no. of hours after finishing the task.
+
   
-  Main Flow: At certain intervals[S1], the bot will evaluate each member's’ performance based on a rule-based logic system[S2], and send appropriate messages from a list hard
-coded in its memory.
+  Main Flow: At certain intervals[S1], the bot will evaluate each member's’ performance based on a rule-based logic system and calculate score & rewards[S2], and update the leaderboard of the team[S3] and [S4] will give new targets and set new competitions for the members
+(e.g. the rule-based logic system may have a logic to give more score the faster one completes the task. Detail logic will be added later)
   
   Subflows:
   S1: It will keep track of time and will get activated after certain intervals.
-  S2: It will evaluated all members’ performance based on current information available
-according to its logic system and select appropriate message for all of them. S3: It will send (via mail) them to the members.
+  S2: It will evaluate all members’ performance based on current information available according to its logic system and calculate score & rewards.
+  S3: It will update the leaderboard for the whole team.
+  S4: It will set new targets for each member and set up new competition weekly.
   
   Alternative flow:
-  A1: In absence of adequate information, it will select generic motivating messages for the
-users.
+  A1: In absence of adequate information for any user, it will add penalties(minimal) for inactivity to his/her score in the leaderboard.
 ```
   
-  3. Intelligent Tasks Assignment
+  3. Reminder Buddy
 ```
-  Precondition: All members will always have their updated skillsets in the platform. When adding a task, the manager must give input the required skillsets for the task.
+  Precondition: With addition to the preconditions for use case 1 where user add tasks with due date and predicted no. of hours to complete it and optionally updating progress, User must also input the completion date and no. of hours after finishing the task.
   
-  Main Flow: The bot will read skillsets[S1] and current workloads of the members[S2] from the platform and its own memory, match them based on a rule-based logic system[S3] and assign the task to one/more members.[S4]
+  Main Flow: The bot will ask for progress to each member based on his tasks and due dates [S1], it will wait a certain period (differing on scenario, periods will be dynamically calculated) [S2], if response is positive, it will post congratulatory message on a public channel and award score in the leaderboard[S3], if response is negative, it will post reminder message to a public channel and add penalties in his score in the leaderboard.
   
   Subflows:
-  S1: The bot reads skillsets from the platform.
-  S2: The bot predict free work hours available for each member based on the current
-information.
-  S3: Run these data into a simple logic based function and outputs results assigning
-one/more members to the task specifying the no. of hours assigned to them.
-  S4: Send them mail notifying the assignment. (sending them repeatedly at certain periods
-unless a response is received)
+  S1: The bot will ask for progress to each member based on his tasks and due dates.
+  S2: It will wait a certain period (differing on scenario, periods will be dynamically calculated).
+  S3: If response is positive (response of progress), it will post congratulatory message on a public channel and award score in the leaderboard.
+  S4: If response is negative (either no response/response of no progress), it will post reminder message to a public channel and add penalties in his score in the leaderboard.
 
   Alternative flow:
-A1: If too many information is missing, It doesn’t produce results, and notify project manager to handle the job himself. (deflecting duty)
+A1: 1.	If information is missing about any member, it will post message to public channel that the member is inactive.
 ```
   
 
