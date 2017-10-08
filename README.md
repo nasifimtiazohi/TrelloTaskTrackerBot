@@ -1,11 +1,13 @@
 # Task Manager BOT #
+### Group Members
 
-### Name: Xiaoting Fu, Unity ID: xfu7
-### Name: Vinay Gupta, Unity ID: vgupta8
-### Name: Nasif Imtiaz, Unity ID: simtiaz
-### Name: Yu-Ching Hu, Unity ID: yhu22
-### Name: Guanxu Yu, Unity ID: gyu9
-
+Name | Unity ID 
+--- | --- 
+Xiaoting Fu | xfu7
+Vinay Gupta | vgupta8
+Nasif Imtiaz | simtiaz
+Yu-Ching Hu | yhu22
+Guanxu Yu | gyu9
 
 ## Milestone 1 ##
 ### Problem Statement ###
