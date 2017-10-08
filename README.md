@@ -86,15 +86,15 @@ A1: 1.	If information is missing about any member, it will post message to publi
   
   *Storyboard*
   
-  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/otto/storyboard/storyboard1.png)
-  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/otto/storyboard/storyboard2.png)
-  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/otto/storyboard/storyboard3.png)
-  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/otto/storyboard/storyboard4.png)
-  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/otto/storyboard/storyboard5.png)
-  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/otto/storyboard/storyboard6.png)
+  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/storyboard/storyboard1.jpg)
+  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/storyboard/storyboard2.jpg)
+  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/storyboard/storyboard3.jpg)
+  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/storyboard/storyboard4.jpg)
+  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/storyboard/storyboard5.jpg)
+  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/storyboard/storyboard6.jpg)
   
   
-  The Project Manager will input all the required information about the project and the team into our BOT. Then, the BOT will intelligently find out the best match for skills of the team members and requirements of the project. Once the PM has the matched result, (s)he can assign the tasks to the team members. Then, the BOT will keep a track of the progress and anticipated soft deadlines. It will also send notifications to the team members in case there is a delay in work. At last, when the project is completed, the BOT will intelligently analyze the performance of the members and report it to the PM. The Project Manager will input all the required information about the project and the team into our BOT. Then, the BOT will intelligently find out the best match for skills of the team members and requirements of the project. Once the PM has the matched result, (s)he can assign the tasks to the team members. Then, the BOT will keep a track of the progress and anticipated soft deadlines. It will also send notifications to the team members in case there is a delay in work. At last, when the project is completed, the BOT will intelligently analyze the performance of the members and report it to the PM.
+  Our BOT keeps track of progress by the Team on the task assigned. It will create weekly summaries of individual team members contributions, assign them scores and rewards and prepare a scoreboard for performance evaluation purposes. The Project managers are much time found using this as criteria while giving annual increments. Our BOT also sends notifications to all the team members about deadlines, their progress, and the work done and yet to be done. It also sends public notifications on forums like slack about the progress of the team.
   
   
 ### Architecture Design ###
