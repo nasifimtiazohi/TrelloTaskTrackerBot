@@ -75,13 +75,13 @@ A1: 1.	If information is missing about any member, it will post message to publi
 ### Design Sketches ###
   *Wireframe*
   
-  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/otto/wireframe/use_case1.jpg)
+  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/wireframe/use_case1.jpg)
   
-  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/otto/wireframe/use_case2.jpg)
+  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/wireframe/use_case2.jpg)
   
-  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/otto/wireframe/use_case3-1.jpg)
+  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/wireframe/use_case3-1.jpg)
   
-  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/otto/wireframe/use_case3-2.jpg)
+  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/wireframe/use_case3-2.jpg)
   
   
   *Storyboard*
