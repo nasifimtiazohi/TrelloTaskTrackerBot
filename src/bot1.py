@@ -1,14 +1,33 @@
 import os
 from slackclient import SlackClient
+from trello import TrelloClient
 import time
 # os.environ["BOT_ID"]="xoxb-253135269635-VmnyYnbZdCYdi1YK9r53VK9G"
 # os.environ["BOT_TOKEN"]="U7F3Z7XJP"
-BOT_ID=os.environ.get("BOT_ID")
-print(BOT_ID)
-BOT_TOKEN=os.environ.get("BOT_TOKEN")
-print(BOT_TOKEN)
+BOT_ID=os.environ.get("SLACK_BOT_ID")
+BOT_TOKEN=os.environ.get("SLACKTOKEN")
 AT_BOT = "<@" + BOT_ID + ">"
 EXAMPLE_COMMAND = "do"
+
+userChannel = {}
+
+TRELLO_API_KEY = os.environ.get("TRELLO_API_KEY")
+TRELLO_API_SECRET = os.environ.get("TRELLO_API_SECRET")
+TRELLO_TOKEN = os.environ.get("TRELLO_TOKEN")
+
+trelloClient = TrelloClient(
+    api_key=TRELLO_API_KEY,
+    api_secret=TRELLO_API_SECRET,
+    token=TRELLO_TOKEN,
+    token_secret=None
+)
+
+myBoards = trelloClient.list_boards()
+boardName = ''
+for board in myBoards:
+    boardName = boardName + str(board.name) + ' '
+    
+
 #slack_client = SlackClient(os.environ.get("BOT_TOKEN"))
 slack_client= SlackClient(BOT_TOKEN)
 def handle_command(command, channel):
@@ -20,7 +39,7 @@ def handle_command(command, channel):
     response = "Not sure what you mean. Use the *" + EXAMPLE_COMMAND + \
                "* command with numbers, delimited by spaces."
     if command.startswith(EXAMPLE_COMMAND):
-        response = "Sure...write some more code then I can do that!"
+        response = "Sure...write some more code then I can do that!" + channel
     slack_client.api_call("chat.postMessage", channel=channel,
                           text=response, as_user=True)
 
@@ -41,11 +60,32 @@ def parse_slack_output(slack_rtm_output):
     return None, None
 if __name__ == "__main__":
     READ_WEBSOCKET_DELAY = 1 # 1 second delay between reading from firehose
-    if slack_client.rtm_connect():
+    RES = slack_client.rtm_connect()
+
+    users = slack_client.api_call("users.list")
+    gyu9ID = ''
+    for user in users['members']:
+        #userChannel[user['id']] = user['name']
+        #print user['name'] + ' ' + user['id']
+        if user['name'] == 'gyu9':
+            gyu9ID = user['id']
+    
+    ims = slack_client.api_call("im.list")
+    gyu9Channel = ''
+    for im in ims['ims']:
+        #print im['id']
+        #print '\n'
+        if im['user'] == gyu9ID:
+            gyu9Channel = im['id']
+            print slack_client.api_call("chat.postMessage", channel = gyu9Channel,
+                                        text = boardName, as_user=True)
+        
+    if RES:
         print("StarterBot connected and running!")
         while True:
             command, channel = parse_slack_output(slack_client.rtm_read())
             if command and channel:
+                print "current channel is " + channel
                 handle_command(command, channel)
             time.sleep(READ_WEBSOCKET_DELAY)
     else:
