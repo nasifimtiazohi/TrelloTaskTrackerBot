@@ -1,8 +1,8 @@
 import os
 from slackclient import SlackClient
 import time
-# os.environ["BOT_ID"]="xoxb-253135269635-VmnyYnbZdCYdi1YK9r53VK9G"
-# os.environ["BOT_TOKEN"]="U7F3Z7XJP"
+os.environ["BOT_TOKEN"]="xoxb-253135269635-VmnyYnbZdCYdi1YK9r53VK9G"
+os.environ["BOT_ID"]="U7F3Z7XJP"
 BOT_ID=os.environ.get("BOT_ID")
 print(BOT_ID)
 BOT_TOKEN=os.environ.get("BOT_TOKEN")
@@ -36,6 +36,7 @@ def parse_slack_output(slack_rtm_output):
         for output in output_list:
             if output and 'text' in output and AT_BOT in output['text']:
                 # return text after the @ mention, whitespace removed
+                #todo: only works with texts after the mention, need to fix
                 return output['text'].split(AT_BOT)[1].strip().lower(), \
                        output['channel']
     return None, None
@@ -45,7 +46,7 @@ if __name__ == "__main__":
         print("StarterBot connected and running!")
         while True:
             command, channel = parse_slack_output(slack_client.rtm_read())
-            if command and channel:
+            if command and channel: 
                 handle_command(command, channel)
             time.sleep(READ_WEBSOCKET_DELAY)
     else:
