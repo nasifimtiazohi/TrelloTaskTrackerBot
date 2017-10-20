@@ -19,6 +19,8 @@
 | Mocking Service Component     | person 2   | mock.json file for trello data,how to create mock output data-- similar json file ?,what is injection?
 | Bot Platform| Done  | python implementation to deploy bot in Slack
 | Trello API connect | Done | sample trello api calls made via python library TrelloClient
+| database storage | on hold | need to determine if we need that
+| Posting data | Doing Research | How to efficiently post detail data on trello and slack by the bot (e.g. leaderboard)
 | Bot Interaction | person 1,3 | make commands for 3 use cases -- what shall be a full conversation?, make timer for bot, make the bot provide push notifications on specific time 
 | Selenium testing   |perosn 4 | After previous tasks are done   
 |Task Tracking |    On progress | subtasks divided and assigned for last week
