@@ -6,14 +6,17 @@ The primary focus of this milestone will be to integrate with the bot platform f
 
 There are also several techniques (such as testing and mocking) and practices (agile) that you will be required to perform as part of this milestone.
 
-### Use Case Refinement
+### Use Case Refinement (contains 10% : done)
 
 Based on the feedback from your design milestone, improve the use cases for your bot. This should be your final iteration of your use case design, it will be very difficult to change past this point.
 
 Describe how you address any required fixes to your use cases.
 
-### Mocking Service Component
+### Mocking Service Component (required - 20%)
 
+### (required) mock.json file for trello data (person 2)
+### (required) how to create mock output data-- similar json file ? (person 2)
+### (required) what is injection?
 Because the focus on your milestone is platform integration and bot interaction, you will not yet have a working service implementation. Implement mock services and data to support service integration. For example, if you were implementing a meeting bot that helps set up meetings, use mock calendar data to determine available meeting time, rather than integrate with a user's Google calendar.
 
 **Failure to use appropriate mocking/injection techniques will result in 0 credit**. Do not do this:
@@ -23,13 +26,21 @@ bot.hears("command", function(){ bot.replys("fake answer");});
 ```
 
 ### Bot Implementation
+### (done) deplying bot in slack project team that can respond to basic command
+### (done) make trello api calls to fetch/post to project team board
+### (required) make commands for 3 use cases -- what shall be a full conversation (person 1,3)
+### (required) make timer for bot (person 1,3)
+### (required) make the bot provide push notifications on specific time (person 1,3)
+* **Bot Platform (15%) : required **
 
 In implementing your bot, you will have to primary tasks:
 
-* **Bot Platform**: Implement hooks into platform. You should be able to have a fully operational bot within your platform (Slack/Github) that can response to basic commands.
-* **Bot Integration**: Implement basic conversation/interaction with bot. You need to support the ability to fully have a conversation with an bot as defined by your use cases.
+* **Bot Platform (done -15%)**: Implement hooks into platform. You should be able to have a fully operational bot within your platform (Slack/Github) that can response to basic commands.
+* **Bot Integration (required - 15%)**: Implement basic conversation/interaction with bot. You need to support the ability to fully have a conversation with an bot as defined by your use cases.
 
-### Selenium Testing
+### Selenium Testing (required - 20% )
+
+### (required) person 4
 
 To support testing of your bot, we will use Selenium to verify that the bot is returning the correct response based on a input message.
 
@@ -52,7 +63,9 @@ public void postMessage()
 
 Create a selenium test that demonstrates each use case. Demonstrate at least one "happy path" and one "alternative" path for each use case.
 
-### Task Tracking
+### Task Tracking ( required - 15%)
+
+### (required- person 5)
 
 Building software is a complex process and you will have a big team of people. The only way you will make it through this process is by careful planning and delegation of work.
 
@@ -94,7 +107,10 @@ Finally, you may find the [SMART](https://www.mindtools.com/pages/article/smart-
 
 Creating tasks on the last day of submission **will not receive credit**. Plan ahead.
 
-### Screencast
+### Screencast (required- 5%)
+
+
+### (required- person 5)
 
 Create a screencast of your bot performing your three use cases.
 Demonstrate your selenium tests being executed.
