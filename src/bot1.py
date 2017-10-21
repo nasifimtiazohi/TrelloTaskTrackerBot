@@ -2,8 +2,13 @@ import os
 from slackclient import SlackClient
 from trello import TrelloClient
 import time
-# os.environ["BOT_ID"]="xoxb-253135269635-VmnyYnbZdCYdi1YK9r53VK9G"
-# os.environ["BOT_TOKEN"]="U7F3Z7XJP"
+# key = 2646b5b37bc5c5685826c5e262a7c7e1
+# secret = bac1b35e2fe238197cb32bfa4f630afef0bbd1134a7e146ccad48db9fc0be896
+# token = 1f1f55268c21a25c239e806a70ca629980677ba0b5253e143b5a18c562e5abdf
+# slack token 
+# os.environ["BOT_ID"]="xoxb-259977818516-61UeRd6sWGmNosxt8DLeXIwC"
+# os.environ["BOT_TOKEN"]="B7NPTDBBQ"
+
 BOT_ID=os.environ.get("SLACK_BOT_ID")
 BOT_TOKEN=os.environ.get("SLACKTOKEN")
 AT_BOT = "<@" + BOT_ID + ">"
