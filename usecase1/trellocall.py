@@ -2,9 +2,9 @@ from trello import TrelloClient
 import struct
 
 
-trelloKey='dbf6947f87a8dcb83f090731a27e8bd4'
-trelloSecret='f57a6c66081742aa5f6149d329c3581d53231c308e4cc9f78b31230ce13b3bb8'
-trelloToken='414df911de9e839c8ab9838c8fa1723107fba5848e5049269d88e5e94a348f31'
+trelloToken = 'fafbd8bea1ca07b19f8656b62174b81d7dbed73bdddaf318b61192bce9931ab3'
+trelloKey = 'cda12dfc52f6530a3eb17745f1b4e61b'
+trelloSecret = '96d037afb64bfb3306bd031bd403b1eeca1836186e0c09109b1a03ad5aec1c11'
 
 client = TrelloClient(
     api_key = trelloKey,
