@@ -25,3 +25,19 @@
 | Selenium testing   |perosn 4 | After previous tasks are done   
 |Task Tracking |    On progress | subtasks divided and assigned for last week
 |Screencast    |    N/A   | Will do screencast when all section has been done.
+
+##### Week 2.5
+
+| Deliverable   | assigned  |  Issues/Tasks
+| ------------- | ------------  |  ------------
+| Mocking Service Component     | almost done   | created mock.json file to read data in the program wherever real data is not possible to achieve. NOT SURE WHAT IS INJECTION?
+| database storage | on hold | need to determine if we need that
+| Posting data | some progress | can post raw data. need to determine to post data in good, fashionable format.
+| Bot Interaction | good progress | can send messages and recieve & understand(based on hardcoded formats) messages at any channel. It can also send emails. FORMATS FOR UNDERSTANDING COMMANDS NEED POLISHING
+| Capturing response | doing research | capturing email replies and answers to questions asked to users in direct messages. Users can reply at any time. The bot needs to wait and poll for the responses for all of them at a time (concurrency?) and also need to code how it can interprete the reponses
+| Selenium testing   |doing research | last work  
+|Task Tracking |    On progress | subtasks divided and assigned for last week
+|Screencast    |    N/A   | last work
+|use case 1 | done for bot milestone | 1 person has wrote codes for use case 1 as much as it needed to be implemented in milestone:bot. 
+|use case 2 | done for bot milestone  | 1 person has wrote codes for use case 1 as much as it needed to be implemented in milestone:bot. 
+|use case 3 | done for bot milestone  | 1 person has wrote codes for use case 1 as much as it needed to be implemented in milestone:bot. 
