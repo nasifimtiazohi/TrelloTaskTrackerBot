@@ -37,7 +37,9 @@ def handle_command(command, channel):
             ''' retrieve mail_id of users from mock.json
             send an email '''
     elif command.startswith(COMMAND_USECASE_2):
-        usecase2
+        messages=trellocall.print_members_points()
+        slack_client.api_call("chat.postMessage", channel=channel,
+                          text=messages, as_user=True)
         #todo 
     elif COMMAND_USECASE_3 in command:
         #todo   

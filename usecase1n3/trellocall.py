@@ -148,6 +148,43 @@ if __name__ == "__main__":
 print "trellocall initialization start"
 var_init()
 print "trellocall initilization end"
+
+
+def print_members_points():
+    teams = client.list_organizations()
+    for team in teams:
+        teamID=team.id
+        #todo: if there's more than one organization?
+    curTeam=client.get_organization(teamID)
+    boards = curTeam.get_boards(curTeam)
+    members = curTeam.get_members()
+    idMembersDict = {}
+    membersPoint = {}
+    for member in members:
+        membersPoint[member.username] = 0
+    for member in members:
+        idMembersDict[member.id] = member.username
+    for board in boards:
+        testBoard=board
+        #todo: if there's more than one board?
+    lists=testBoard.list_lists()
+    for list in lists:
+        cards=list.list_cards()
+        #todo: make it a dictionary for easy searching
+        for card in cards:
+            membersID = card.member_id
+            checkLists = card.fetch_checklists()
+            for checkList in checkLists:
+                items = checkList.items
+                for item in items:
+                    points = item["name"].split(' ')[0]
+                    for memberID in membersID:
+                        membersPoint[idMembersDict[memberID]] += int(points)
+    messages = ""
+    for key in membersPoint.keys():
+        messages = messages + str(key) + ": "
+        messages = messages + str(membersPoint[key])
+    return messages
     
 
     

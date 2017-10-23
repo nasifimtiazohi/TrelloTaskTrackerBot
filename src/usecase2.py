@@ -13,7 +13,7 @@ client = TrelloClient(
     token_secret=None
 )
 
-def countPersonalPoints():
+def countPersonalPoints(client):
     teams = client.list_organizations()
     for team in teams:
         teamID=team.id
@@ -43,8 +43,12 @@ def countPersonalPoints():
                     points = item["name"].split(' ')[0]
                     for memberID in membersID:
                         membersPoint[idMembersDict[memberID]] += int(points)
-    return membersPoint
+    messages = ""
+    for key in membersPoint.keys():
+        messages = messages + str(key) + ": "
+        messages = messages + str(membersPoint[key])
+    return messages
 
 if __name__ == "__main__":
-    dict = countPersonalPoints()
+    dict = countPersonalPoints(client)
     print(dict)
