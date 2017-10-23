@@ -2,8 +2,6 @@ import os
 from slackclient import SlackClient
 from trello import TrelloClient
 import time
-# os.environ["BOT_ID"]="xoxb-253135269635-VmnyYnbZdCYdi1YK9r53VK9G"
-# os.environ["BOT_TOKEN"]="U7F3Z7XJP"
 BOT_ID=os.environ.get("SLACK_BOT_ID")
 BOT_TOKEN=os.environ.get("SLACKTOKEN")
 AT_BOT = "<@" + BOT_ID + ">"
@@ -21,7 +19,9 @@ trelloClient = TrelloClient(
     token=TRELLO_TOKEN,
     token_secret=None
 )
-
+orgs = trelloClient.list_organizations()
+for org in orgs:
+    print(trelloClient.get_organization(org))
 myBoards = trelloClient.list_boards()
 boardName = ''
 for board in myBoards:
