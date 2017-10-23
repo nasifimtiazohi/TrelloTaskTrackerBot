@@ -183,7 +183,7 @@ def print_members_points():
     messages = ""
     for key in membersPoint.keys():
         messages = messages + str(key) + ": "
-        messages = messages + str(membersPoint[key])
+        messages = messages + str(membersPoint[key]) + " "
     return messages
     
 
