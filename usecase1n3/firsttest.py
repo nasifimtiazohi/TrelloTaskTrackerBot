@@ -38,8 +38,10 @@ def handle_command(command, channel):
             send an email '''
     elif command.startswith(COMMAND_USECASE_2):
         messages=trellocall.print_members_points()
-        slack_client.api_call("chat.postMessage", channel=channel,
-                          text=messages, as_user=True)
+        for key in messages.keys():
+            message = str(key) + ": " + str(messages[key])
+            slack_client.api_call("chat.postMessage", channel=channel,
+                          text=message, as_user=True)
         #todo 
     elif COMMAND_USECASE_3 in command:
         #todo   

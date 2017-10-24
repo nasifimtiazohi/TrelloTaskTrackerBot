@@ -180,11 +180,7 @@ def print_members_points():
                     points = item["name"].split(' ')[0]
                     for memberID in membersID:
                         membersPoint[idMembersDict[memberID]] += int(points)
-    messages = ""
-    for key in membersPoint.keys():
-        messages = messages + str(key) + ": "
-        messages = messages + str(membersPoint[key]) + " "
-    return messages
+    return membersPoint
     
 
     
