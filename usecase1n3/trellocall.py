@@ -169,17 +169,18 @@ def print_members_points():
         #todo: if there's more than one board?
     lists=testBoard.list_lists()
     for list in lists:
-        cards=list.list_cards()
-        #todo: make it a dictionary for easy searching
-        for card in cards:
-            membersID = card.member_id
-            checkLists = card.fetch_checklists()
-            for checkList in checkLists:
-                items = checkList.items
-                for item in items:
-                    points = item["name"].split(' ')[0]
-                    for memberID in membersID:
-                        membersPoint[idMembersDict[memberID]] += int(points)
+        if list.name == "Leader Board":
+            cards=list.list_cards()
+            #todo: make it a dictionary for easy searching
+            for card in cards:
+                membersID = card.member_id
+                checkLists = card.fetch_checklists()
+                for checkList in checkLists:
+                    items = checkList.items
+                    for item in items:
+                        points = item["name"].split(' ')[0]
+                        for memberID in membersID:
+                            membersPoint[idMembersDict[memberID]] += int(points)
     return membersPoint
     
 
