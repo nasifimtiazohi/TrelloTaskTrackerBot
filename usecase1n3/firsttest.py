@@ -51,7 +51,7 @@ def handle_command(command, channel):
         capture response: required
         open a new public channel named "reminderBuddy": required
         post reminders in the channel: required '''
-        response="what's your progress, mate?"
+        response="what is your progress, mate?"
         dm_channels=usecase3.perform()
         for d in dm_channels:
             channel=d[2]

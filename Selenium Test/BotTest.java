@@ -9,8 +9,10 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -18,6 +20,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.github.bonigarcia.wdm.ChromeDriverManager;
@@ -50,13 +53,14 @@ public class BotTest
 	 * Sends a Email to his/her email
 	 * 
 	 * */
+	
 	@Test
 	public void sendNaggingReminder()
 	{
 		driver = new ChromeDriver();
 		driver.get("https://" + System.getenv("SLACK_WEB_ADDRESS") + "/");
 		// Wait until page loads and we can see a sign in button.
-		WebDriverWait wait = new WebDriverWait(driver, 30);
+		WebDriverWait wait = new WebDriverWait(driver, 20);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("signin_btn")));
 
 		// Find email and password fields.
@@ -86,74 +90,66 @@ public class BotTest
 		actions.sendKeys(Keys.RETURN);
 		actions.build().perform();
 
-		wait.withTimeout(10, TimeUnit.SECONDS).ignoring(StaleElementReferenceException.class);
-		
-		//It should find the response of the bot
-		//String innerPath = "//div[@class = 'message_content_header_left']//a[.='firsttest']";
-		String path1 ="//span[@class='message_body'  and text() ='xiaotingfu1 is asked to complete example task 2']";
-		String path2 ="//span[@class='message_body'  and text() ='vinay638 is asked to complete example task 3']";
-		String path3 ="//span[@class='message_body'  and text() ='sheikhnasifimtiaz is asked to complete example task 4']";
-		
-		WebElement e1 = driver.findElement(By.xpath(path1));
-		WebElement e2 = driver.findElement(By.xpath(path2));
-		WebElement e3 = driver.findElement(By.xpath(path3));
-		
-		
-		//Test if the message if true
-		//Test if the email is sent
-		assertNotNull(e1);
-		assertNotNull(e2);
-		assertNotNull(e3);
+		String path = "//div[@id='msgs_div']/div[1]/div[2]/ts-message[last()]//span[@class = 'message_body' and text() = 'sheikhnasifimtiaz is asked to complete example task 4']";
+		WebElement slackbot  = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(path)));
+	    
+		assertNotNull(slackbot);
 		
 	
 	}
 	
-	@Test
-	public void testEmailSent()
-	{
-		
-		driver.get("https://" + System.getenv("SLACK_WEB_ADDRESS") + "/");
-
-		// Wait until page loads and we can see a sign in button.
-		WebDriverWait wait = new WebDriverWait(driver, 30);
-		
-		wait.until(ExpectedConditions.titleContains("general"));
-
-		// Input Command to the bot
-		WebElement messageBot = driver.findElement(By.id("msg_input"));
-		assertNotNull(messageBot);
-			
-		Actions actions = new Actions(driver);
-		actions.moveToElement(messageBot);
-		actions.click();
-		
-		//The designed command is "@firsttest usecase 1" here
-		actions.sendKeys("@firsttest usecase 1");
-		actions.sendKeys(Keys.RETURN);
-		actions.build().perform();
-
-		wait.withTimeout(5, TimeUnit.SECONDS).ignoring(StaleElementReferenceException.class);
-
-		//It should find the response of the bot
-		WebElement msg = driver.findElement(
-				By.xpath("//span[@class='message_body' and text() = 'vinay638: 130 sheikhnasifimtiaz: 80 xiaotingfu1: 205 otto292: 235 guanxuyu: 290']"));
+//	@Test
+//	public void testEmailSent()
+//	{
+//		
+//		driver.get("https://" + System.getenv("SLACK_WEB_ADDRESS") + "/");
+//
+//		// Wait until page loads and we can see a sign in button.
+//		WebDriverWait wait = new WebDriverWait(driver, 30);
+//		
+//		wait.until(ExpectedConditions.titleContains("general"));
+//
+//		// Input Command to the bot
+//		WebElement messageBot = driver.findElement(By.id("msg_input"));
+//		assertNotNull(messageBot);
+//			
+//		Actions actions = new Actions(driver);
+//		actions.moveToElement(messageBot);
+//		actions.click();
+//		
+//		//The designed command is "@firsttest usecase 1" here
+//		actions.sendKeys("@firsttest usecase 1");
+//		actions.sendKeys(Keys.RETURN);
+//		actions.build().perform();
+//
+//		wait.withTimeout(5, TimeUnit.SECONDS).ignoring(StaleElementReferenceException.class);
+// 
+//		//It should find the response of the bot
+//		WebElement msg = driver.findElement(
+//				By.xpath("//span[@class='message_body' and text() = 'vinay638: 130 sheikhnasifimtiaz: 80 xiaotingfu1: 205 otto292: 235 guanxuyu: 290']"));
+//	
+//		
+//		//Test if the email is sent
+//		assertNotNull(msg);
+//	}
+//	/**
+//	 * Use case 2: Calculate Rewards based on Team Members’ Performance
+//	 * Test the following functionalities:
+//	 * Fetch the performance score for each member
+//	 * 
+////	 * */
 	
-		//Test if the email is sent
-		assertNotNull(msg);
-	}
-	/**
-	 * Use case 2: Calculate Rewards based on Team Members’ Performance
-	 * Test the following functionalities:
-	 * Fetch the performance score for each member
-	 * 
-//	 * */
 	@Test
 	public void performanceEvaluation()
 	{
 		driver = new ChromeDriver();
 		driver.get("https://" + System.getenv("SLACK_WEB_ADDRESS") + "/");
 		// Wait until page loads and we can see a sign in button.
-		WebDriverWait wait = new WebDriverWait(driver, 30);
+		
+		//driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		
+		WebDriverWait wait = new WebDriverWait(driver, 15);
+		
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("signin_btn")));
 
 		// Find email and password fields.
@@ -178,39 +174,25 @@ public class BotTest
 		actions.sendKeys("@firsttest usecase 2");
 		actions.sendKeys(Keys.RETURN);
 		actions.build().perform();
-
-		wait.withTimeout(5, TimeUnit.SECONDS).ignoring(StaleElementReferenceException.class);
-
-		WebElement msg1 = driver.findElement(By.xpath("//span[@class='message_body' and text() = 'vinay638: 0']"));
-		WebElement msg2 = driver.findElement(By.xpath("//span[@class='message_body' and text() = 'sheikhnasifimtiaz: 0']"));
-		WebElement msg3 = driver.findElement(By.xpath("//span[@class='message_body' and text() = 'xiaotingfu1: 0']"));
-		WebElement msg4 = driver.findElement(By.xpath("//span[@class='message_body' and text() = 'otto292: 0']"));
-		WebElement msg5 = driver.findElement(By.xpath("//span[@class='message_body' and text() = 'guanxuyu: 0']"));
-//		wait.until(ExpectedConditions.visibilityOf(msg1));
-//		wait.until(ExpectedConditions.visibilityOf(msg2));
-//		wait.until(ExpectedConditions.visibilityOf(msg3));
-//		wait.until(ExpectedConditions.visibilityOf(msg4));
-//		wait.until(ExpectedConditions.visibilityOf(msg5));
 		
-		assertNotNull(msg1);
-		assertNotNull(msg2);
-		assertNotNull(msg3);
-		assertNotNull(msg4);
-		assertNotNull(msg5);
+		String path = "//div[@id='msgs_div']/div[1]/div[2]/ts-message[last()]//span[@class = 'message_body' and text() = 'guanxuyu: 0']";
+		WebElement slackbot  = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(path)));
+	    
+		assertNotNull(slackbot);
 	}
-	
-	/**
-	 * Use case 3: Reminder Buddy
-	 * Send Direct message to the person
-	 * 
-	 * */
+//	
+//	/**
+//	 * Use case 3: Reminder Buddy
+//	 * Send Direct message to the person
+//	 * 
+//	 * */
 	@Test
 	public void reminderBuddy()
 	{
 		driver = new ChromeDriver();
 		driver.get("https://" + System.getenv("SLACK_WEB_ADDRESS") + "/");
 		// Wait until page loads and we can see a sign in button.
-		WebDriverWait wait = new WebDriverWait(driver, 30);
+		WebDriverWait wait = new WebDriverWait(driver, 5);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("signin_btn")));
 
 		// Find email and password fields.
@@ -240,11 +222,13 @@ public class BotTest
 		actions.sendKeys(Keys.RETURN);
 		actions.build().perform();
 
-		wait.withTimeout(5, TimeUnit.SECONDS).ignoring(StaleElementReferenceException.class);
-		WebElement msg = driver.findElement(By.xpath("//span[@class='message_body' and text() = 'what's your progress, mate?']"));
-	
-		//wait.until(ExpectedConditions.visibilityOf(msg));
+		//wait.withTimeout(5, TimeUnit.SECONDS).ignoring(StaleElementReferenceException.class);
+		String path = "//div[@id='msgs_div']/div[1]/div[2]/ts-message[last()]//span[@class = 'message_body' and text() = 'what is your progress, mate?']";
+		//WebElement test = driver.findElement(By.xpath(path))
+		WebElement test  = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(path)));
 		
-		assertNotNull(msg);
+		//System.out.println(test.getText());
+		assertNotNull(test);
+		
 	}
 }
