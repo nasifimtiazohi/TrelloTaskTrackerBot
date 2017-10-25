@@ -1,7 +1,7 @@
 # Task Manager BOT #
 
 ### Link to Screencast for BOT Milestone
-Screencast:
+[Screencast](screencast_file_path_put_here)
 
 
 ### Group Members
@@ -15,6 +15,12 @@ Yu-Ching Hu | yhu22
 Guanxu Yu | gyu9
 
 ## Milestone - BOT ##
+Our bot runs on the assumption that a team will have their workspace both on "Slack" and "Trello". They use trello to keep track of their tasks, and "Slack" for communication. With necessary permissions, our bot resides in Slack and also can fetch/post data on Trello workspace of the team. 
+
+For testing purpose for TAs,
+https://join.slack.com/t/510taskmanagerbot/shared_invite/enQtMjU0Njk4NDA4NzExLTM2ZmMyNzEwNTA3ZjgyNmQwZDk1Y2VlMjU4NWQ3ZDlmYWYwODhiMDYwOGU2ZmRhZmMxOGQ1ZTYxZWI3ZDllNDQ -
+is the link for invitation to our team's slack workspace where our bot resides. Also, we can send invitaion to our trello team if the TAs want. 
+
 
 ### Use Cases ###    
 
@@ -67,5 +73,66 @@ User must also input the completion date and no. of hours after finishing the ta
   Alternative flow:
 A1: 1.	If information is missing about any member, it will post message to public channel that the member is inactive.
 ```
-  
 
+### Mocking Service Component
+
+The main data source for our bot will be trello boards and its cards. Also it would require some information from Slack. And for other necessary information, it will ask users on the slack and capture and store their response.
+
+For this milestone, we have filled our trello team's board with mock data to work with. We can make trello api calls to fetch this data and can also make slack api calls to get necessary information.
+
+However we will require users' input in future which we will store in our database. We don't have that data yet. Also, some information are yet not available to get through api calls. For those data, we wrote a **mock.json** file to hardcode those information in json format. Whenever we needed those types of data for any service/testing, we just read that file as our data source. That is how we implemented mocking.
+
+### Bot Implementation
+
+* **Bot Platform : **
+
+* **Bot Platform**: We have successfully deployed our bot into the slack workspace. It can also make the necessary api calls to trello workspace. It can respond to/send basic commands based on the usecases. 
+If you run the firsttest.py file the bot will get active in the workspaces. [ you will need to install necessary libraries. you can create a virtualenv and pip install "slackclient" and "trello" ]
+
+* **Bot Integration (required - 15%)**: 
+1. It can understand command for 3 use cases; the format is harcoded. [format will be explored more in future]. 
+2. It can send message in any channel 
+3. It can recieve message in any channel and can understand/respond to it if they are under certain formats. 
+4. It can direct message to any user and capture response. 
+5. It can send mail to the users. 
+
+### Selenium Testing 
+## Overview
+We conducted Selenium testing based on Chrome, and fixed the JUnit testing orders.
+The four JUnit tests we haved conducted are 
+ * "sendNaggingReminder"
+ * "testEmailSent"
+ * "performanceEvaluation"
+ * "reminderBuddy"
+ 
+ ## Usecase 1: Send Nagging Reminder
+ * Test the following functionalities:
+	 * Input "@firsttest usecase 1" command to slackbot
+	 * Firsttest bot respond by sending the names of users who has task that is due within 1 day deadline
+	 * Sends a Email to his/her email address
+ * The test cases for this usecase are "sendNaggingReminder and "testEmailSent.
+ 	 * sendNaggingReminder
+   *    Check if the bot respond the names of three persons who have task unfinished (based on our mock data)
+   * testEmailSent
+   *    Check if the email is sent to these person by checking the sender's gmail box with the timestamp same as the person input the command to the bot
+ 
+ 
+## Usecase 2: Performance Evaluation
+ * Test the following functionalities:
+	 * Input "@firsttest usecase 2" command to slackbot
+	 * Firsttest bot respond by sending the names of users as long as their performance score
+ * The test case related to this usecase is "performanceEvaluation"
+ 	 * performanceEvaluation
+   *    Check if the five users along with their score are printed by the bot
+ 
+ 
+ ## Usecase 3: Reminder Buddy
+ * Test the following functionalities:
+	 * Input "@firsttest usecase 3" command to slackbot
+	 * Firsttest bot respond by sending direct message to the person who has task unfinished
+ * The test case related to this usecase is "reminderBuddy"
+ 	 * reminderBuddy
+   *    check if the last sentence of the chat screen is "what is your progress, mate?"
+
+### Task Tracking
+[WORKSHEET](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/WORKSHEET.md)
