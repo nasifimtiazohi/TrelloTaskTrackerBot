@@ -37,7 +37,7 @@ public class BotTest
 	}
 
 
-	@AfterClass
+	//@AfterClass
 	public static void  tearDown() throws Exception
 	{
 		driver.close();
@@ -54,7 +54,7 @@ public class BotTest
 	 * 
 	 * */
 	
-	@Test
+	//@Test
 	public void sendNaggingReminder()
 	{
 		driver = new ChromeDriver();
@@ -98,40 +98,32 @@ public class BotTest
 	
 	}
 	
-//	@Test
-//	public void testEmailSent()
-//	{
-//		
-//		driver.get("https://" + System.getenv("SLACK_WEB_ADDRESS") + "/");
-//
-//		// Wait until page loads and we can see a sign in button.
-//		WebDriverWait wait = new WebDriverWait(driver, 30);
-//		
-//		wait.until(ExpectedConditions.titleContains("general"));
-//
-//		// Input Command to the bot
-//		WebElement messageBot = driver.findElement(By.id("msg_input"));
-//		assertNotNull(messageBot);
-//			
-//		Actions actions = new Actions(driver);
-//		actions.moveToElement(messageBot);
-//		actions.click();
-//		
-//		//The designed command is "@firsttest usecase 1" here
-//		actions.sendKeys("@firsttest usecase 1");
-//		actions.sendKeys(Keys.RETURN);
-//		actions.build().perform();
-//
-//		wait.withTimeout(5, TimeUnit.SECONDS).ignoring(StaleElementReferenceException.class);
-// 
-//		//It should find the response of the bot
-//		WebElement msg = driver.findElement(
-//				By.xpath("//span[@class='message_body' and text() = 'vinay638: 130 sheikhnasifimtiaz: 80 xiaotingfu1: 205 otto292: 235 guanxuyu: 290']"));
-//	
-//		
-//		//Test if the email is sent
-//		assertNotNull(msg);
-//	}
+	@Test
+	public void testEmailSent() throws InterruptedException
+	{
+		driver = new ChromeDriver();
+		driver.get("https://accounts.google.com/ServiceLogin/identifier?service=mail&passive=true&rm=false&continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&ss=1&scc=1&ltmpl=default&ltmplcache=2&emr=1&osid=1&flowName=GlifWebSignIn&flowEntry=ServiceLogin");
+
+		String GMAIL_USERNAME = "bot510project@gmail.com";
+		String GMAIL_PASSWORD = "simtiaz1234";
+
+		//Enter the email id 		
+		driver.findElement(By.id("identifierId")).sendKeys(GMAIL_USERNAME);
+		//Click Next Button
+		driver.findElement(By.id("identifierNext")).click();
+		//wait.withTimeout(5, TimeUnit.SECONDS).ignoring(StaleElementReferenceException.class);
+		Thread.sleep(1000);
+		// Enter Password
+		//whsOnd zHQkBf
+		//driver.findElement(By.xpath("//*[@id='password']/div[1]/div/div[1]/input")).sendKeys(GMAIL_PASSWORD); 
+		driver.findElement(By.xpath("//input[@aria-label='Enter your password' and @name='password']")).sendKeys(GMAIL_PASSWORD); 
+		Thread.sleep(1000);
+		//Click Next Button
+		driver.findElement(By.id("passwordNext")).click();
+		
+		
+	}
+	
 //	/**
 //	 * Use case 2: Calculate Rewards based on Team Members’ Performance
 //	 * Test the following functionalities:
@@ -139,7 +131,7 @@ public class BotTest
 //	 * 
 ////	 * */
 	
-	@Test
+	//@Test
 	public void performanceEvaluation()
 	{
 		driver = new ChromeDriver();
@@ -150,7 +142,7 @@ public class BotTest
 		
 		WebDriverWait wait = new WebDriverWait(driver, 15);
 		
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("signin_btn")));
+
 
 		// Find email and password fields.
 		WebElement email = driver.findElement(By.id("email"));
@@ -186,7 +178,7 @@ public class BotTest
 //	 * Send Direct message to the person
 //	 * 
 //	 * */
-	@Test
+	//@Test
 	public void reminderBuddy()
 	{
 		driver = new ChromeDriver();
