@@ -1,13 +1,14 @@
 package selenium.tests;
 
 import static org.junit.Assert.*;
-
+import org.junit.runners.MethodSorters;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -25,10 +26,11 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.github.bonigarcia.wdm.ChromeDriverManager;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class BotTest
 {
 	private static WebDriver driver;
-	
+	private static String lastTime;
 	@BeforeClass
 	public static void setUp() throws Exception 
 	{
@@ -37,7 +39,7 @@ public class BotTest
 	}
 
 
-	//@AfterClass
+	@AfterClass
 	public static void  tearDown() throws Exception
 	{
 		driver.close();
@@ -54,7 +56,7 @@ public class BotTest
 	 * 
 	 * */
 	
-	//@Test
+	@Test
 	public void sendNaggingReminder()
 	{
 		driver = new ChromeDriver();
@@ -90,17 +92,30 @@ public class BotTest
 		actions.sendKeys(Keys.RETURN);
 		actions.build().perform();
 
+		
+		//*[@id="msg_1508897624_000178"]/div[2]/div[1]/div/span[2]/a
 		String path = "//div[@id='msgs_div']/div[1]/div[2]/ts-message[last()]//span[@class = 'message_body' and text() = 'sheikhnasifimtiaz is asked to complete example task 4']";
 		WebElement slackbot  = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(path)));
-	    
+		//WebElement time = driver.findElement(By.xpath("div[@id='msgs_div']/div[1]/div[2]/ts-message[last()-3]/div[2]/div[1]/div/span[2]/a"));
+		List<WebElement> times = driver.findElements(By.xpath("//span[@class = 'time_star_and_extra_metadata']/a"));
+		
+		lastTime = times.get(times.size() -4).getText();
+		System.out.println("Time: "+lastTime);
+		
+		//System.out.println("Time: "+times.get(times.size() -3).getText());
+//		for(WebElement time: times) {
+//			
+//			System.out.println("Time ARRAY: "+time.getText());
+//		}
+		//*span[@class = 'time_star_and_extra_metadata']/a/text()
 		assertNotNull(slackbot);
 		
-	
 	}
 	
 	@Test
 	public void testEmailSent() throws InterruptedException
 	{
+	
 		driver = new ChromeDriver();
 		driver.get("https://accounts.google.com/ServiceLogin/identifier?service=mail&passive=true&rm=false&continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&ss=1&scc=1&ltmpl=default&ltmplcache=2&emr=1&osid=1&flowName=GlifWebSignIn&flowEntry=ServiceLogin");
 
@@ -111,17 +126,34 @@ public class BotTest
 		driver.findElement(By.id("identifierId")).sendKeys(GMAIL_USERNAME);
 		//Click Next Button
 		driver.findElement(By.id("identifierNext")).click();
-		//wait.withTimeout(5, TimeUnit.SECONDS).ignoring(StaleElementReferenceException.class);
 		Thread.sleep(1000);
-		// Enter Password
-		//whsOnd zHQkBf
-		//driver.findElement(By.xpath("//*[@id='password']/div[1]/div/div[1]/input")).sendKeys(GMAIL_PASSWORD); 
+		
 		driver.findElement(By.xpath("//input[@aria-label='Enter your password' and @name='password']")).sendKeys(GMAIL_PASSWORD); 
 		Thread.sleep(1000);
 		//Click Next Button
 		driver.findElement(By.id("passwordNext")).click();
+		Thread.sleep(3000);
+	
+		driver.findElement(By.xpath("//*[@id=':4n']/div/div[2]/span/a")).click();
+		Thread.sleep(8000);
+	   //td[@class = 'yX xY'] 
+		List<WebElement> emails = driver.findElements(By.xpath("//tbody/tr"));
 		
+		//System.out.println("email: "+email.getText());
+		String simtiaz  = emails.get(9).getText();
+		String vgupta8  = emails.get(10).getText();
+		String xfu7 = emails.get(11).getText();
 		
+		System.out.println("email 2: "+emails.get(9).getText());
+		System.out.println("email 2: "+emails.get(10).getText());
+		System.out.println("email 2: "+emails.get(11).getText());
+		
+		assertTrue(simtiaz.contains("simtiaz"));
+		assertTrue(simtiaz.contains(lastTime.toLowerCase()));
+		assertTrue(vgupta8.contains("vgupta8"));
+		assertTrue(vgupta8.contains(lastTime.toLowerCase()));
+		assertTrue(xfu7.contains("xfu7"));
+		assertTrue( xfu7.contains(lastTime.toLowerCase()));
 	}
 	
 //	/**
@@ -131,7 +163,7 @@ public class BotTest
 //	 * 
 ////	 * */
 	
-	//@Test
+	@Test
 	public void performanceEvaluation()
 	{
 		driver = new ChromeDriver();
@@ -178,7 +210,7 @@ public class BotTest
 //	 * Send Direct message to the person
 //	 * 
 //	 * */
-	//@Test
+	@Test
 	public void reminderBuddy()
 	{
 		driver = new ChromeDriver();
