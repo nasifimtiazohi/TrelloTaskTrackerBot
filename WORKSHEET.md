@@ -41,3 +41,15 @@
 |use case 1 | done for bot milestone | 1 person has wrote codes for use case 1 as much as it needed to be implemented in milestone:bot. 
 |use case 2 | done for bot milestone  | 1 person has wrote codes for use case 1 as much as it needed to be implemented in milestone:bot. 
 |use case 3 | done for bot milestone  | 1 person has wrote codes for use case 1 as much as it needed to be implemented in milestone:bot. 
+
+
+##### Week 3
+
+| Deliverable   | assigned  |  Issues/Tasks
+| ------------- | ------------  |  ------------
+| Mocking Service Component     | done | reading from mock.json whenever necessary
+|selenium testing | done |
+|screencasting | done | 
+|databse storage | on next milestone | how to integrate one?
+| capturing user response | next milestone |
+|capturing mail reply | next milestone
