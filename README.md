@@ -3,6 +3,18 @@
 ### Link to Screencast for BOT Milestone
 [Screencast](screencast_file_path_put_here)
 
+### Files Related to BOT Milestone
+
+File | Description
+---  | ---
+usecase1n3/firsttest.py | Main file. Run this to activate BOT in Slack
+usecase1n3/slackapicall.py | Make Slack API calls
+usecase1n3/trellocall.py | Make Trello calls and run functions for usecase 1 & 2
+usecase1n3/usecase3.py | Run functions for usecase 3
+usecase1n3/emailing.py | Code for sending mail
+usecase1n3/mock.json | Mock data 
+Selenium Test/BotTest.java | Selenium test for BOT
+Selenium Test/SeleniumTestForSlack.java | Selenium test for Slack
 
 ### Group Members
 
@@ -136,3 +148,16 @@ The four JUnit tests we haved conducted are
 
 ### Task Tracking
 [WORKSHEET](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/WORKSHEET.md)
+
+### Reference
+https://api.slack.com/incoming-webhooks
+
+This link contains 
+1. send timely messaged 
+2. message in a rich format [ although not by our bot. by the integrated incoming-webhook-bot of slack]
+
+https://api.slack.com/rtm
+The one that we are using
+
+**You cannot provide attachments nor buttons to messages posted over the RTM API.
+If your bot user needs to send more complex messages, use the web API's chat.postMessage or chat.postEphemeral.**
