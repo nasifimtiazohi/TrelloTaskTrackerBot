@@ -80,23 +80,23 @@ A1: 1.	If information is missing about any member, it will post message to publi
 ### Design Sketches ###
   *Wireframe*
   
-  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/wireframe/use_case1.jpg)
+  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/Design/wireframe/use_case1.jpg)
   
-  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/wireframe/use_case2.jpg)
+  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/Design/wireframe/use_case2.jpg)
   
-  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/wireframe/use_case3-1.jpg)
+  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/Design/wireframe/use_case3-1.jpg)
   
-  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/wireframe/use_case3-2.jpg)
+  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/Design/wireframe/use_case3-2.jpg)
   
   
   *Storyboard*
   
-  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/storyboard/storyboard1.jpg)
-  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/storyboard/storyboard2.jpg)
-  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/storyboard/storyboard3.jpg)
-  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/storyboard/storyboard4.jpg)
-  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/storyboard/storyboard5.jpg)
-  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/storyboard/storyboard6.jpg)
+  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/Design/storyboard/storyboard1.jpg)
+  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/Design/storyboard/storyboard2.jpg)
+  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/Design/storyboard/storyboard3.jpg)
+  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/Design/storyboard/storyboard4.jpg)
+  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/Design/storyboard/storyboard5.jpg)
+  ![alt text](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/Design/storyboard/storyboard6.jpg)
   
   
   Our BOT keeps track of progress by the Team on the task assigned. It will create weekly summaries of individual team members contributions, assign them scores and rewards and prepare a scoreboard for performance evaluation purposes. The Project managers are much time found using this as criteria while giving annual increments. Our BOT also sends notifications to all the team members about deadlines, their progress, and the work done and yet to be done. It also sends public notifications on forums like slack about the progress of the team.
