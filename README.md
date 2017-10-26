@@ -100,7 +100,7 @@ However we will require users' input in future which we will store in our databa
 * **Bot Platform**: We have successfully deployed our bot into the slack workspace. It can also make the necessary api calls to trello workspace. It can respond to/send basic commands based on the usecases. 
 If you run the firsttest.py file the bot will get active in the workspaces. [ you will need to install necessary libraries. you can create a virtualenv and pip install "slackclient" and "trello" ]
 
-* **Bot Integration (required - 15%)**: 
+* **Bot Integration**: 
 1. It can understand command for 3 use cases; the format is harcoded. [format will be explored more in future]. 
 2. It can send message in any channel 
 3. It can recieve message in any channel and can understand/respond to it if they are under certain formats. 
