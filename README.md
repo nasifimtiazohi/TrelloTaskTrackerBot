@@ -7,14 +7,14 @@
 
 File | Description
 ---  | ---
-usecase1n3/firsttest.py | Main file. Run this to activate BOT in Slack
-usecase1n3/slackapicall.py | Make Slack API calls
-usecase1n3/trellocall.py | Make Trello calls and run functions for usecase 1 & 2
-usecase1n3/usecase3.py | Run functions for usecase 3
-usecase1n3/emailing.py | Code for sending mail
-usecase1n3/mock.json | Mock data 
-Selenium Test/BotTest.java | Selenium test for BOT
-Selenium Test/SeleniumTestForSlack.java | Selenium test for Slack
+[src/firsttest.py](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/src/firsttest.py) | Main file. Run this to activate BOT in Slack
+[src/slackapicall.py](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/src/slackapicall.py) | Make Slack API calls
+[src/trellocall.py](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/src/trellocall.py) | Make Trello calls and run functions for usecase 1 & 2
+[src/usecase3.py](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/src/usecase3.py) | Run functions for usecase 3
+[src/emailing.py](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/src/emailing.py) | Code for sending mail
+[src/mock.json](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/src/mock.json) | Mock data 
+[Selenium Test/BotTest.java](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/Selenium%20Test/BotTest.java) | Selenium test for BOT
+[Selenium Test/SeleniumTestForSlack.java](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/Selenium%20Test/SeleniumTestForSlack.java) | Selenium test for Slack
 
 ### Group Members
 
@@ -29,9 +29,10 @@ Guanxu Yu | gyu9
 ## Milestone - BOT ##
 Our bot runs on the assumption that a team will have their workspace both on "Slack" and "Trello". They use trello to keep track of their tasks, and "Slack" for communication. With necessary permissions, our bot resides in Slack and also can fetch/post data on Trello workspace of the team. 
 
-For testing purpose for TAs,
-https://join.slack.com/t/510taskmanagerbot/shared_invite/enQtMjU0Njk4NDA4NzExLTM2ZmMyNzEwNTA3ZjgyNmQwZDk1Y2VlMjU4NWQ3ZDlmYWYwODhiMDYwOGU2ZmRhZmMxOGQ1ZTYxZWI3ZDllNDQ -
-is the link for invitation to our team's slack workspace where our bot resides. Also, we can send invitaion to our trello team if the TAs want. 
+For testing purpose for **TAs**,
+https://join.slack.com/t/510taskmanagerbot/shared_invite/enQtMjU0Njk4NDA4NzExLTM2ZmMyNzEwNTA3ZjgyNmQwZDk1Y2VlMjU4NWQ3ZDlmYWYwODhiMDYwOGU2ZmRhZmMxOGQ1ZTYxZWI3ZDllNDQ 
+
+The link for invitation to our team's slack workspace where our bot resides. Also, we can send invitaion to our trello team if the TAs want. 
 
 
 ### Use Cases ###    
@@ -96,8 +97,6 @@ However we will require users' input in future which we will store in our databa
 
 ### Bot Implementation
 
-* **Bot Platform : **
-
 * **Bot Platform**: We have successfully deployed our bot into the slack workspace. It can also make the necessary api calls to trello workspace. It can respond to/send basic commands based on the usecases. 
 If you run the firsttest.py file the bot will get active in the workspaces. [ you will need to install necessary libraries. you can create a virtualenv and pip install "slackclient" and "trello" ]
 
@@ -111,11 +110,12 @@ If you run the firsttest.py file the bot will get active in the workspaces. [ yo
 ### Selenium Testing 
 ## Overview
 We conducted Selenium testing based on Chrome, and fixed the JUnit testing orders.
-The four JUnit tests we haved conducted are 
- * "sendNaggingReminder"
- * "testEmailSent"
- * "performanceEvaluation"
- * "reminderBuddy"
+The **four** JUnit tests we haved conducted are 
+ 
+ 1. "sendNaggingReminder"
+ 2. "testEmailSent"
+ 3. "performanceEvaluation"
+ 4. "reminderBuddy"
  
  ## Usecase 1: Send Nagging Reminder
  * Test the following functionalities:
@@ -152,7 +152,7 @@ The four JUnit tests we haved conducted are
 ### Reference
 https://api.slack.com/incoming-webhooks
 
-This link contains 
+*Above link contains* 
 1. send timely messaged 
 2. message in a rich format [ although not by our bot. by the integrated incoming-webhook-bot of slack]
 
