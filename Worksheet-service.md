@@ -7,3 +7,4 @@
 | Set up the VM & databse| | fu
 | design the leaderboar | | otto
 | implement slack dialog boxes to interact with users| | guanxu
+| use formats to parse users' replie| | Nasif ?
