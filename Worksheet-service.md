@@ -6,3 +6,4 @@
 | Complete Use case 1 | need to run it constantly | Nasif
 | Set up the VM & databse| | fu
 | design the leaderboar | | otto
+| implement slack dialog boxes to interact with users| | guanxu
