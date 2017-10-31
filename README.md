@@ -1,5 +1,7 @@
 # Task Manager BOT #
 
+Note: The MILESTONE: SERVICE should refer to **service** branch.
+
 ### Link to Screencast for BOT Milestone
 [Screencast](https://drive.google.com/file/d/0B5oA6rsKphdkYkJzSTdoNGU2aEU/view?usp=sharing)
 
