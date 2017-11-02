@@ -4,7 +4,10 @@
 2. design database schema 
 3. read data from trello, save to database 
 4. write function to calculate reward points 
-5. save the points to database 6. present the point in trello
+5. save the points to database 
+6. present the point in trello
+7. Configure database, implement database and bot connection
+
 ## Leaderboard score calculation Function
 
 There are two factors we are using to reward the out-performed users: task difficulty and working efficiency.
