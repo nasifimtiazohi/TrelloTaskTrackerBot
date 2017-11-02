@@ -1,4 +1,10 @@
 # Reward Principles 
+## Work flow
+1. design leaderboard (where to put score, hours of work, task finish time) 
+2. design database schema 
+3. read data from trello, save to database 
+4. write function to calculate reward points 
+5. save the points to database 6. present the point in trello
 ## Leaderboard score calculation Function
 
 There are two factors we are using to reward the out-performed users: task difficulty and working efficiency.
