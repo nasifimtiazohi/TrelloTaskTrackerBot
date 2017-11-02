@@ -3,8 +3,8 @@ from slackclient import SlackClient
 import time
 import trellocall
 import usecase3
-os.environ["BOT_TOKEN"]="xoxb-253135269635-VmnyYnbZdCYdi1YK9r53VK9G"
-os.environ["BOT_ID"]="U7F3Z7XJP"
+# os.environ["BOT_TOKEN"]=os.environ.get('BOT_TOKEN')
+# os.environ["BOT_ID"]=os.environ.get('BOT_ID')
 BOT_ID=os.environ.get("BOT_ID")
 BOT_TOKEN=os.environ.get("BOT_TOKEN")
 AT_BOT = "<@" + BOT_ID + ">"
@@ -42,9 +42,9 @@ def handle_command(command, channel):
             message = str(key) + ": " + str(messages[key])
             slack_client.api_call("chat.postMessage", channel=channel,
                           text=message, as_user=True)
-        #todo 
+        #todo
     elif COMMAND_USECASE_3 in command:
-        #todo   
+        #todo
         ''' retrieve cards that are due : done
         detect direct message channel for each user: done
         ask for progress: done
@@ -58,7 +58,7 @@ def handle_command(command, channel):
             slack_client.api_call("chat.postMessage", channel=channel,
                           text=response, as_user=True)
 
-    else: 
+    else:
         slack_client.api_call("chat.postMessage", channel=channel,
                           text=response, as_user=True)
 
@@ -84,7 +84,7 @@ if __name__ == "__main__":
         print("StarterBot connected and running!")
         while True:
             command, channel = parse_slack_output(slack_client.rtm_read())
-            if command and channel: 
+            if command and channel:
                 handle_command(command, channel)
             time.sleep(READ_WEBSOCKET_DELAY)
     else:

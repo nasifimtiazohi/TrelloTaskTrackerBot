@@ -7,4 +7,4 @@ if not ((os.environ.get('BOT_TOKEN') is None) and (os.environ.get('BOT_ID') is N
     print(os.environ.get('BOT_TOKEN'))
     print(os.environ.get('BOT_ID'))
 else:
-    print('You did not setup the Slack_BOT_Token. ')
+    print('You did not setup the Slack_BOT_Token or BOT_ID. ')
