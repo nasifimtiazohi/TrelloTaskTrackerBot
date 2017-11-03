@@ -16,7 +16,7 @@ There are two factors we are using to reward the out-performed users: task diffi
 |Hours of Work | Difficulty | Reward Points 
 |--- | --- |---
 |> 6h | HARD |50
-|3h < T < 6h | Median |
+|3h < T < 6h | Median | 30
 |< 3h | EASY|10
 
 2. Working Efficiency BPts
