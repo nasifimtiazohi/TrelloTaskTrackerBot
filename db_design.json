@@ -6,6 +6,7 @@
         "due_date" : "date_time",
         "hours" : 7,
         "points" : 50,
+        "progress" : "pending",
         "check_list" : {
           "retrieve points" : "NULL",
           "write function" : "NULL"
@@ -20,7 +21,8 @@
           "set ubuntu" : "NULL",
           "get private key" : "NULL"
         }
-      }
+      },
+      "total_points": 30
     },
     "yhu22" : {
       "Card1" : {
@@ -28,6 +30,7 @@
         "due_date" : "date_time",
         "hours" : 7,
         "points" : 50,
+        "progress" : "pending",
         "check_list" : {
           "retrieve points" : "NULL",
           "write function" : "NULL"
@@ -41,7 +44,8 @@
         "check_list" : {
           "write envTest" : "NULL"
         }
-      }
+      },
+      "total_points" : 30
     },
     "gyu9" : {
       "Card1" : {
@@ -49,11 +53,13 @@
         "due_date" : "date_time",
         "hours" : 4,
         "points" : 30,
+        "progress" : "pending",
         "check_list" : {
           "add more condition" : "NULL",
           "parse response" : "NULL"
         }
-      }
+      },
+      "total_points" : 40
     },
     "simtiaz" : {
       "Card1" : {
@@ -61,11 +67,13 @@
         "due_date" : "date_time",
         "hours" : 5,
         "points" : 30,
+        "progress" : "pending",
         "check_list" : {
           "set timer" : "NULL",
           "repetitive call function" : "NULL"
         }
-      }
+      },
+      "total_points" : 50
     },
     "vinay638" : {
       "Card1" : {
@@ -73,11 +81,13 @@
         "due_date" : "date_time",
         "hours" : 2,
         "points" : 10,
+        "progress" : "pending",
         "check_list" : {
           "add points to leaderboard" : "NULL",
           "add to corresponding member" : "NULL"
         }
-      }
+      },
+      "total_points" : 20
     }
   }
 }
