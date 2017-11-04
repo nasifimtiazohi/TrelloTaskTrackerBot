@@ -25,14 +25,15 @@ There are two factors we are using to reward the out-performed users: task diffi
 |--- | ---
 |>=3h | 30
 |1h< T< 3h | 15
-|<= 1h| 0
+|<= 1h | 0
 
 Final score = Pts + Bpts
 This is the score that shoud be stored in leaderboard and present to the user.
 
 3. Deduction Points
+
 |Time passed Deadline| Penality 
 |--- | --- 
-|<= 12h | -10 
-|<= 24h |-30
-|>24| -50 
+| <= 12h | -10 
+| <= 24h | -30
+| >24 | -50 
