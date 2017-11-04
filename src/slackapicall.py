@@ -19,7 +19,7 @@ os.environ["BOT_ID"]='U7UEN7G06'
 BOT_ID=os.environ.get("BOT_ID")
 BOT_TOKEN=os.environ.get("BOT_TOKEN")
 
-print BOT_TOKEN
+#print BOT_TOKEN
 slack_client= SlackClient(BOT_TOKEN)
 
 def name_to_id(username):

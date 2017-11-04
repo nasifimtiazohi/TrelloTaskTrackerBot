@@ -28,15 +28,6 @@ client = TrelloClient(
 def get_all_cards_with_duedate():
     current_time=datetime.datetime.now()
     current_time=current_time.replace(tzinfo=pytz.utc)
-    teams = client.list_organizations()
-    for t in teams:
-        project_team_id=t.id
-        #todo: if there's more than one organization?
-    project_team=client.get_organization(project_team_id)
-    boards = project_team.get_boards(project_team)
-    for b in boards:
-        testboard=b
-        #todo: if there's more than one board?
     opencards=testboard.open_cards()
     duecards=[]
     for c in opencards:
@@ -47,12 +38,16 @@ def get_all_cards_with_duedate():
                 duecards.append(c)
     ''' only sending the names for now.
     In future, we'll send info about each card '''
-    namelist_with_duecards=[]
+    namelist_with_duecards={}
     for c in duecards:
         mid=c.member_id[0]
         name=members_dict[mid]
-        if name not in namelist_with_duecards:
-            namelist_with_duecards.append(name)
+        if name not in namelist_with_duecards.keys():
+            l=[]
+            l.append(c)
+            namelist_with_duecards[name]=l
+        else:
+            namelist_with_duecards[name].append(c)
     return namelist_with_duecards 
 
 def get_all_cards_with_duetime(timeinhours):
@@ -145,10 +140,11 @@ def slackname_with_duecards():
     trelloname_with_duecards=get_all_cards_with_duedate()
     ''' read mock data for matching for now
     in future match by mail id? '''
-    slackname_with_duecrds=[]
+    slackname_with_duecrds={}
     mapping = mockdata["trello_to_slack_name"]
-    for n in trelloname_with_duecards:
-        slackname_with_duecrds.append(mapping[n])
+    for n in trelloname_with_duecards.keys():
+        slackname=mapping[n]
+        slackname_with_duecrds[slackname]=trelloname_with_duecards[n]
     return slackname_with_duecrds
 
 def print_members_points():
@@ -183,12 +179,13 @@ def print_members_points():
                         for memberID in membersID:
                             membersPoint[idMembersDict[memberID]] += int(points)
     return membersPoint
-  
+    
 if __name__ == "__main__":
     var_init()
     ''' read mock data '''
     ''' start experiments from here '''
-    get_all_cards_with_duetime(100)
+    d=slackname_with_duecards()
+    print d
 
     
     
