@@ -14,7 +14,8 @@ xfu7   U7GLR2L6T
 yhu22   U7FL172BU
 slackbot   USLACKBOT
 '''
-
+os.environ["BOT_TOKEN"]='xoxb-266498254006-btD2n1TcKdi5MY6AKlPGTwnm'
+os.environ["BOT_ID"]='U7UEN7G06'
 BOT_ID=os.environ.get("BOT_ID")
 BOT_TOKEN=os.environ.get("BOT_TOKEN")
 
@@ -56,10 +57,25 @@ def list_users():
     call= slack_client.api_call("users.list")
     users=call['members']
     for c in users:
-        #print c['name']," ",c['id']
+        # profile=c['profile']
+        # if 'email' in profile.keys():
+        #     print profile['email']
+        #     print profile['real_name']
         d[c['name']]=c['id']
+    return d
+
+def nameNmail():
+    d={}
+    call= slack_client.api_call("users.list")
+    users=call['members']
+    for c in users:
+        profile=c['profile']
+        if 'email' in profile.keys():
+            # print profile['email']
+            # print profile['real_name']
+            d[profile['real_name'].lower()]=profile['email']
     return d
 
 
 if __name__== "__main__":
-    open_im(BOT_ID)
+    list_users()

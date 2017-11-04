@@ -3,8 +3,9 @@ from slackclient import SlackClient
 import time
 import trellocall
 import usecase3
-# os.environ["BOT_TOKEN"]=os.environ.get('BOT_TOKEN')
-# os.environ["BOT_ID"]=os.environ.get('BOT_ID')
+import usecase1
+os.environ["BOT_TOKEN"]='xoxb-266498254006-btD2n1TcKdi5MY6AKlPGTwnm'
+os.environ["BOT_ID"]='U7UEN7G06'
 BOT_ID=os.environ.get("BOT_ID")
 BOT_TOKEN=os.environ.get("BOT_TOKEN")
 AT_BOT = "<@" + BOT_ID + ">"
@@ -26,16 +27,16 @@ def handle_command(command, channel):
         response = "Sure...write some more code then I can do that!"
         slack_client.api_call("chat.postMessage", channel=channel,
                           text=response, as_user=True)
-    elif COMMAND_USECASE_1 in command:
-        messages=trellocall.print_deadline_messages()
-        for m in messages:
-            slack_client.api_call("chat.postMessage", channel=channel,
-                          text=m, as_user=True)
-        #TODO: check it on timely basis
-            ''' will be done in milestone 3 '''
-        #TODO: send mail to the user
-            ''' retrieve mail_id of users from mock.json
-            send an email '''
+    # elif COMMAND_USECASE_1 in command:
+    #     messages=trellocall.print_deadline_messages()
+    #     for m in messages:
+    #         slack_client.api_call("chat.postMessage", channel=channel,
+    #                       text=m, as_user=True)
+    #     #TODO: check it on timely basis
+    #         ''' will be done in milestone 3 '''
+    #     #TODO: send mail to the user
+    #         ''' retrieve mail_id of users from mock.json
+    #         send an email '''
     elif command.startswith(COMMAND_USECASE_2):
         messages=trellocall.print_members_points()
         for key in messages.keys():
@@ -83,6 +84,7 @@ if __name__ == "__main__":
     if slack_client.rtm_connect():
         print("StarterBot connected and running!")
         while True:
+            usecase1.perform()
             command, channel = parse_slack_output(slack_client.rtm_read())
             if command and channel:
                 handle_command(command, channel)

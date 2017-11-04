@@ -6,9 +6,6 @@ import pytz
 import slackapicall
 import json
 import emailing
-# import sys
-# os.environ['DJANGO_SETTINGS_MODULE'] = '/home/nasif/tools/510project/bot510/bot510/bot510.settings'
-# from django.utils import timezone
 
 members_dict=None
 project_team=None
@@ -58,6 +55,21 @@ def get_all_cards_with_duedate():
             namelist_with_duecards.append(name)
     return namelist_with_duecards 
 
+def get_all_cards_with_duetime(timeinhours):
+    current_time=datetime.datetime.now()
+    current_time=current_time.replace(tzinfo=pytz.utc)
+    print "hello",testboard.name
+    opencards=testboard.open_cards()
+    duecards=[]
+    for c in opencards:
+        temp=c.due_date
+        if c.due_date:
+            temp=temp.replace(tzinfo=pytz.utc)
+            temp2=temp-datetime.timedelta(hours=timeinhours)
+            if current_time<temp and current_time>temp2 and '59bdb4181314a33999a2736d' not in c.label_ids:
+                duecards.append(c)
+    return duecards
+
 
 
 def print_deadline_messages():
@@ -87,10 +99,10 @@ def print_deadline_messages():
     return message_list
 
 def sendmail(name,message):
-    print name
+    #print name
     temp=mockdata['trello_name_to_mailid']
     mail=temp[name]
-    print mail
+    #print mail
     emailing.sendmail(mail,message)
 
 def members_dictionary(project_team):
@@ -105,15 +117,15 @@ def var_init():
     global testboard
     global members_dict
     global mockdata
-    teams = client.list_organizations()
+    teams=client.list_organizations()
     for t in teams:
-        project_team_id=t.id
-        #todo: if there's more than one organization?
-    project_team = client.get_organization(project_team_id)
+        if t.name=='510projectteam':
+            project_team=t
+            break
     boards = project_team.get_boards(project_team)
     for b in boards:
-        testboard=b
-        #todo: if there's more than one board?
+        if b.name=='Test Board':
+            testboard=b
     members_dict=members_dictionary(project_team)
     with open('mock.json') as json_data:
         mockdata = json.load(json_data)
@@ -138,17 +150,6 @@ def slackname_with_duecards():
     for n in trelloname_with_duecards:
         slackname_with_duecrds.append(mapping[n])
     return slackname_with_duecrds
-  
-if __name__ == "__main__":
-    var_init()
-    ''' read mock data '''
-    ''' start experiments from here '''
-    print_deadline_messages()
-
-print "trellocall initialization start"
-var_init()
-print "trellocall initilization end"
-
 
 def print_members_points():
     teams = client.list_organizations()
@@ -182,6 +183,23 @@ def print_members_points():
                         for memberID in membersID:
                             membersPoint[idMembersDict[memberID]] += int(points)
     return membersPoint
+  
+if __name__ == "__main__":
+    var_init()
+    ''' read mock data '''
+    ''' start experiments from here '''
+    get_all_cards_with_duetime(100)
+
+    
+    
+            
+
+print "trellocall initialization start"
+var_init()
+print "trellocall initilization end"
+
+
+
     
 
     
