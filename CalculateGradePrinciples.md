@@ -20,6 +20,7 @@ There are two factors we are using to reward the out-performed users: task diffi
 |< 3h | EASY|10
 
 2. Difficulty color
+
 |Difficulty | color
 |Easy|yellor
 |Median|sky
