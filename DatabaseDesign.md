@@ -1,7 +1,6 @@
-# What kind of data to put into the database?
-1. Predicted number of hours of a task (Difficulty level)
-2. Design a formula to assign point to each task
-3. Design a rule to assign points to them
+# Database Design
 
-Future work
-People are in different regions of the world
+In this project, we use Firebase to store our real-time performance score for each member in the team.
+The image below shows an example of our nested database design:
+
+
