@@ -1,5 +1,6 @@
 from firebase import firebase
 import pyrebase
+import operator
 
 config = {
   "apiKey": "AIzaSyCC5OzyEqGBcGZkpyUP90qUnyCCJY8SRQ8",
@@ -76,5 +77,20 @@ def store_total_points(performance):
     db.child("leaderboard/" + key).update({'total_points': value})
 
 # modify the value here to test
-performance = {'gyu9': 10, 'yhu22': 20, 'xfu7': 30, 'simtiaz': 20, 'vinay638': 10}
-store_total_points(performance)
+performance = {'gyu9': 15, 'yhu22': 25, 'xfu7': 30, 'simtiaz': 20, 'vinay638': 10}
+# store_total_points(performance)
+
+def print_leaderboard():
+  '''
+  Print each user's total points
+  '''
+  all_users = db.child("leaderboard/").get()
+  leaderboard = {}
+
+  for user in all_users.each():
+    leaderboard[user.key()] = db.child("leaderboard/" + user.key() + "/total_points").get().val()
+
+  sorted_leaderboard = sorted(leaderboard.items(), key=operator.itemgetter(1), reverse=True)
+  print(sorted_leaderboard) # change print to return for later use to export to trello platform
+
+print_leaderboard()
