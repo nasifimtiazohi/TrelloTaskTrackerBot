@@ -58,3 +58,12 @@ def get_total_points(user):
   # comment out the line below line to test the output value
   # print(db.child("leaderboard/" + user + "/total_points").get().val())
   return (db.child("leaderboard/" + user + "/total_points").get().val())
+
+def store_total_points(performance):
+  '''
+  Store total points to the database
+
+  Args:
+    performance is a dict which keys are the user id and values are the total points
+
+  '''
