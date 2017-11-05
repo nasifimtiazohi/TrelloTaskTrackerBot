@@ -16,10 +16,18 @@ There are two factors we are using to reward the out-performed users: task diffi
 |Hours of Work | Difficulty | Reward Points 
 |--- | --- |---
 |> 6h | HARD |50
-|3h < T < 6h | Median | 30
+|3h < T < 6h | Hard | 40
 |< 3h | EASY|10
 
-2. Working Efficiency BPts
+2. Difficulty color
+
+|Difficulty | color
+|---|---
+|Easy |yellor
+|Median |sky
+|Hard |black
+
+3. Working Efficiency BPts
 
 |Finish Time before deadline | Bonus Reward Points
 |--- | ---
@@ -30,10 +38,10 @@ There are two factors we are using to reward the out-performed users: task diffi
 Final score = Pts + Bpts
 This is the score that shoud be stored in leaderboard and present to the user.
 
-3. Deduction Points
+4. Deduction Points
 
-|Time passed Deadline| Penality 
+|Difficulty| Penality 
 |--- | --- 
-| <= 12h | -10 
-| <= 24h | -30
-| >24 | -50 
+| Hard | -10 
+| Median | -30
+| Easy | -50 

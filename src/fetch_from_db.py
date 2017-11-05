@@ -11,12 +11,18 @@ config = {
 # init the firebase config
 firebase = pyrebase.initialize_app(config)
 
-# firebase = firebase.FirebaseApplication('https://taskmangerbot.firebaseio.com/leaderboard/')
-# point = firebase.get('gyu9', '/Card1')
-# print(users)
-
 # get the db ref
 db = firebase.database()
+
 # get all users from the leaderboard
-users = db.child("leaderboard").get()
-print(users.val())
+def get_all_info():
+  users = db.child("leaderboard").get()
+  print(users.val())
+
+def add_card(user, due_date, hours, name, points, progress):
+  data = {"check_list": {"test add card": 0}, "due_date": due_date, "hours": hours, "name": name, "points": points, "progress": progress}
+  member = db.child("leaderboard/" + user + "/cards").push(data)
+
+add_card("gyu9", "tomorrow", 8, "add card to firebase", 50, "pending")
+
+#get_all_info()
