@@ -185,8 +185,6 @@ def getInterval(timeInHours):
     endTime = datetime.datetime.utcnow()
     endTime = endTime.replace(tzinfo=pytz.utc)
     startTime = endTime - datetime.timedelta(hours = timeInHours)
-    print endTime
-    print startTime
     return (startTime, endTime)
 
 def getAllOpenCards():
@@ -226,8 +224,6 @@ def getAllCompletedCardsAtCurrentInterval(cards, interval):
     for card in cards:
         #dueDate = card.due_date
         dueDate = card.due_date.replace(tzinfo=pytz.utc)
-        if card.name == "TestLoL":
-            print dueDate
         if dueDate > interval[0] and dueDate < interval[1]:
             currentCompletedCards.append(card)
     return currentCompletedCards
@@ -307,8 +303,7 @@ def getPerformancePoints():
 
         rewardsAndBouns = 0
         penalty = 0
-        print members_dict[memberID]
-        print completedCards
+
         if completedCards :
             currentCompletedCards = getAllCompletedCardsAtCurrentInterval(completedCards, interval)
             rewardsAndBouns = getRewardsAndBonus(currentCompletedCards)    
@@ -321,6 +316,19 @@ def getPerformancePoints():
     for memberID in members_dict.keys():
         memberPerformance[members_dict[memberID]] = performance[memberID]
     return memberPerformance
+
+def pushPerformanceToLeaderBoard(performance):
+    leaderList = testboard.list_lists()
+    for list in leaderList:
+        if list.name == "Leader Board":
+            cards = list.list_cards()
+            for card in cards:
+                memberID = card.member_id[0]
+                title = "Round x"
+                itemName = "Points :" + str(performance[members_dict[memberID]])
+                items = [itemName]
+                card.add_checklist(title, items)
+
 
 if __name__ == "__main__":
     var_init()
