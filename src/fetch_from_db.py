@@ -63,7 +63,18 @@ def store_total_points(performance):
   '''
   Store total points to the database
 
+  Example:
+  performance = {'gyu9': 10, 'yhu22': 20, 'xfu7': 30, 'simtiaz': 20, 'vinay638': 10}
+  store_total_points(performance)
+
   Args:
     performance is a dict which keys are the user id and values are the total points
 
   '''
+  for key, value in performance.iteritems():
+    # new_total_points = {'total_points': value}
+    db.child("leaderboard/" + key).update({'total_points': value})
+
+# modify the value here to test
+performance = {'gyu9': 10, 'yhu22': 20, 'xfu7': 30, 'simtiaz': 20, 'vinay638': 10}
+store_total_points(performance)
