@@ -40,8 +40,8 @@ This is the score that shoud be stored in leaderboard and present to the user.
 
 4. Deduction Points
 
-|Time passed Deadline| Penality 
+|Difficulty| Penality 
 |--- | --- 
-| <= 12h | -10 
-| <= 24h | -30
-| >24 | -50 
+| Hard | -10 
+| Median | -30
+| Easy | -50 
