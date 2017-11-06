@@ -27,7 +27,7 @@ def get_all_info():
   users = db.child("leaderboard").get()
   print(users.val())
 
-def add_card(card_id, user, due_date, hours, name, points, progress):
+def add_card(user, due_date, hours, name, points, progress):
   '''
   Add card to certain member
 
@@ -44,10 +44,9 @@ def add_card(card_id, user, due_date, hours, name, points, progress):
   '''
 
   data = {"check_list": {"test add card": 0}, "due_date": due_date, "hours": hours, "name": name, "points": points, "progress": progress}
-  
-  member = db.child("leaderboard/" + user + "/cards/"+ card_id).set(data)
+  member = db.child("leaderboard/" + user + "/cards").push(data)
 
-def get_total_points(user):
+def get_user_points(user):
   '''
   Get the total points from the user
 
@@ -84,6 +83,9 @@ performance = {'gyu9': 15, 'yhu22': 25, 'xfu7': 30, 'simtiaz': 20, 'vinay638': 1
 def print_leaderboard():
   '''
   Print each user's total points
+
+  Example:
+  print_leaderboard()
   '''
   all_users = db.child("leaderboard/").get()
   leaderboard = {}
@@ -94,6 +96,4 @@ def print_leaderboard():
   sorted_leaderboard = sorted(leaderboard.items(), key=operator.itemgetter(1), reverse=True)
   print(sorted_leaderboard) # change print to return for later use to export to trello platform
 
-#print_leaderboard()
-add_card("59ff88811b3404758592ca5f", "xfu7", "2017-11-06T17:00:00.000Z", 8, "test firebase", 50, "pending")
-
+# print_leaderboard()
