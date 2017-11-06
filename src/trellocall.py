@@ -1,4 +1,5 @@
 from trello import TrelloClient
+import fetch_from_db
 import struct
 import datetime
 import os
@@ -350,11 +351,12 @@ def getPerformancePoints():
         if incompletedCards :
             currentIncompleteCards = getAllIncompletedCardsAtCurrentInterval(incompletedCards, interval[1])
             penalty = getPenalty(currentIncompleteCards)
-
-        performance[memberID] = rewardsAndBouns + penalty
+        prevPoint = fetch_from_db.get_user_points(members_dick[memberID])
+        performance[memberID] = rewardsAndBouns + penalty + prevPoint
     memberPerformance = {}
     for memberID in members_dict.keys():
         memberPerformance[members_dict[memberID]] = performance[memberID]
+    fetch_from_db.store_total_points(memberPerformance)
     return memberPerformance
 
 def pushPerformanceToLeaderBoard(performance):
