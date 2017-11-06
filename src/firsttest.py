@@ -55,7 +55,21 @@ def handle_command(command, channel):
         slack_client.api_call("chat.postMessage", channel=channel,
                           text=response, as_user=True)
 
-
+def usecase3_final_function():
+    #response="what is your progress, mate?"
+    dm_channels=usecase3.check_progress()
+    for d in dm_channels:
+        channel=d[2]
+        response=d[4]
+            # cardlist=d[3]
+            # print "bal",channel
+            # for c in cardlist:
+            #     response+=c.name
+        slack_client.api_call("chat.postMessage", channel=channel,
+                          text=response, as_user=True)
+    time.sleep(60*3)
+    
+    
 def parse_slack_output(slack_rtm_output):
     """
         The Slack Real Time Messaging API is an events firehose.
@@ -78,7 +92,8 @@ if __name__ == "__main__":
     if slack_client.rtm_connect():
         print("Taskbot connected and running!")
         while True:
-            #usecase1.perform()
+            usecase1.perform()
+            usecase3_final_function()
             command, channel = parse_slack_output(slack_client.rtm_read())
             if command and channel:
                 handle_command(command, channel)
