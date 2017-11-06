@@ -65,6 +65,32 @@ def get_all_cards_with_duetime(timeinhours):
                 duecards.append(c)
     return duecards
 
+def get_all_names_cards_with_duetime(timeinhours):
+    current_time=datetime.datetime.now()
+    current_time=current_time.replace(tzinfo=pytz.utc)
+    print "hello",testboard.name
+    opencards=testboard.open_cards()
+    duecards=[]
+    for c in opencards:
+        temp=c.due_date
+        if c.due_date:
+            temp=temp.replace(tzinfo=pytz.utc)
+            temp2=temp-datetime.timedelta(hours=timeinhours)
+            if current_time<temp and current_time>temp2 and '59bdb4181314a33999a2736d' not in c.label_ids:
+                duecards.append(c)
+    ''' only sending the names for now.
+    In future, we'll send info about each card '''
+    namelist_with_duecards={}
+    for c in duecards:
+        mid=c.member_id[0]
+        name=members_dict[mid]
+        if name not in namelist_with_duecards.keys():
+            l=[]
+            l.append(c)
+            namelist_with_duecards[name]=l
+        else:
+            namelist_with_duecards[name].append(c)
+    return namelist_with_duecards
 
 
 def print_deadline_messages():
@@ -142,6 +168,20 @@ def slackname_with_duecards():
     in future match by mail id? '''
     slackname_with_duecrds={}
     mapping = mockdata["trello_to_slack_name"]
+
+    for n in trelloname_with_duecards.keys():
+        slackname=mapping[n]
+        slackname_with_duecrds[slackname]=trelloname_with_duecards[n]
+    return slackname_with_duecrds
+
+
+def slackname_with_duetime(duetime_in_hours):
+    trelloname_with_duecards=get_all_names_cards_with_duetime(duetime_in_hours)
+    ''' read mock data for matching for now
+    in future match by mail id? '''
+    slackname_with_duecrds={}
+    mapping = mockdata["trello_to_slack_name"]
+    
     for n in trelloname_with_duecards.keys():
         slackname=mapping[n]
         slackname_with_duecrds[slackname]=trelloname_with_duecards[n]
@@ -179,7 +219,157 @@ def print_members_points():
                         for memberID in membersID:
                             membersPoint[idMembersDict[memberID]] += int(points)
     return membersPoint
+
+
+def getInterval(timeInHours):
+    endTime = datetime.datetime.utcnow()
+    endTime = endTime.replace(tzinfo=pytz.utc)
+    startTime = endTime - datetime.timedelta(hours = timeInHours)
+    return (startTime, endTime)
+
+def getAllOpenCards():
+    return testboard.open_cards()
+
+# Completed cards
+def getAllCompletedCards(cards):
+    completeLable = "green"
+    completeCards = []
+    for card in cards:
+        lables = card.list_labels
+        if lables != None:
+            for lable in lables:
+                if lable.color == completeLable:
+                    completeCards.append(card)
+                    break
+    return completeCards
+# Incompleted cards
+def getAllIncompletedCards(cards):
+    inCompletedLable = "red"
+    inCompletedCards = []
+    for card in cards:
+        lables = card.list_labels
+        if lables != None :
+            for lable in lables:
+                if lable.color == inCompletedLable:
+                    '''if card.due_date:
+                        dueDate = card.due_date
+                        dueDate = dueDate.replace(tzinfo=pytz.utc)
+                        if dueDate < currentTime:'''
+                    inCompletedCards.append(card)
+    return inCompletedCards
+
+# get all cards finished after the start time point of the current interval
+def getAllCompletedCardsAtCurrentInterval(cards, interval):
+    currentCompletedCards = []
+    for card in cards:
+        #dueDate = card.due_date
+        dueDate = card.due_date.replace(tzinfo=pytz.utc)
+        if dueDate > interval[0] and dueDate < interval[1]:
+            currentCompletedCards.append(card)
+    return currentCompletedCards
+
+def getAllIncompletedCardsAtCurrentInterval(cards, endTimePoint):
+
+    currentIncompleteCards = []
+    for card in cards:
+        dueDate = card.due_date
+        dueDate = dueDate.replace(tzinfo=pytz.utc)
+        if dueDate < endTimePoint:
+            currentIncompleteCards.append(card)
+    return currentIncompleteCards
+
+def getRewardsAndBonus(cards):
+
+    points = 0
+    Easy = "yellow"
+    Median = "sky"
+    Hard = "black"
     
+    for card in cards:
+        for label in card.list_labels:
+            if label.color == Easy:
+                points += 10
+                break
+            if label.color == Median:
+                points += 40
+                break
+            if label.color == Hard:
+                points += 50
+                break
+    return points
+
+def getPenalty(cards):
+    penalty = 0
+    Easy = "yellow"
+    Median = "sky"
+    Hard = "black"
+    for card in cards:
+        for label in card.list_labels:
+            if label.color == Easy:
+                penalty = penalty - 50
+                break
+            if label.color == Median:
+                penalty = penalty - 30
+                break
+            if label.color == Hard:
+                penalty = penalty - 10
+                break
+    return penalty
+
+def getPerformancePoints():
+    openCards = getAllOpenCards()
+
+    members = members_dict.keys()
+    memberCards = {}
+
+    for member in members:
+        memberCards[member] = []
+
+    for card in openCards:
+        if card.member_ids:
+            for memberId in card.member_ids:
+                memberCards[memberId].append(card)
+
+    intervalLength = 5 # length of interval, hours
+    interval = getInterval(5)
+    performance = {}
+    for memberID in memberCards.keys():
+        cards = memberCards[memberID]
+        completedCards = None
+        incompletedCards = None
+
+        completedCards = getAllCompletedCards(memberCards[memberID])
+        incompletedCards = getAllIncompletedCards(memberCards[memberID])
+
+        rewardsAndBouns = 0
+        penalty = 0
+
+        if completedCards :
+            currentCompletedCards = getAllCompletedCardsAtCurrentInterval(completedCards, interval)
+            rewardsAndBouns = getRewardsAndBonus(currentCompletedCards)    
+        if incompletedCards :
+            currentIncompleteCards = getAllIncompletedCardsAtCurrentInterval(incompletedCards, interval[1])
+            penalty = getPenalty(currentIncompleteCards)
+
+        performance[memberID] = rewardsAndBouns + penalty
+    memberPerformance = {}
+    for memberID in members_dict.keys():
+        memberPerformance[members_dict[memberID]] = performance[memberID]
+    return memberPerformance
+
+def pushPerformanceToLeaderBoard(performance):
+    leaderList = testboard.list_lists()
+    for list in leaderList:
+        if list.name == "Leader Board":
+            cards = list.list_cards()
+            for card in cards:
+                memberID = card.member_id[0]
+                title = "Round x"
+                itemName = "Points :" + str(performance[members_dict[memberID]])
+                items = [itemName]
+                card.add_checklist(title, items)
+
+
 if __name__ == "__main__":
     var_init()
     ''' read mock data '''

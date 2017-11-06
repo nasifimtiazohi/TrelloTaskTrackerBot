@@ -28,7 +28,11 @@ def handle_command(command, channel):
         slack_client.api_call("chat.postMessage", channel=channel,
                           text=response, as_user=True)
     elif command.startswith(COMMAND_USECASE_2):
-        messages=trellocall.print_members_points()
+        messages=trellocall.getPerformancePoints()
+        #trellocall.pushPerformanceToLeaderBoard(messages)
+        message = "Individual Performance List"
+        slack_client.api_call("chat.postMessage", channel=channel,
+                          text=message, as_user=True)
         for key in messages.keys():
             message = str(key) + ": " + str(messages[key])
             slack_client.api_call("chat.postMessage", channel=channel,
@@ -36,7 +40,7 @@ def handle_command(command, channel):
         #todo
     elif COMMAND_USECASE_3 in command:
         response="what is your progress, mate?"
-        dm_channels=usecase3.perform()
+        dm_channels=usecase3.check_progress()
         for d in dm_channels:
             channel=d[2]
             response=d[4]

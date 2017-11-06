@@ -1,83 +1,103 @@
 {
   "leaderboard" : {
     "xfu7" : {
-      "Card1" : {
-        "name" : "design database",
-        "due_date" : "date_time",
-        "hours" : 7,
-        "points" : 50,
-        "check_list" : {
-          "retrieve points" : "NULL",
-          "write function" : "NULL"
+      "cards" : {
+        "card1" : {
+          "name" : "design database",
+          "due_date" : "date_time",
+          "hours" : 7,
+          "points" : 50,
+          "progress" : "pending",
+          "check_list" : {
+            "retrieve points" : "NULL",
+            "write function" : "NULL"
+          }
+        },
+        "card2": {
+          "name" : "set up vm",
+          "due_date" : "date_time",
+          "hours" : 2,
+          "points" : 10,
+          "check_list" : {
+            "set ubuntu" : "NULL",
+            "get private key" : "NULL"
+          }
         }
       },
-      "Card2" : {
-        "name" : "set up vm",
-        "due_date" : "date_time",
-        "hours" : 2,
-        "points" : 10,
-        "check_list" : {
-          "set ubuntu" : "NULL",
-          "get private key" : "NULL"
-        }
-      }
+      "total_points": 30
     },
     "yhu22" : {
-      "Card1" : {
-        "name" : "design database",
-        "due_date" : "date_time",
-        "hours" : 7,
-        "points" : 50,
-        "check_list" : {
-          "retrieve points" : "NULL",
-          "write function" : "NULL"
+      "cards" : {
+        "card1" : {
+          "name" : "design database",
+          "due_date" : "date_time",
+          "hours" : 7,
+          "points" : 50,
+          "progress" : "pending",
+          "check_list" : {
+            "retrieve points" : "NULL",
+            "write function" : "NULL"
+          }
+        },
+        "card2" : {
+          "name" : "test bot token",
+          "due_date" : "date_time",
+          "hours" : 1,
+          "points" : 10,
+          "check_list" : {
+            "write envTest" : "NULL"
+          }
         }
       },
-      "Card2" : {
-        "name" : "test bot token",
-        "due_date" : "date_time",
-        "hours" : 1,
-        "points" : 10,
-        "check_list" : {
-          "write envTest" : "NULL"
-        }
-      }
+      "total_points" : 30
     },
     "gyu9" : {
-      "Card1" : {
-        "name" : "implement use case2",
-        "due_date" : "date_time",
-        "hours" : 4,
-        "points" : 30,
-        "check_list" : {
-          "add more condition" : "NULL",
-          "parse response" : "NULL"
+      "cards" : {
+        "card1" : {
+          "name" : "implement use case2",
+          "due_date" : "date_time",
+          "hours" : 4,
+          "points" : 30,
+          "progress" : "pending",
+          "check_list" : {
+            "add more condition" : "NULL",
+            "parse response" : "NULL"
+          }
         }
-      }
+      },
+      "total_points" : 40
     },
     "simtiaz" : {
-      "Card1" : {
-        "name" : "implement use case1",
-        "due_date" : "date_time",
-        "hours" : 5,
-        "points" : 30,
-        "check_list" : {
-          "set timer" : "NULL",
-          "repetitive call function" : "NULL"
+      "cards" : {
+        "card1" : {
+          "name" : "implement use case1",
+          "due_date" : "date_time",
+          "hours" : 5,
+          "points" : 30,
+          "progress" : "pending",
+          "check_list" : {
+            "set timer" : "NULL",
+            "repetitive call function" : "NULL"
+          }
         }
-      }
+      },
+      "total_points" : 50
     },
     "vinay638" : {
-      "Card1" : {
-        "name" : "implement use case3",
-        "due_date" : "date_time",
-        "hours" : 2,
-        "points" : 10,
-        "check_list" : {
-          "add points to leaderboard" : "NULL",
-          "add to corresponding member" : "NULL"
+      "cards" : {
+        "card1" : {
+          "name" : "implement use case3",
+          "due_date" : "date_time",
+          "hours" : 2,
+          "points" : 10,
+          "progress" : "pending",
+          "check_list" : {
+            "add points to leaderboard" : "NULL",
+            "add to corresponding member" : "NULL"
+          }
         }
-      }
+      },
+      "total_points" : 20
     }
   }
 }
