@@ -37,7 +37,7 @@ Our bot runs on the assumption that a team will have their workspace both on "Sl
 
 
 ### Task Tracking
-[WORKSHEET](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/WORKSHEET.md)
+[Trello Task Manager](https://trello.com/b/MXYu6ZEy/task-manager-bot)
 
 ### Reference
 https://api.slack.com/incoming-webhooks
