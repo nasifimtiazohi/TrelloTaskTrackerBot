@@ -65,6 +65,32 @@ def get_all_cards_with_duetime(timeinhours):
                 duecards.append(c)
     return duecards
 
+def get_all_names_cards_with_duetime(timeinhours):
+    current_time=datetime.datetime.now()
+    current_time=current_time.replace(tzinfo=pytz.utc)
+    print "hello",testboard.name
+    opencards=testboard.open_cards()
+    duecards=[]
+    for c in opencards:
+        temp=c.due_date
+        if c.due_date:
+            temp=temp.replace(tzinfo=pytz.utc)
+            temp2=temp-datetime.timedelta(hours=timeinhours)
+            if current_time<temp and current_time>temp2 and '59bdb4181314a33999a2736d' not in c.label_ids:
+                duecards.append(c)
+    ''' only sending the names for now.
+    In future, we'll send info about each card '''
+    namelist_with_duecards={}
+    for c in duecards:
+        mid=c.member_id[0]
+        name=members_dict[mid]
+        if name not in namelist_with_duecards.keys():
+            l=[]
+            l.append(c)
+            namelist_with_duecards[name]=l
+        else:
+            namelist_with_duecards[name].append(c)
+    return namelist_with_duecards
 
 
 def print_deadline_messages():
@@ -122,8 +148,8 @@ def var_init():
         if b.name=='Test Board':
             testboard=b
     members_dict=members_dictionary(project_team)
-    '''with open('mock.json') as json_data:
-        mockdata = json.load(json_data)'''
+    with open('mock.json') as json_data:
+        mockdata = json.load(json_data)
 
 ''' def match_trello_slack_id():
     userlist= slackapicall.list_users()
@@ -142,6 +168,20 @@ def slackname_with_duecards():
     in future match by mail id? '''
     slackname_with_duecrds={}
     mapping = mockdata["trello_to_slack_name"]
+
+    for n in trelloname_with_duecards.keys():
+        slackname=mapping[n]
+        slackname_with_duecrds[slackname]=trelloname_with_duecards[n]
+    return slackname_with_duecrds
+
+
+def slackname_with_duetime(duetime_in_hours):
+    trelloname_with_duecards=get_all_names_cards_with_duetime(duetime_in_hours)
+    ''' read mock data for matching for now
+    in future match by mail id? '''
+    slackname_with_duecrds={}
+    mapping = mockdata["trello_to_slack_name"]
+    
     for n in trelloname_with_duecards.keys():
         slackname=mapping[n]
         slackname_with_duecrds[slackname]=trelloname_with_duecards[n]
