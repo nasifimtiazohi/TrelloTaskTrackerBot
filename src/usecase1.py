@@ -12,9 +12,12 @@ def perform():
     slack=slackapicall.nameNmail()
 
     for p in participants:
-        print p.username
+        #print dir(p)
+        json_obj = trellocall.client.fetch_json('/members/' + p.id,query_params={'badges': False})
+        print "bal",json_obj
         #print "trello",p.full_name.lower()
         d[p.id]=p.full_name.lower()
+        
     #print d
     for c in duecards:
         print "inside duecard loop"
@@ -35,7 +38,7 @@ def perform():
                     max=temp
                     key=k
             mail=slack[key]
-            emailing.sendmail(mail,message)
+            #emailing.sendmail(mail,message)
             
 
     time.sleep(60*3)
