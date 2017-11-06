@@ -12,3 +12,6 @@ def sendmail(mail,message):
     r=smtpObj.login('bot510project@gmail.com','simtiaz1234')
     r=smtpObj.sendmail('bot510project@gmail.com',mail,'Subject: checking our bot.\n\n'+message)
     print r
+
+if __name__=="__main__":
+    sendmail("sads","SADSD")
