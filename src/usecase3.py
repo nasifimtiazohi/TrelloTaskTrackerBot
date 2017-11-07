@@ -3,6 +3,7 @@ import trellocall
 from firebase import firebase
 import pyrebase
 from datetime import datetime
+from fetch_from_db import get_user_points
 
 config = {
   "apiKey": "AIzaSyCC5OzyEqGBcGZkpyUP90qUnyCCJY8SRQ8",
@@ -40,14 +41,17 @@ def reward_points(user, points):
   Reward points according to rewarding principles
   Save points to database under each person's name
 
+  Example:
+  reward_points("yhu22", 50)
+
   Args:
         user (string): user id
         points (int): points reward for the task
 
   '''
-
-
-
+  # print("Before adding reward points: ",get_user_points(user))
+  db.child("leaderboard/" + user).update({'total_points': (get_user_points(user) + points)})
+  # print("After adding reward points: ",get_user_points(user))
 
 def post_public_message():
   '''
