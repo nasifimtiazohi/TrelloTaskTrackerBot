@@ -4,12 +4,25 @@ from firebase import firebase
 import pyrebase
 from datetime import datetime
 
+config = {
+  "apiKey": "AIzaSyCC5OzyEqGBcGZkpyUP90qUnyCCJY8SRQ8",
+  "authDomain": "taskmangerbot.firebaseapp.com",
+  "databaseURL": "https://taskmangerbot.firebaseio.com",
+  "storageBucket": "taskmangerbot.appspot.com"
+}
+
+# init the firebase config
+firebase = pyrebase.initialize_app(config)
+
+# get the db ref
+db = firebase.database()
+
 '''
-  Use Case 3: 
+  Use Case 3:
 
       S1: The bot will ask for progress to each member based on his tasks and due dates.
       S2: It will wait a certain period (differing on scenario, periods will be dynamically calculated).
-      S3: If response is positive (response of progress), 
+      S3: If response is positive (response of progress),
       it will post congratulatory message on a public channel and award score in the leaderboard.
       S4: If response is negative (either no response/response of no progress), (we assum our user is honest)
       it will post reminder message to a public channel and add penalties in his score in the leaderboard.
@@ -19,27 +32,30 @@ from datetime import datetime
 
    Implementation:
    Don't need to type "Use Case 3" command to retrieve data!
-   Run the bot and fetch data from trello 
+   Run the bot and fetch data from trello
 '''
 
-def reward_points():
+def reward_points(user, points):
   '''
   Reward points according to rewarding principles
   Save points to database under each person's name
 
   Args:
-      
-  '''    
+        user (string): user id
+        points (int): points reward for the task
 
-    
+  '''
+
+
+
 
 def post_public_message():
   '''
     Post the message to the general channel
 
   Args:
-      
-  '''   
+
+  '''
 
 def check_progress():
   '''
@@ -53,7 +69,7 @@ def check_progress():
   perform()
 
   Args:
-      
+
   '''
   #For each user who have cards check progress
   #namelist_with_duecards=get_all_cards_with_duedate()
@@ -67,12 +83,12 @@ def check_progress():
         #get uid
         #print slackapicall.name_to_id(u)
         userid=slackapicall.name_to_id(u)
-        cardlist=users_with_cards[u] 
+        cardlist=users_with_cards[u]
         message=u+" ," +"you have "+ str(len(cardlist)) + " task pending that approach the due"
         i = 0
-        for card in cardlist: 
+        for card in cardlist:
             i+=1
-            message+=". Task "+ str(i) +": "+ card.name+" ,please update your progress for this card here: " + "https://taskmangerbot.firebaseapp.com"+ "?userid=" + u + "&card_id="+card.id 
+            message+=". Task "+ str(i) +": "+ card.name+" ,please update your progress for this card here: " + "https://taskmangerbot.firebaseapp.com"+ "?userid=" + u + "&card_id="+card.id
             print message
             print card.id
         l=[]
@@ -83,7 +99,7 @@ def check_progress():
   return dm_channel
 
 
-  
+
 def calculate_time_period():
   '''
   Check progress of each member's progress twich a day:
@@ -94,7 +110,7 @@ def calculate_time_period():
   Example:
   perform()
 
-  Args:     
+  Args:
   '''
 
 if __name__=="__main__":
