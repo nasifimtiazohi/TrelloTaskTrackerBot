@@ -2,12 +2,25 @@ from firebase import firebase
 import pyrebase
 import operator
 
+
 config = {
   "apiKey": "AIzaSyCC5OzyEqGBcGZkpyUP90qUnyCCJY8SRQ8",
   "authDomain": "taskmangerbot.firebaseapp.com",
   "databaseURL": "https://taskmangerbot.firebaseio.com",
   "storageBucket": "taskmangerbot.appspot.com"
 }
+
+  # 1. Add all the cards of the user to the database
+  # Nested DB structure:
+  #+userid
+  #-------total_points
+  #------+card_id
+  #--------------user
+  #--------------due_date
+  #--------------hours
+  #--------------name
+  #--------------points
+  #--------------progress
 
 # init the firebase config
 firebase = pyrebase.initialize_app(config)
@@ -27,7 +40,7 @@ def get_all_info():
   users = db.child("leaderboard").get()
   print(users.val())
 
-def add_card(user, due_date, hours, name, points, progress):
+def add_card(card_id, user, due_date, hours, name, points, progress):
   '''
   Add card to certain member
 
@@ -44,7 +57,7 @@ def add_card(user, due_date, hours, name, points, progress):
   '''
 
   data = {"check_list": {"test add card": 0}, "due_date": due_date, "hours": hours, "name": name, "points": points, "progress": progress}
-  member = db.child("leaderboard/" + user + "/cards").push(data)
+  member = db.child("leaderboard/" + user + "/cards/"+ card_id).set(data)
 
 def get_user_points(user):
   '''

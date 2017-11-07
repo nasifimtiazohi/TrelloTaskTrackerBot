@@ -72,14 +72,12 @@ def usecase3_final_function():
     
 def usecase3_post_congratuation_message():
     #Post congraduate message
-    dm_channels=usecase3.check_progress()
+    #Post only once after the user finished
+    dm_channels=usecase3.post_public_message()
     for d in dm_channels:
-        channel=d[2]
+        channel=d[1]
         response=d[4]
-            # cardlist=d[3]
-            # print "bal",channel
-            # for c in cardlist:
-            #     response+=c.name
+        print "The channel is" + channel
         slack_client.api_call("chat.postMessage", channel=channel,
                           text=response, as_user=True)
 
@@ -106,6 +104,7 @@ if __name__ == "__main__":
         print("Taskbot connected and running!")
         while True:
             #usecase1.perform()
+            usecase3_post_congratuation_message()
             usecase3_final_function()
             command, channel = parse_slack_output(slack_client.rtm_read())
             if command and channel:

@@ -24,7 +24,38 @@ client = TrelloClient(
     token=trelloToken,
     token_secret=None
 )
+# return a list of things:
+# card_id, user_id, due_date, hours, card_name, points, progress
+def get_all_cards_of_user(userid):
+    opencards=testboard.open_cards()
+    for c in opencards:
+        card_info=[]
+        if c.user_id == userid :
+            due_date = c.due_date
+            card_id = c.card_id
+            hours = 5 #
+            card_name = c.card_name
+            points = getPerformancePoints()
+            progress = "" #add progress
+            #how to know if the card is due or not
+            card_info.append(card_id, userid, due_date, card_id, points, progress)
+        else:
+            return null
+    return card_info
 
+
+# def calculate_points(due_date):
+#     reward_point = 0
+#     current_time=datetime.datetime.now()
+#     current_time=current_time.replace(tzinfo=pytz.utc)
+#     time_difference = current_due_date.replace(tzinfo=pytz.utc)
+#     #hour of work: difficulty_points
+#     #finish_time_before_deadline: bonus_points
+#     if time_difference>6:
+#         reward_point+= 
+
+
+    return reward_point
 
 def get_all_cards_with_duedate():
     current_time=datetime.datetime.now()
@@ -317,6 +348,7 @@ def getPenalty(cards):
                 break
     return penalty
 
+### What is the thing returns???
 def getPerformancePoints():
     openCards = getAllOpenCards()
 
