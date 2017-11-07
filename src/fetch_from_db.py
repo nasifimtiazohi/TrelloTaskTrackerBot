@@ -62,6 +62,15 @@ def add_card(due_date, card_name, points, progress, user_name, card_id):
   data = {"due_date": due_date, "card_name": card_name, "points": points, "progress": progress}
   db.child("leaderboard/" + user_name + "/cards/"+ card_id).set(data)
 
+def total_points_init():
+  '''
+  Initialize all member's total points
+  '''
+  all_users = db.child("leaderboard/").get()
+  for user in all_users.each():
+    db.child("leaderboard/" + user.key() + "/total_points").set(0)
+
+
 def get_user_points(user):
   '''
   Get the total points from the user
@@ -83,7 +92,7 @@ def store_total_points(performance):
   Example:
   performance = {'gyu9': 10, 'yhu22': 20, 'xfu7': 30, 'simtiaz': 20, 'vinay638': 10}
   store_total_points(performance)
-  
+
 
   Args:
     performance is a dict which keys are the user id and values are the total points
