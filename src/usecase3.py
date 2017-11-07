@@ -36,6 +36,7 @@ def reward_points():
 def post_public_message():
   '''
     Post the message to the general channel
+    Check in the progress in the task list, if the progress is "Completed", post a message to the user
 
   Args:
       
@@ -43,14 +44,12 @@ def post_public_message():
 
 def check_progress():
   '''
-  Check progress of each member's progress twice a day:
-  7:00 AM and 11:00 PM
-
+  Check progress of each member's progress twice a day: 7:00 AM and 11:00 PM
   This function should be always running and monitoring the progress
   This function can be triggered by a time event
 
   Example:
-  perform()
+  check_progress()
 
   Args:
       
@@ -73,8 +72,6 @@ def check_progress():
         for card in cardlist: 
             i+=1
             message+=". Task "+ str(i) +": "+ card.name+" ,please update your progress for this card here: " + "https://taskmangerbot.firebaseapp.com"+ "?userid=" + u + "&card_id="+card.id 
-            print message
-            print card.id
         l=[]
         channel=slackapicall.open_im(userid)
         #print u,userid,channel
@@ -82,17 +79,12 @@ def check_progress():
         dm_channel.append(l)
   return dm_channel
 
-
-  
 def calculate_time_period():
   '''
   Check progress of each member's progress twich a day:
   7:00 AM and 11:00 PM
   This function should be always running and monitoring the progress
   This function can be triggered by a time event
-
-  Example:
-  perform()
 
   Args:     
   '''
