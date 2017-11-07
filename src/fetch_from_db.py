@@ -15,11 +15,10 @@ config = {
   #+userid
   #-------total_points
   #------+card_id
-  #--------------user
-  #--------------due_date
-  #--------------name
-  #--------------points
-  #--------------progress
+  #--------------due_date(string)
+  #--------------card_name (string)
+  #--------------points (int)
+  #--------------progress (string)
 
 # init the firebase config
 firebase = pyrebase.initialize_app(config)

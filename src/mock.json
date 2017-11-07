@@ -403,6 +403,13 @@
         "vinay638": "vgupta8",
         "otto292" : "yhu22"
     },
+    "slack_name_to_trello_name":{
+        "simtiaz":"sheikhnasifimtiaz",
+        "gyu9":"guanxuyu",
+        "xfu7":"xiaotingfu1",
+        "vgupta8":"vinay638",
+        "yhu22": "otto292"
+    },
     "idmatching":[
         {
             "slackname" : "simtiaz",
