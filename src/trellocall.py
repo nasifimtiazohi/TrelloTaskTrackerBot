@@ -25,23 +25,38 @@ client = TrelloClient(
     token_secret=None
 )
 # return a list of things:
-# card_id, user_id, due_date, hours, card_name, points, progress
-def get_all_cards_of_user(userid):
-    opencards=testboard.open_cards()
+# card_id, user_id, due_date, card_name, points, progress
+def get_all_cards_of_user():
+    opencards = testboard.open_cards()
+    all_card_info=[]
     for c in opencards:
-        card_info=[]
-        if c.user_id == userid :
-            due_date = c.due_date
-            card_id = c.card_id
-            hours = 5 #
-            card_name = c.card_name
-            points = getPerformancePoints()
-            progress = "" #add progress
+        card_info = []
+        for userid in c.member_ids:
+            user_name = members_dict[userid]
+            # 'sheikhnasifimtiaz' is a slack name
+            #if user_name == 'sheikhnasifimtiaz':
+            due_date = c.due
+            card_id = c.id
+            card_name = c.name
+            points = 20
+            #points = getPerformancePoints()[user_name]  
+            progress = getCardProgress(card_id)
+            #only get the cards with progress
+            if progress != '':
+                card_info.append(due_date)
+                card_info.append(card_name)
+                card_info.append(points)
+                card_info.append(progress)
+                card_info.append(user_name)
+                card_info.append(card_id)
+                card_info.append(userid)
+                #card_info.extend((due_date, userid, due_date, card_name, user_name, progress))
+                all_card_info.append(card_info)
+            #points = getPerformancePoints()[userid]  
+            #progress = getCardProgress(card_id)
             #how to know if the card is due or not
-            card_info.append(card_id, userid, due_date, card_id, points, progress)
-        else:
-            return null
-    return card_info
+            #card_info.append(card_id, userid, due_date, card_name, points, progress)
+    return all_card_info
 
 
 # def calculate_points(due_date):
@@ -290,6 +305,22 @@ def getAllIncompletedCards(cards):
                     inCompletedCards.append(card)
     return inCompletedCards
 
+def getCardProgress(card_id):
+    progress = ""
+    opencards=testboard.open_cards()
+    inCompletedLable = "red"
+    CompletedLable = "green"
+    for card in opencards:
+        #Go to specific card id
+        if card.id == card_id:
+            lables = card.list_labels
+            if lables != None :
+                for lable in lables:
+                    if lable.color == inCompletedLable:
+                        progress = "Pending"
+                    if lable.color == CompletedLable:
+                        progress = "Completed"          
+    return progress
 # get all cards finished after the start time point of the current interval
 def getAllCompletedCardsAtCurrentInterval(cards, interval):
     currentCompletedCards = []
@@ -349,9 +380,9 @@ def getPenalty(cards):
     return penalty
 
 ### What is the thing returns???
+#performance = {'gyu9': 10, 'yhu22': 20, 'xfu7': 30, 'simtiaz': 20, 'vinay638': 10}
 def getPerformancePoints():
     openCards = getAllOpenCards()
-
     members = members_dict.keys()
     memberCards = {}
 

@@ -17,7 +17,6 @@ config = {
   #------+card_id
   #--------------user
   #--------------due_date
-  #--------------hours
   #--------------name
   #--------------points
   #--------------progress
@@ -40,10 +39,16 @@ def get_all_info():
   users = db.child("leaderboard").get()
   print(users.val())
 
-def add_card(card_id, user, due_date, hours, name, points, progress):
+def add_card(due_date, card_name, points, progress, user_name, card_id):
   '''
   Add card to certain member
-
+                    card_info[0]= due_date
+                    card_info[1]= card_name
+                    card_info[2]= 20
+                    card_info[3]= progress
+                    card_info[4] = user_name
+                    card_info[5] = card_id
+                    card_info[6] = userid
   Example:
   add_card("yhu22", "2017-10-25T16:00:00.000Z", 8, "test add card to firebase via python code", 50, "completed")
 
@@ -55,16 +60,15 @@ def add_card(card_id, user, due_date, hours, name, points, progress):
       points (int): points reward for the task
       progress (string): progress of the task, "completed" or "pending"
   '''
-
-  data = {"check_list": {"test add card": 0}, "due_date": due_date, "hours": hours, "name": name, "points": points, "progress": progress}
-  member = db.child("leaderboard/" + user + "/cards/"+ card_id).set(data)
+  data = {"due_date": due_date, "card_name": card_name, "points": points, "progress": progress}
+  db.child("leaderboard/" + user_name + "/cards/"+ card_id).set(data)
 
 def get_user_points(user):
   '''
   Get the total points from the user
 
   Example:
-  get_total_points("yhu22")
+  get_total_points("guanxuyu")
 
   Args:
       user (string): user id
@@ -80,6 +84,7 @@ def store_total_points(performance):
   Example:
   performance = {'gyu9': 10, 'yhu22': 20, 'xfu7': 30, 'simtiaz': 20, 'vinay638': 10}
   store_total_points(performance)
+  
 
   Args:
     performance is a dict which keys are the user id and values are the total points

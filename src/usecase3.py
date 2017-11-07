@@ -16,6 +16,23 @@ config = {
 firebase = pyrebase.initialize_app(config)
 # get the db ref
 db = firebase.database()
+#init list of all cards
+'''
+                    card_info[0]= due_date
+                    card_info[1]= card_name
+                    card_info[2]= 20
+                    card_info[3]= progress
+                    card_info[4] = user_name
+                    card_info[5] = card_id
+                    card_info[6] = userid
+'''
+all_card_info = []
+all_card_info = trellocall.get_all_cards_of_user()
+
+for card_info in all_card_info:
+  print card_info
+  add_card(card_info[0], card_info[1], card_info[2], card_info[3], card_info[4], card_info[5])
+
 
 '''
 Fetch data from trello and store it into database
@@ -65,7 +82,6 @@ def post_public_message():
 
   Args:
   '''
-
   #if the user finish the task, says congratulations to him
   users_with_cards=trellocall.slackname_with_duetime(48)
   dm_channel=[]
@@ -89,10 +105,8 @@ def check_progress():
   Example:
   check_progress()
   Args:
-
   '''
-
-  add_card()
+  #add_card()
   users_with_cards=trellocall.slackname_with_duetime(48)
   dm_channel=[]
   for u in users_with_cards.keys():
