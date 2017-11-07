@@ -3,6 +3,11 @@
 Note: The MILESTONE: SERVICE should refer to **service** branch.
 Before running our code, please install some package below:
 
+*py-trello*
+```
+pip install py-trello
+```
+
 *pyrebase*
 ```
 pip install pyrebase
