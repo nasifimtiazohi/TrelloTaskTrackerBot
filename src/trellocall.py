@@ -195,8 +195,8 @@ def var_init():
         if b.name=='Test Board':
             testboard=b
     members_dict=members_dictionary(project_team)
-    with open('mock.json') as json_data:
-        mockdata = json.load(json_data)
+    '''with open('mock.json') as json_data:
+        mockdata = json.load(json_data)'''
 
 ''' def match_trello_slack_id():
     userlist= slackapicall.list_users()
@@ -332,11 +332,12 @@ def getAllCompletedCardsAtCurrentInterval(cards, interval):
     return currentCompletedCards
 
 def getAllIncompletedCardsAtCurrentInterval(cards, endTimePoint):
-
     currentIncompleteCards = []
     for card in cards:
         dueDate = card.due_date
-        dueDate = dueDate.replace(tzinfo=pytz.utc)
+        '''if type(dueDate) == str:
+            continue'''
+        #dueDate = dueDate.replace(tzinfo=pytz.utc)
         if dueDate < endTimePoint:
             currentIncompleteCards.append(card)
     return currentIncompleteCards
@@ -414,7 +415,7 @@ def getPerformancePoints():
         if incompletedCards :
             currentIncompleteCards = getAllIncompletedCardsAtCurrentInterval(incompletedCards, interval[1])
             penalty = getPenalty(currentIncompleteCards)
-        prevPoint = fetch_from_db.get_user_points(members_dick[memberID])
+        prevPoint = fetch_from_db.get_user_points(members_dict[memberID])
         performance[memberID] = rewardsAndBouns + penalty + prevPoint
     memberPerformance = {}
     for memberID in members_dict.keys():
