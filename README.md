@@ -1,7 +1,8 @@
 # Task Manager BOT #
 
 Note: The MILESTONE: SERVICE should refer to **service** branch.
-Before running our code, please install some package below:
+
+Before running our code, please install some packages below:
 
 *py-trello*
 ```
