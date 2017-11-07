@@ -26,19 +26,19 @@ db = firebase.database()
                     card_info[5] = card_id
                     card_info[6] = userid
 '''
-all_card_info = []
-all_card_info = trellocall.get_all_cards_of_user()
 
-for card_info in all_card_info:
-  print card_info
-  add_card(card_info[0], card_info[1], card_info[2], card_info[3], card_info[4], card_info[5])
-
+def database_init():
+  # Init Firebase database everytime
+  all_card_info = []
+  all_card_info = trellocall.get_all_cards_of_user()
+  for card_info in all_card_info:
+    print card_info
+    add_card(card_info[0], card_info[1], card_info[2], card_info[3], card_info[4], card_info[5])
 
 '''
 Fetch data from trello and store it into database
 Find all the cards of each user
 '''
-
 
 '''
   Use Case 3:
@@ -82,6 +82,7 @@ def post_public_message():
 
   Args:
   '''
+  
   #if the user finish the task, says congratulations to him
   users_with_cards=trellocall.slackname_with_duetime(48)
   dm_channel=[]
@@ -106,20 +107,24 @@ def check_progress():
   check_progress()
   Args:
   '''
-  #add_card()
+  #we are using trello_user_name
   users_with_cards=trellocall.slackname_with_duetime(48)
   dm_channel=[]
-  for u in users_with_cards.keys():
+  # u is the slack_id, e.g. xfu7
+  for slack_name in users_with_cards.keys():
         #message= u
         #get uid
         #print slackapicall.name_to_id(u)
-        userid=slackapicall.name_to_id(u)
-        cardlist=users_with_cards[u]
-        message=u+" ," +"you have "+ str(len(cardlist)) + " task pending that approach the due"
+        userid=slackapicall.name_to_id(slack_name)
+        cardlist=users_with_cards[slack_name]
+        #mapping from slack_id to trello_user_name, full_name
+        trello_user_name = trellocall.slack_name_to_trello_name(slack_name)
+        #print trello_user_name   
+        message= trello_user_name+" ," +"you have "+ str(len(cardlist)) + " task pending that approach the due"
         i = 0
         for card in cardlist:
             i+=1
-            message+=". Task "+ str(i) +": "+ card.name+" ,please update your progress for this card here: " + "https://taskmangerbot.firebaseapp.com"+ "?userid=" + u + "&card_id="+card.id 
+            message+=". Task "+ str(i) +": "+ card.name+" ,please update your progress for this card here: " + "https://taskmangerbot.firebaseapp.com"+ "?userid=" + trello_user_name + "&card_id="+card.id 
         l=[]
         channel=slackapicall.open_im(userid)
         #print u,userid,channel

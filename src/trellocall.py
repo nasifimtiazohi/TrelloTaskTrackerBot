@@ -97,6 +97,11 @@ def get_all_cards_with_duedate():
             namelist_with_duecards[name].append(c)
     return namelist_with_duecards 
 
+def slack_name_to_trello_name(slack_name):
+     mapping = mockdata["slack_name_to_trello_name"]
+
+     return mapping[slack_name]
+     
 def get_all_cards_with_duetime(timeinhours):
     current_time=datetime.datetime.now()
     current_time=current_time.replace(tzinfo=pytz.utc)
@@ -211,8 +216,10 @@ def var_init():
 
 def slackname_with_duecards():
     trelloname_with_duecards=get_all_cards_with_duedate()
-    ''' read mock data for matching for now
-    in future match by mail id? '''
+    ''' 
+    read mock data for matching for now,
+    in future match by mail id? 
+    '''
     slackname_with_duecrds={}
     mapping = mockdata["trello_to_slack_name"]
 
@@ -220,6 +227,7 @@ def slackname_with_duecards():
         slackname=mapping[n]
         slackname_with_duecrds[slackname]=trelloname_with_duecards[n]
     return slackname_with_duecrds
+
 
 
 def slackname_with_duetime(duetime_in_hours):
