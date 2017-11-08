@@ -13,8 +13,8 @@ EXAMPLE_COMMAND = "do"
 COMMAND_USECASE_1 = "usecase 1"
 COMMAND_USECASE_2 = "usecase 2"
 COMMAND_USECASE_3 = "usecase 3"
-P_RESPONSE_USECASE_3 = "1"
-N_RESPONSE_USECASE_3 = "0"
+P_RESPONSE_USECASE_3 = ["1", "Done", "Finished", "Completed"]
+N_RESPONSE_USECASE_3 = ["0", "Pending", "Not yet", "Incomplete"]
 
 #slack_client = SlackClient(os.environ.get("BOT_TOKEN"))
 slack_client= SlackClient(BOT_TOKEN)
@@ -41,55 +41,47 @@ def handle_command(command, channel):
             slack_client.api_call("chat.postMessage", channel=channel,
                           text=message, as_user=True)
         #todo
-    elif COMMAND_USECASE_3 in command:
-        dm_channels=usecase3.check_progress()
-        for d in dm_channels:
-            channel=d[2]
-            response=d[4]
-            # cardlist=d[3]
-            # print "bal",channel
-            # for c in cardlist:
-            #     response+=c.name
-            slack_client.api_call("chat.postMessage", channel=channel,
-                          text=response, as_user=True)
+    # elif COMMAND_USECASE_3 in command:
+    #     dm_channels=usecase3.check_progress()
+    #     for d in dm_channels:
+    #         channel=d[2]
+    #         response=d[4]
+    #         # cardlist=d[3]
+    #         # print "bal",channel
+    #         # for c in cardlist:
+    #         #     response+=c.name
+    #         slack_client.api_call("chat.postMessage", channel=channel,
+    #                       text=response, as_user=True)
                           
-    elif command.startswith(P_RESPONSE_USECASE_3):
-       usecase3_post_congratuation_message()
+    elif command in P_RESPONSE_USECASE_3:
+       usecase3_post_congratuation_message(channel)
 
-    elif command.startswith(N_RESPONSE_USECASE_3):
-       #trellocall.pushPerformanceToLeaderBoard(messages)
-       message = "Alright, your response is pending, please work harder!"
+    elif command in N_RESPONSE_USECASE_3:
+       message = "Alright, your task is pending, please work harder!"
        slack_client.api_call("chat.postMessage", channel=channel,
                           text=message, as_user=True)
-       for key in messages.keys():
-           message = str(key) + ": " + str(messages[key])
-           slack_client.api_call("chat.postMessage", channel=channel,
+       #for key in messages.keys():
+           #message = str(key) + ": " + str(messages[key])
+       slack_client.api_call("chat.postMessage", channel=channel,
                           text=message, as_user=True)
     else:
         slack_client.api_call("chat.postMessage", channel=channel,
                           text=response, as_user=True)
 
 def usecase3_final_function():
-    #response="what is your progress, mate?"
-    #print ("is it getting called?")
     dm_channels=usecase3.check_progress()
     for d in dm_channels:
         channel=d[2]
         response=d[4]
-            # cardlist=d[3]
-            # print "bal",channel
-            # for c in cardlist:
-            #     response+=c.name
         slack_client.api_call("chat.postMessage", channel=channel,
                           text=response, as_user=True)
-    #time.sleep(60*3)
+    time.sleep(60*5)
     
-def usecase3_post_congratuation_message():
+def usecase3_post_congratuation_message(channel):
     #Post congraduate message
     #Post only once after the user finished
     dm_channels=usecase3.post_public_message()
     for d in dm_channels:
-        channel=d[2]
         response=d[4]
         print "The channel is" + channel
         slack_client.api_call("chat.postMessage", channel=channel,
@@ -120,8 +112,8 @@ if __name__ == "__main__":
         print("Taskbot connected and running!")
         while True:
             #usecase1.perform()
-            usecase3_final_function()
             command, channel = parse_slack_output(slack_client.rtm_read())
+            #usecase3_final_function()
             if command and channel:
                 handle_command(command, channel)
             time.sleep(READ_WEBSOCKET_DELAY)

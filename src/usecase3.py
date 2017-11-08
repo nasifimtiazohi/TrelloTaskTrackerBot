@@ -85,7 +85,6 @@ def post_public_message():
 
   Args:
   '''
-  
   #if the user finish the task, says congratulations to him
   users_with_cards=trellocall.slackname_with_duetime(48)
   dm_channel=[]
@@ -93,7 +92,7 @@ def post_public_message():
         #get uid
         userid=slackapicall.name_to_id(u)
         cardlist=users_with_cards[u]
-        message="Congratulations! "+ u+" ," +" has finished the task before the deadline!"
+        message="Congratulations to "+ u+" ," +" for finishing the task before the deadline!"
         l=[]
         channel=slackapicall.open_im(userid)
         #print u,userid,channel
@@ -136,7 +135,7 @@ def check_progress():
         i = 0
         for card in cardlist:
             i+=1
-            message+=". Task "+ str(i) +": "+ card.name+" ,please respond with 1 for complete and 0 for incomplete." 
+            message+=". Task "+ str(i) +": "+ card.name+" ,please respond with the following numbers: 1 for complete;  0 for incomplete." 
         l=[]
         channel=slackapicall.open_im(userid)
         #print u,userid,channel
