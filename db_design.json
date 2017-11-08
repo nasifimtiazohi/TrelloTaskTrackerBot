@@ -1,103 +1,140 @@
 {
   "leaderboard" : {
-    "xfu7" : {
+    "guanxuyu" : {
       "cards" : {
-        "card1" : {
-          "name" : "design database",
-          "due_date" : "date_time",
-          "hours" : 7,
-          "points" : 50,
-          "progress" : "pending",
-          "check_list" : {
-            "retrieve points" : "NULL",
-            "write function" : "NULL"
-          }
+        "59eb63651eca77c2f1bc66f6" : {
+          "card_name" : "Development for Use Case 2",
+          "due_date" : "2017-10-25T16:00:00.000Z",
+          "progress" : "Completed"
         },
-        "card2": {
-          "name" : "set up vm",
-          "due_date" : "date_time",
-          "hours" : 2,
-          "points" : 10,
-          "check_list" : {
-            "set ubuntu" : "NULL",
-            "get private key" : "NULL"
-          }
-        }
-      },
-      "total_points": 30
-    },
-    "yhu22" : {
-      "cards" : {
-        "card1" : {
-          "name" : "design database",
-          "due_date" : "date_time",
-          "hours" : 7,
-          "points" : 50,
-          "progress" : "pending",
-          "check_list" : {
-            "retrieve points" : "NULL",
-            "write function" : "NULL"
-          }
+        "59eba771f8f92ef35eab3291" : {
+          "card_name" : "Unit Test 2",
+          "due_date" : "2017-10-31T16:00:00.000Z",
+          "progress" : "Completed"
         },
-        "card2" : {
-          "name" : "test bot token",
-          "due_date" : "date_time",
-          "hours" : 1,
-          "points" : 10,
-          "check_list" : {
-            "write envTest" : "NULL"
-          }
+        "59eba7a2a8d62519c971ec81" : {
+          "card_name" : "Bot interaction",
+          "due_date" : "2017-10-31T16:00:00.000Z",
+          "progress" : "Completed"
+        },
+        "59fea98788b17190bcb0e37f" : {
+          "card_name" : "TestLoL",
+          "due_date" : "2017-11-05T05:10:00.000Z",
+          "progress" : "Completed"
+        },
+        "59feb6cd2d4c9f588948d8c6" : {
+          "card_name" : "TestDota",
+          "due_date" : "2017-11-05T05:00:00.000Z",
+          "progress" : "Completed"
         }
       },
-      "total_points" : 30
+      "total_points" : -4170
     },
-    "gyu9" : {
+    "otto292" : {
       "cards" : {
-        "card1" : {
-          "name" : "implement use case2",
-          "due_date" : "date_time",
-          "hours" : 4,
-          "points" : 30,
-          "progress" : "pending",
-          "check_list" : {
-            "add more condition" : "NULL",
-            "parse response" : "NULL"
-          }
+        "59eb634b9c84cc02182a487b" : {
+          "card_name" : "Create Mocking data",
+          "due_date" : "2017-10-25T16:00:00.000Z",
+          "progress" : "Completed"
+        },
+        "59eba737418e777a4ac31360" : {
+          "card_name" : "Unit Test 1",
+          "due_date" : "2017-10-28T16:00:00.000Z",
+          "progress" : "Completed"
+        },
+        "59eba77b04ae9502e6025f8c" : {
+          "card_name" : "Slack Integration",
+          "due_date" : "2017-10-11T16:00:00.000Z",
+          "progress" : "Completed"
         }
       },
-      "total_points" : 40
+      "total_points" : -1680
     },
-    "simtiaz" : {
+    "sheikhnasifimtiaz" : {
       "cards" : {
-        "card1" : {
-          "name" : "implement use case1",
-          "due_date" : "date_time",
-          "hours" : 5,
-          "points" : 30,
-          "progress" : "pending",
-          "check_list" : {
-            "set timer" : "NULL",
-            "repetitive call function" : "NULL"
-          }
+        "59eb635c44521cf59ae2d2c3" : {
+          "card_name" : "Development for Use Case 1",
+          "due_date" : "2017-10-25T16:00:00.000Z",
+          "progress" : "Completed"
+        },
+        "59eb636b1314cd6969a277b7" : {
+          "card_name" : "Development for Use case 3",
+          "due_date" : "2017-10-26T03:59:00.000Z",
+          "progress" : "Completed"
+        },
+        "59ed2447190a151e849b7179" : {
+          "card_name" : "example task 4",
+          "due_date" : "2017-11-08T17:00:00.000Z",
+          "progress" : "Completed"
+        },
+        "59fd526370393da3391d3c75" : {
+          "card_name" : "emergency task",
+          "due_date" : "2017-11-04T16:00:00.000Z",
+          "points" : 20,
+          "progress" : "Pending"
+        },
+        "59fd56bb7e1807eb6839686b" : {
+          "card_name" : "donetask",
+          "due_date" : "2017-11-04T16:00:00.000Z",
+          "progress" : "Completed"
+        },
+        "59ff885b16b59ae9b29d1ef7" : {
+          "card_name" : "test duecards",
+          "due_date" : "2017-11-06T17:00:00.000Z",
+          "progress" : "Completed"
         }
       },
-      "total_points" : 50
+      "total_points" : -1680
     },
     "vinay638" : {
       "cards" : {
-        "card1" : {
-          "name" : "implement use case3",
-          "due_date" : "date_time",
-          "hours" : 2,
-          "points" : 10,
-          "progress" : "pending",
-          "check_list" : {
-            "add points to leaderboard" : "NULL",
-            "add to corresponding member" : "NULL"
-          }
+        "59eb56e53c8b6af5708302b2" : {
+          "card_name" : "example task 3",
+          "due_date" : "2017-10-19T16:00:00.000Z",
+          "progress" : "Completed"
+        },
+        "59eba77536b7a12a37fbb415" : {
+          "card_name" : "Unit Test 3",
+          "due_date" : "2017-11-16T17:00:00.000Z",
+          "progress" : "Completed"
         }
       },
-      "total_points" : 20
+      "total_points" : -1650
+    },
+    "xiaotingfu1" : {
+      "cards" : {
+        "59dd512fbfd77119f4557639" : {
+          "card_name" : "MILESTONE: BOT",
+          "due_date" : "2017-10-25T16:00:00.000Z",
+          "progress" : "Completed"
+        },
+        "59ea45bf8088d0a9cda61c49" : {
+          "card_name" : "example task 2",
+          "due_date" : "2017-11-08T17:00:00.000Z",
+          "progress" : "Completed"
+        },
+        "59eba7b4cd8fad69bfba8e63" : {
+          "card_name" : "Trello Integration",
+          "due_date" : "2017-10-31T16:00:00.000Z",
+          "progress" : "Completed"
+        },
+        "59fd526370393da3391d3c75" : {
+          "card_name" : "emergency task",
+          "due_date" : "2017-11-04T16:00:00.000Z",
+          "progress" : "Completed"
+        },
+        "59ff88811b3404758592ca5f" : {
+          "card_name" : "test",
+          "due_date" : "2017-11-06T17:00:00.000Z",
+          "progress" : "Completed"
+        },
+        "5a00b84c3272b84227f55ed5" : {
+          "card_name" : "Usecase 3",
+          "due_date" : "2017-11-09T17:00:00.000Z",
+          "progress" : "Completed"
+        }
+      },
+      "total_points" : -2940
     }
   }
 }
