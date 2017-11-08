@@ -2,22 +2,8 @@
 
 Note: The MILESTONE: SERVICE should refer to **service** branch.
 
-Before running our code, please install some packages below:
-
-*py-trello*
-```
-pip install py-trello
-```
-
-*pyrebase*
-```
-pip install pyrebase
-```
-*python-firebase 1.2*
-```
-sudo pip install python-firebase
-```
-
+Before running our code, please install some packages and setup the
+environment variables, please see [Prerequisite](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/service/src/README.md)
 
 ### Link to Screencast for SERVICE Milestone
 [Screencast]()
