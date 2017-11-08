@@ -29,15 +29,13 @@ Our bot runs on the assumption that a team will have their workspace both on "Sl
 
 
 ### Task Tracking
-[Trello Task Manager](https://trello.com/b/MXYu6ZEy/task-manager-bot)
+[Trello Task Manager](https://trello.com/b/MXYu6ZEy/task-manager-bot)  Used for task tracking like worksheet. 
 
-[Testing Board](https://trello.com/b/3L2DxAis/test-board)
+[Testing Board](https://trello.com/b/3L2DxAis/test-board) Trello board for us to test the function.
 
 ### Reference
 https://api.slack.com/incoming-webhooks
 https://github.com/thisbejim/Pyrebase
 https://pypi.python.org/pypi/python-firebase/1.2
 https://api.slack.com/rtm
-
-**You cannot provide attachments nor buttons to messages posted over the RTM API.
-If your bot user needs to send more complex messages, use the web API's chat.postMessage or chat.postEphemeral.**
+https://github.com/slackapi/python-slackclient
