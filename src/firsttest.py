@@ -4,6 +4,7 @@ import time
 import trellocall
 import usecase3
 import usecase1
+# import unicodedata
 
 # Set Slack BOT environment variables, if failed here, please see the README.md
 BOT_ID=os.environ.get("BOT_ID")
@@ -11,11 +12,11 @@ BOT_TOKEN=os.environ.get("BOT_TOKEN")
 
 AT_BOT = "<@" + BOT_ID + ">"
 EXAMPLE_COMMAND = "do"
-COMMAND_USECASE_1 = "usecase 1"
+# COMMAND_USECASE_1 = "usecase 1"
 COMMAND_USECASE_2 = "usecase 2"
 COMMAND_USECASE_3 = "usecase 3"
-P_RESPONSE_USECASE_3 = ['Done', '1', 'Finished', 'Completed']
-N_RESPONSE_USECASE_3 = ['Pending', '0', 'Not yet', 'Incomplete']
+P_RESPONSE_USECASE_3 = ['done', '1', 'finished', 'completed', "i'm done", "yes", "of course", "i finished"]
+N_RESPONSE_USECASE_3 = ['pending', '0', 'not yet', 'incomplete', 'wait', 'almost', 'no', 'nah']
 
 #slack_client = SlackClient(os.environ.get("BOT_TOKEN"))
 slack_client= SlackClient(BOT_TOKEN)
@@ -27,11 +28,17 @@ def handle_command(command, channel):
     """
     response = "Not sure what you mean. Use the *" + EXAMPLE_COMMAND + \
                "* command with numbers, delimited by spaces."
-    if command.startswith(EXAMPLE_COMMAND):
-        response = "Sure...write some more code then I can do that!"
-        slack_client.api_call("chat.postMessage", channel=channel,
-                          text=response, as_user=True)
-    elif command.startswith(COMMAND_USECASE_2):
+    # preprocess the input command to small case and cast from unicode string to string
+    command = str(command).lower()
+
+    print("command receive", command)
+
+
+    # if command.startswith(EXAMPLE_COMMAND):
+    #     response = "Sure...write some more code then I can do that!"
+    #     slack_client.api_call("chat.postMessage", channel=channel,
+    #                       text=response, as_user=True)
+    if command.startswith(COMMAND_USECASE_2):
         messages=trellocall.getPerformancePoints()
         #trellocall.pushPerformanceToLeaderBoard(messages)
         message = "Individual Performance List"
@@ -54,9 +61,11 @@ def handle_command(command, channel):
     #         slack_client.api_call("chat.postMessage", channel=channel,
     #                       text=response, as_user=True)
 
+    # if any(command in s for s in P_RESPONSE_USECASE_3):
     elif command in P_RESPONSE_USECASE_3:
        usecase3_post_congratuation_message(channel)
 
+    # if any(command in s for s in N_RESPONSE_USECASE_3):
     elif command in N_RESPONSE_USECASE_3:
        message = "Alright, your task is pending, please work harder!"
        slack_client.api_call("chat.postMessage", channel=channel,
