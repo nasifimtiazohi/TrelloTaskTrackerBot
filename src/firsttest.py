@@ -4,17 +4,18 @@ import time
 import trellocall
 import usecase3
 import usecase1
-os.environ["BOT_TOKEN"]='xoxb-266498254006-btD2n1TcKdi5MY6AKlPGTwnm'
-os.environ["BOT_ID"]='U7UEN7G06'
+
+# Set Slack BOT environment variables, if failed here, please see the README.md
 BOT_ID=os.environ.get("BOT_ID")
 BOT_TOKEN=os.environ.get("BOT_TOKEN")
+
 AT_BOT = "<@" + BOT_ID + ">"
 EXAMPLE_COMMAND = "do"
 COMMAND_USECASE_1 = "usecase 1"
 COMMAND_USECASE_2 = "usecase 2"
 COMMAND_USECASE_3 = "usecase 3"
-P_RESPONSE_USECASE_3 = ["1", "Done", "Finished", "Completed"]
-N_RESPONSE_USECASE_3 = ["0", "Pending", "Not yet", "Incomplete"]
+P_RESPONSE_USECASE_3 = ['Done', '1', 'Finished', 'Completed']
+N_RESPONSE_USECASE_3 = ['Pending', '0', 'Not yet', 'Incomplete']
 
 #slack_client = SlackClient(os.environ.get("BOT_TOKEN"))
 slack_client= SlackClient(BOT_TOKEN)
@@ -52,7 +53,7 @@ def handle_command(command, channel):
     #         #     response+=c.name
     #         slack_client.api_call("chat.postMessage", channel=channel,
     #                       text=response, as_user=True)
-                          
+
     elif command in P_RESPONSE_USECASE_3:
        usecase3_post_congratuation_message(channel)
 
@@ -76,7 +77,7 @@ def usecase3_final_function():
         slack_client.api_call("chat.postMessage", channel=channel,
                           text=response, as_user=True)
     time.sleep(60*5)
-    
+
 def usecase3_post_congratuation_message(channel):
     #Post congraduate message
     #Post only once after the user finished

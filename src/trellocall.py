@@ -13,9 +13,11 @@ members_dict=None
 project_team=None
 testboard=None
 mockdata=None
-trelloKey='dbf6947f87a8dcb83f090731a27e8bd4'
-trelloSecret='f57a6c66081742aa5f6149d329c3581d53231c308e4cc9f78b31230ce13b3bb8'
-trelloToken='414df911de9e839c8ab9838c8fa1723107fba5848e5049269d88e5e94a348f31'
+
+# Set up Trello environment variables, if failed here, please see the README.md
+trelloKey = os.environ.get("TRELLO_API_KEY")
+trelloSecret = os.environ.get("TRELLO_API_SECRET")
+trelloToken = os.environ.get("TRELLO_TOKEN")
 
 #TODO: Usecase3 only asks a person about progress. No matter how many cards are due. Later we'll refine it
 
@@ -40,7 +42,7 @@ def get_all_cards_of_user():
             due_date = c.due
             card_id = c.id
             card_name = c.name
-            #points = getPerformancePoints()[user_name]  
+            #points = getPerformancePoints()[user_name]
             progress = getCardProgress(card_id)
             #only get the cards with progress
             if progress != '':
@@ -52,7 +54,7 @@ def get_all_cards_of_user():
                 card_info.append(userid)
                 #card_info.extend((due_date, userid, due_date, card_name, user_name, progress))
                 all_card_info.append(card_info)
-            #points = getPerformancePoints()[userid]  
+            #points = getPerformancePoints()[userid]
             #progress = getCardProgress(card_id)
             #how to know if the card is due or not
             #card_info.append(card_id, userid, due_date, card_name, points, progress)
@@ -81,12 +83,12 @@ def get_all_cards_with_duedate():
             namelist_with_duecards[name]=l
         else:
             namelist_with_duecards[name].append(c)
-    return namelist_with_duecards 
+    return namelist_with_duecards
 
 def slack_name_to_trello_name(slack_name):
      mapping = mockdata["slack_name_to_trello_name"]
      return mapping[slack_name]
-     
+
 def get_all_cards_with_duetime(timeinhours):
     current_time=datetime.datetime.now()
     current_time=current_time.replace(tzinfo=pytz.utc)
@@ -198,13 +200,13 @@ def var_init():
     print "here's a gap"
     for d in userlist:
         print d['slackname'] '''
-    
+
 
 def slackname_with_duecards():
     trelloname_with_duecards=get_all_cards_with_duedate()
-    ''' 
+    '''
     read mock data for matching for now,
-    in future match by mail id? 
+    in future match by mail id?
     '''
     slackname_with_duecrds={}
     mapping = mockdata["trello_to_slack_name"]
@@ -221,7 +223,7 @@ def slackname_with_duetime(duetime_in_hours):
     ''' read mock data for matching for now
     in future match by mail id? '''
     slackname_with_duecrds={}
-    mapping = mockdata["trello_to_slack_name"] 
+    mapping = mockdata["trello_to_slack_name"]
     for n in trelloname_with_duecards.keys():
         slackname=mapping[n]
         slackname_with_duecrds[slackname]=trelloname_with_duecards[n]
@@ -312,7 +314,7 @@ def getCardProgress(card_id):
                     if lable.color == inCompletedLable:
                         progress = "Pending"
                     if lable.color == CompletedLable:
-                        progress = "Completed"          
+                        progress = "Completed"
     return progress
 # get all cards finished after the start time point of the current interval
 def getAllCompletedCardsAtCurrentInterval(cards, interval):
@@ -341,7 +343,7 @@ def getRewardsAndBonus(cards):
     Easy = "yellow"
     Median = "sky"
     Hard = "black"
-    
+
     for card in cards:
         for label in card.list_labels:
             if label.color == Easy:
@@ -409,7 +411,7 @@ def getPerformancePoints():
 
         if completedCards :
             currentCompletedCards = getAllCompletedCardsAtCurrentInterval(completedCards, interval)
-            rewardsAndBouns = getRewardsAndBonus(currentCompletedCards)    
+            rewardsAndBouns = getRewardsAndBonus(currentCompletedCards)
         if incompletedCards :
             currentIncompleteCards = getAllIncompletedCardsAtCurrentInterval(incompletedCards, interval[1])
             penalty = getPenalty(currentIncompleteCards)
@@ -445,7 +447,7 @@ def completeCards(cardID, cards):
                 if label.color == "red":
                     card.remove_label(label)
                     createCardLabel(card, "Done", "green")
-                    return 
+                    return
 
 def createCardLabel(card, name, color):
     newLable = client.fetch_json(
@@ -465,17 +467,10 @@ if __name__ == "__main__":
     d=slackname_with_duecards()
     print d
 
-    
-    
-            
+
+
+
 
 print "trellocall initialization start"
 var_init()
 print "trellocall initilization end"
-
-
-
-    
-
-    
-    
