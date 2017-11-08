@@ -90,7 +90,7 @@ def store_total_points(performance):
   Store total points to the database
 
   Example:
-  performance = {'gyu9': 10, 'yhu22': 20, 'xfu7': 30, 'simtiaz': 20, 'vinay638': 10}
+  performance = {'guanxuyu': 15, 'otto292': 25, 'xiaotingfu1': 30, 'sheikhnasifimtiaz': 20, 'vinay638': 10}
   store_total_points(performance)
 
 
@@ -103,8 +103,23 @@ def store_total_points(performance):
     db.child("leaderboard/" + key).update({'total_points': value})
 
 # modify the value here to test
-performance = {'gyu9': 15, 'yhu22': 25, 'xfu7': 30, 'simtiaz': 20, 'vinay638': 10}
+# performance = {'guanxuyu': 15, 'otto292': 25, 'xiaotingfu1': 30, 'sheikhnasifimtiaz': 20, 'vinay638': 10}
 # store_total_points(performance)
+
+def update_card_progress(user, card_id, progress):
+  '''
+  Update card progress for user's card
+
+  Example:
+  update_card_progress("otto292", "59eb634b9c84cc02182a487b", "Completed")
+
+  Args:
+    user (string): user_id
+    card_id (string): card id
+    progress (string): either "Pending" or "Completed"
+  '''
+  db.child("leaderboard/" + user + "/cards/" + card_id).update({'progress': progress})
+
 
 def print_leaderboard():
   '''
