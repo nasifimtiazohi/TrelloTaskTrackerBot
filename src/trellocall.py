@@ -377,7 +377,8 @@ def getPenalty(cards):
 #performance = {'gyu9': 10, 'yhu22': 20, 'xfu7': 30, 'simtiaz': 20, 'vinay638': 10}
 
 def updatePerformancePoints():
-    
+    #....
+    hello
 
 def getPerformancePoints():
     openCards = getAllOpenCards()

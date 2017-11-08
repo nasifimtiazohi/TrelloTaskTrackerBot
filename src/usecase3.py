@@ -103,6 +103,7 @@ def post_public_message():
 
 def check_progress():
   '''
+  default progress is pending
   Check progress of each member's progress every 3 minutes if user has card pending within 8 hours
   If user complete the task, we will do the following things:
   1. We will update his progress (="completed") in database and also update the points to his total points (reward)
@@ -119,7 +120,7 @@ def check_progress():
   Args:
   '''
   #we are using trello_user_name
-  users_with_cards=trellocall.slackname_with_duetime(8)
+  users_with_cards=trellocall.slackname_with_duetime(20)
   dm_channel=[]
   # u is the slack_id, e.g. xfu7
   for slack_name in users_with_cards.keys():
@@ -135,7 +136,7 @@ def check_progress():
         i = 0
         for card in cardlist:
             i+=1
-            message+=". Task "+ str(i) +": "+ card.name+" ,please update your progress for this card here: " + "https://taskmangerbot.firebaseapp.com"+ "?userid=" + trello_user_name + "&card_id="+card.id 
+            message+=". Task "+ str(i) +": "+ card.name+" ,please respond with 1 for complete and 0 for incomplete." 
         l=[]
         channel=slackapicall.open_im(userid)
         #print u,userid,channel
@@ -155,5 +156,5 @@ def calculate_time_period():
 
 if __name__=="__main__":
     d = check_progress()
-    database_init()
+    #database_init()
     #print d
