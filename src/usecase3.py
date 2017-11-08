@@ -16,15 +16,15 @@ config = {
 firebase = pyrebase.initialize_app(config)
 # get the db ref
 db = firebase.database()
+#print "The performance point: " + str(trellocall.getPerformancePoints())
 #init list of all cards
 '''
                     card_info[0]= due_date
                     card_info[1]= card_name
-                    card_info[2]= 20
-                    card_info[3]= progress
-                    card_info[4] = user_name
-                    card_info[5] = card_id
-                    card_info[6] = userid
+                    card_info[2]= progress
+                    card_info[3] = user_name
+                    card_info[4] = card_id
+                
 '''
 
 def database_init():
@@ -32,8 +32,11 @@ def database_init():
   all_card_info = []
   all_card_info = trellocall.get_all_cards_of_user()
   for card_info in all_card_info:
-    print card_info
-    add_card(card_info[0], card_info[1], card_info[2], card_info[3], card_info[4], card_info[5])
+    #print card_info
+    add_card(card_info[0], card_info[1], card_info[2], card_info[3], card_info[4])
+
+# If user complete the task, we will add points for this user and then update his performance point
+
 
 '''
 Fetch data from trello and store it into database
@@ -90,7 +93,7 @@ def post_public_message():
         #get uid
         userid=slackapicall.name_to_id(u)
         cardlist=users_with_cards[u]
-        message="Congratulations! "+u+" ," +" has finished the task before the deadline!"
+        message="Congratulations! "+ u+" ," +" has finished the task before the deadline!"
         l=[]
         channel=slackapicall.open_im(userid)
         #print u,userid,channel
@@ -100,15 +103,24 @@ def post_public_message():
 
 def check_progress():
   '''
-  Check progress of each member's progress twice a day: 7:00 AM and 11:00 PM
-  This function should be always running and monitoring the progress
-  This function can be triggered by a time event
+  default progress is pending
+  Check progress of each member's progress every 3 minutes if user has card pending within 8 hours
+  If user complete the task, we will do the following things:
+  1. We will update his progress (="completed") in database and also update the points to his total points (reward)
+  2. We will update trello, mark the card as DONE automatically
+  3. we will send congraculation message in public channel, so user's teammate can find their motivation of working harder
+
+  If user ignore our reminder, or he provide an negative reponse, 
+  we will do the following things:
+  1. We will update his progress (="pending")in database and also update the points to his total points (penality)
+  2. Keep sending the reminder
+  
   Example:
   check_progress()
   Args:
   '''
   #we are using trello_user_name
-  users_with_cards=trellocall.slackname_with_duetime(48)
+  users_with_cards=trellocall.slackname_with_duetime(20)
   dm_channel=[]
   # u is the slack_id, e.g. xfu7
   for slack_name in users_with_cards.keys():
@@ -120,15 +132,15 @@ def check_progress():
         #mapping from slack_id to trello_user_name, full_name
         trello_user_name = trellocall.slack_name_to_trello_name(slack_name)
         #print trello_user_name   
-        message= trello_user_name+" ," +"you have "+ str(len(cardlist)) + " task pending that approach the due"
+        message= trello_user_name+" ," +" you have "+ str(len(cardlist)) + " task pending that approach the due"
         i = 0
         for card in cardlist:
             i+=1
-            message+=". Task "+ str(i) +": "+ card.name+" ,please update your progress for this card here: " + "https://taskmangerbot.firebaseapp.com"+ "?userid=" + trello_user_name + "&card_id="+card.id 
+            message+=". Task "+ str(i) +": "+ card.name+" ,please respond with 1 for complete and 0 for incomplete." 
         l=[]
         channel=slackapicall.open_im(userid)
         #print u,userid,channel
-        l.extend((userid,u,channel,cardlist,message))
+        l.extend((userid,slack_name,channel,cardlist,message))
         dm_channel.append(l)
   return dm_channel
 
@@ -144,4 +156,5 @@ def calculate_time_period():
 
 if __name__=="__main__":
     d = check_progress()
+    #database_init()
     #print d

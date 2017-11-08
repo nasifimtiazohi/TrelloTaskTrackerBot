@@ -30,6 +30,7 @@ client = TrelloClient(
 def get_all_cards_of_user():
     opencards = testboard.open_cards()
     all_card_info=[]
+    #print "The performance point: "+getPerformancePoints()
     for c in opencards:
         card_info = []
         for userid in c.member_ids:
@@ -39,14 +40,12 @@ def get_all_cards_of_user():
             due_date = c.due
             card_id = c.id
             card_name = c.name
-            points = 20
             #points = getPerformancePoints()[user_name]  
             progress = getCardProgress(card_id)
             #only get the cards with progress
             if progress != '':
                 card_info.append(due_date)
                 card_info.append(card_name)
-                card_info.append(points)
                 card_info.append(progress)
                 card_info.append(user_name)
                 card_info.append(card_id)
@@ -58,20 +57,6 @@ def get_all_cards_of_user():
             #how to know if the card is due or not
             #card_info.append(card_id, userid, due_date, card_name, points, progress)
     return all_card_info
-
-
-# def calculate_points(due_date):
-#     reward_point = 0
-#     current_time=datetime.datetime.now()
-#     current_time=current_time.replace(tzinfo=pytz.utc)
-#     time_difference = current_due_date.replace(tzinfo=pytz.utc)
-#     #hour of work: difficulty_points
-#     #finish_time_before_deadline: bonus_points
-#     if time_difference>6:
-#         reward_point+= 
-
-
-    return reward_point
 
 def get_all_cards_with_duedate():
     current_time=datetime.datetime.now()
@@ -100,7 +85,6 @@ def get_all_cards_with_duedate():
 
 def slack_name_to_trello_name(slack_name):
      mapping = mockdata["slack_name_to_trello_name"]
-
      return mapping[slack_name]
      
 def get_all_cards_with_duetime(timeinhours):
@@ -201,8 +185,9 @@ def var_init():
         if b.name=='Test Board':
             testboard=b
     members_dict=members_dictionary(project_team)
-    '''with open('mock.json') as json_data:
-        mockdata = json.load(json_data)'''
+    with open('mock.json') as json_data:
+        mockdata = json.load(json_data)
+
 
 ''' def match_trello_slack_id():
     userlist= slackapicall.list_users()
@@ -236,8 +221,7 @@ def slackname_with_duetime(duetime_in_hours):
     ''' read mock data for matching for now
     in future match by mail id? '''
     slackname_with_duecrds={}
-    mapping = mockdata["trello_to_slack_name"]
-    
+    mapping = mockdata["trello_to_slack_name"] 
     for n in trelloname_with_duecards.keys():
         slackname=mapping[n]
         slackname_with_duecrds[slackname]=trelloname_with_duecards[n]
@@ -391,6 +375,11 @@ def getPenalty(cards):
 
 ### What is the thing returns???
 #performance = {'gyu9': 10, 'yhu22': 20, 'xfu7': 30, 'simtiaz': 20, 'vinay638': 10}
+
+def updatePerformancePoints():
+    #....
+    hello
+
 def getPerformancePoints():
     openCards = getAllOpenCards()
     members = members_dict.keys()
