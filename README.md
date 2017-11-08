@@ -34,8 +34,8 @@ Our bot runs on the assumption that a team will have their workspace both on "Sl
 [Testing Board](https://trello.com/b/3L2DxAis/test-board) Trello board for us to test the function.
 
 ### Reference
-https://api.slack.com/incoming-webhooks
-https://github.com/thisbejim/Pyrebase
-https://pypi.python.org/pypi/python-firebase/1.2
-https://api.slack.com/rtm
-https://github.com/slackapi/python-slackclient
+1. https://api.slack.com/incoming-webhooks
+2. https://github.com/thisbejim/Pyrebase
+3. https://pypi.python.org/pypi/python-firebase/1.2
+4. https://api.slack.com/rtm
+5. https://github.com/slackapi/python-slackclient
