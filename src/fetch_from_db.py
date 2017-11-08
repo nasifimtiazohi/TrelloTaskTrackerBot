@@ -106,12 +106,12 @@ def store_total_points(performance):
 # performance = {'guanxuyu': 15, 'otto292': 25, 'xiaotingfu1': 30, 'sheikhnasifimtiaz': 20, 'vinay638': 10}
 # store_total_points(performance)
 
-def update_progress(user, card_id, progress):
+def update_card_progress(user, card_id, progress):
   '''
   Update card progress for user's card
 
   Example:
-  update_progress("otto292", "59eb634b9c84cc02182a487b", "Completed")
+  update_card_progress("otto292", "59eb634b9c84cc02182a487b", "Completed")
 
   Args:
     user (string): user_id
