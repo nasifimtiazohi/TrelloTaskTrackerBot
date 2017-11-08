@@ -2,6 +2,11 @@ Before running our code, please install some package first and setup
 the environment variable such as BOT_ID, BOT_TOKEN, trelloKey, trelloSecret
 and trelloToken.
 
+*install Slack Developer Kit for Python*
+```
+pip install slackclient
+```
+
 *py-trello*
 
 ```
