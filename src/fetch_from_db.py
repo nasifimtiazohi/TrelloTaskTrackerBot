@@ -38,7 +38,7 @@ def get_all_info():
   users = db.child("leaderboard").get()
   print(users.val())
 
-def add_card(due_date, card_name, points, progress, user_name, card_id):
+def add_card(due_date, card_name, progress, user_name, card_id):
   '''
   Add card to certain member
                     card_info[0]= due_date
@@ -59,7 +59,7 @@ def add_card(due_date, card_name, points, progress, user_name, card_id):
       points (int): points reward for the task
       progress (string): progress of the task, "completed" or "pending"
   '''
-  data = {"due_date": due_date, "card_name": card_name, "points": points, "progress": progress}
+  data = {"due_date": due_date, "card_name": card_name, "progress": progress}
   db.child("leaderboard/" + user_name + "/cards/"+ card_id).set(data)
 
 def total_points_init():
