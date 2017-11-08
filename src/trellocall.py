@@ -1,4 +1,5 @@
 from trello import TrelloClient
+from trello import label as trelloLabel
 import fetch_from_db
 import struct
 import datetime
@@ -442,6 +443,30 @@ def pushPerformanceToLeaderBoard(performance):
                 itemName = "Points :" + str(performance[members_dict[memberID]])
                 items = [itemName]
                 card.add_checklist(title, items)
+
+'''
+    params:
+        cards: should be the collections of all opened cards, can be get from getAllOpenCards()
+        cardID: is the target card whose status should be changed from "to do" to "Done"
+'''
+def completeCards(cardID, cards):
+    for card in cards:
+        if card.id == cardID :
+            for label in card.list_labels:
+                if label.color == "red":
+                    card.remove_label(label)
+                    createCardLabel(card, "Done", "green")
+                    return 
+
+def createCardLabel(card, name, color):
+    newLable = client.fetch_json(
+        "/cards/" + card.id + "/labels",
+        http_method = 'POST',
+        post_args = {
+            "color": color,
+            "name": name
+        }
+    )
 
 
 if __name__ == "__main__":
