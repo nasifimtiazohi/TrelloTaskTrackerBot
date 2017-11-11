@@ -15,8 +15,8 @@ EXAMPLE_COMMAND = "do"
 # COMMAND_USECASE_1 = "usecase 1"
 COMMAND_USECASE_2 = "usecase 2"
 COMMAND_USECASE_3 = "usecase 3"
-P_RESPONSE_USECASE_3 = ['done', '1', 'finished', 'completed', "i'm done", "yes", "of course", "i finished"]
-N_RESPONSE_USECASE_3 = ['pending', '0', 'not yet', 'incomplete', 'wait', 'almost', 'no', 'nah']
+P_RESPONSE_USECASE_3 = ['done', '1', 'finished', 'completed', "i'm done", "yes", "of course", "i finished", "yep"]
+N_RESPONSE_USECASE_3 = ['pending', '0', 'not yet', 'incomplete', 'wait', 'almost', 'no', 'nah', "i haven't"]
 
 #slack_client = SlackClient(os.environ.get("BOT_TOKEN"))
 slack_client= SlackClient(BOT_TOKEN)
