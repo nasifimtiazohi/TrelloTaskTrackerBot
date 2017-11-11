@@ -2,6 +2,7 @@ import os
 from slackclient import SlackClient
 import time
 import trellocall
+import slackapicall
 import usecase3
 import usecase1
 import thread
@@ -61,13 +62,13 @@ def handle_command(command, channel):
     #                       text=response, as_user=True)
 
     # if any(command in s for s in P_RESPONSE_USECASE_3):
-    elif command in P_RESPONSE_USECASE_3:
-       usecase3_post_congratuation_message(channel)
+    elif command in P_RESPONSE_USECASE_3 and channel not in slackapicall.public_channels():
+       usecase3_post_congratuation_message('C7EK8ECP3')
 
     # if any(command in s for s in N_RESPONSE_USECASE_3):
-    elif command in N_RESPONSE_USECASE_3:
-       message = "Alright, your task is pending, please work harder!"
-       slack_client.api_call("chat.postMessage", channel=channel,
+    elif command in N_RESPONSE_USECASE_3 and channel not in slackapicall.public_channels():
+       message = "{I don't for whom this message intended to. But I need to know. } Alright, your task is pending, please work harder!"
+       slack_client.api_call("chat.postMessage", channel='C7EK8ECP3',
                           text=message, as_user=True)
        #for key in messages.keys():
            #message = str(key) + ": " + str(messages[key])
@@ -121,8 +122,8 @@ if __name__ == "__main__":
     if slack_client.rtm_connect():
         print("Taskbot connected and running!")
         try:
-            thread.start_new_thread(usecase1.mainFlow,("UC1-mainflow",60*3,))
-            thread.start_new_thread(usecase1.alternateFlow,("UC2-alternateflow",60*5,))
+            #thread.start_new_thread(usecase1.mainFlow,("UC1-mainflow",60*3,))
+            #thread.start_new_thread(usecase1.alternateFlow,("UC2-alternateflow",60*5,))
             thread.start_new_thread(usecase3_final_function,("Usecase3",60*3))
         except:
             print "thread could not be started"

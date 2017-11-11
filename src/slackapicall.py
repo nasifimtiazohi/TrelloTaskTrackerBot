@@ -14,6 +14,10 @@ xfu7   U7GLR2L6T
 yhu22   U7FL172BU
 slackbot   USLACKBOT
 '''
+
+''' general   C7EK8ECP3 '''
+
+
 os.environ["BOT_TOKEN"]='xoxb-266498254006-btD2n1TcKdi5MY6AKlPGTwnm'
 os.environ["BOT_ID"]='U7UEN7G06'
 BOT_ID=os.environ.get("BOT_ID")
@@ -57,7 +61,13 @@ def list_channels():
         return call["channels"]
     else:
         return None
-
+def public_channels():
+    call= slack_client.api_call("channels.list")
+    channels=call["channels"]
+    res=[]
+    for c in channels:
+        res.append(c['id'])
+    return res
 
 
 def list_users():
@@ -87,4 +97,4 @@ def nameNmail():
 
 
 if __name__== "__main__":
-    print list_users()
+    print public_channels()

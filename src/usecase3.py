@@ -94,9 +94,9 @@ def post_public_message():
   dm_channel=[]
   for u in users_with_cards.keys():
         #get uid
-        userid=slackapicall.name_to_id(u)
+        userid=slackapicall.fullname_to_id(u)
         cardlist=users_with_cards[u]
-        message="Congratulations to "+ u+" ," +" for finishing the task before the deadline!"
+        message="Congratulations to <@"+ userid+"> ," +" for finishing the task before the deadline!"
         l=[]
         channel=slackapicall.open_im(userid)
         #print u,userid,channel

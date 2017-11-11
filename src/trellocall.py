@@ -210,7 +210,7 @@ def slackname_with_duecards():
     d={}
     for p in participants:
         json_obj = trellocall.client.fetch_json('/members/' + p.id,query_params={'badges': False})
-        d[p.id]=p.full_name.lower()
+        d[p.username]=p.full_name.lower()
     slackname_with_duecrds={}
 
     for n in trelloname_with_duecards.keys():
