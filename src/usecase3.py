@@ -5,6 +5,10 @@ import pyrebase
 from datetime import datetime
 from fetch_from_db import get_user_points, add_card
 
+''' nasif:
+  1. why do we initialize database everytime?
+  2. Are we not penalizing points and posting shame message on general channel? '''
+
 config = {
   "apiKey": "AIzaSyCC5OzyEqGBcGZkpyUP90qUnyCCJY8SRQ8",
   "authDomain": "taskmangerbot.firebaseapp.com",
@@ -86,7 +90,7 @@ def post_public_message():
   Args:
   '''
   #if the user finish the task, says congratulations to him
-  users_with_cards=trellocall.slackname_with_duetime(48)
+  users_with_cards=trellocall.slackname_with_duetime(48) #this function is returning due cards.. How do you measure if they are finished?
   dm_channel=[]
   for u in users_with_cards.keys():
         #get uid
@@ -126,13 +130,13 @@ def check_progress():
         #message= u
         #get uid
         #print slackapicall.name_to_id(u)
-        userid=slackapicall.name_to_id(slack_name)
+        userid=slackapicall.fullname_to_id(slack_name)
         cardlist=users_with_cards[slack_name]
         ''' no need to match with trello name. slack name is fine '''
         # #mapping from slack_id to trello_user_name, full_name
         # trello_user_name = trellocall.slack_name_to_trello_name(slack_name)
         # #print trello_user_name   
-        message= "<@"+slack_name+"> ," +" you have "+ str(len(cardlist)) + " task pending that approach the due"
+        message= "<@"+userid+"> ," +" you have "+ str(len(cardlist)) + " task pending that approach the due"
         i = 0
         for card in cardlist:
             i+=1

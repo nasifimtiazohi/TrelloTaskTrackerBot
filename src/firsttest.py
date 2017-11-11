@@ -6,7 +6,8 @@ import usecase3
 import usecase1
 import thread
 # import unicodedata
-
+os.environ["BOT_TOKEN"]='xoxb-266498254006-btD2n1TcKdi5MY6AKlPGTwnm'
+os.environ["BOT_ID"]='U7UEN7G06'
 # Set Slack BOT environment variables, if failed here, please see the README.md
 BOT_ID=os.environ.get("BOT_ID")
 BOT_TOKEN=os.environ.get("BOT_TOKEN")
@@ -35,7 +36,7 @@ def handle_command(command, channel):
     print("command receive", command)
 
 
-    #why is this function not printing leaderboard from the database?
+    #nasif: why is this function not printing leaderboard from the database?
     if command.startswith(COMMAND_USECASE_2):
         messages=trellocall.getPerformancePoints()
         #trellocall.pushPerformanceToLeaderBoard(messages)
@@ -76,14 +77,15 @@ def handle_command(command, channel):
         slack_client.api_call("chat.postMessage", channel=channel,
                           text=response, as_user=True)
 
-def usecase3_final_function():
-    dm_channels=usecase3.check_progress()
-    for d in dm_channels:
-        channel=d[2]
-        response=d[4]
-        slack_client.api_call("chat.postMessage", channel=channel,
-                          text=response, as_user=True)
-    time.sleep(60*5)
+def usecase3_final_function(threadName, delay):
+    while True:
+        dm_channels=usecase3.check_progress()
+        for d in dm_channels:
+            channel=d[2]
+            response=d[4]
+            slack_client.api_call("chat.postMessage", channel=channel,
+                            text=response, as_user=True)
+        time.sleep(delay)
 
 def usecase3_post_congratuation_message(channel):
     #Post congraduate message
@@ -119,8 +121,9 @@ if __name__ == "__main__":
     if slack_client.rtm_connect():
         print("Taskbot connected and running!")
         try:
-            thread.start_new_thread(usecase1.mainFlow,("UC1-mainflow",60*3,))
-            thread.start_new_thread(usecase1.alternateFlow,("UC2-alternateflow",60*5,))
+            #thread.start_new_thread(usecase1.mainFlow,("UC1-mainflow",60*3,))
+            #thread.start_new_thread(usecase1.alternateFlow,("UC2-alternateflow",60*5,))
+            thread.start_new_thread(usecase3_final_function,("Usecase3",60*3))
         except:
             print "thread could not be started"
         while True:

@@ -26,17 +26,25 @@ def name_to_id(username):
     d=list_users()
     return d[username]
 
+def fullname_to_id(fullname):
+    d={}
+    call= slack_client.api_call("users.list")
+    users=call['members']
+    for c in users:
+        profile=c['profile']
+        d[profile['real_name'].lower()]=c['id']
+    return d[fullname]
+    
+
 def open_im(user_id):
     f=True
     url = 'https://slack.com/api/im.open'
     headers = {'content-type':'x-www-form-urlencoded'}
     data = [('token', BOT_TOKEN), ('user', user_id),('include_local',f),('return_im',f) ]
-    #data = {'token':BOT_TOKEN, 'user':user_id, 'include_locale':'true','return_im':'true'}
     r= requests.post(url,data,headers )
     d=json.loads(r.text)
     channel=d['channel']
     channel_id=channel['id']
-    #todo: check if channel open or not
     print channel_id
     return channel_id
 
@@ -77,5 +85,6 @@ def nameNmail():
     return d
 
 
+
 if __name__== "__main__":
-    list_users()
+    print list_users()
