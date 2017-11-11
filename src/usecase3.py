@@ -128,10 +128,11 @@ def check_progress():
         #print slackapicall.name_to_id(u)
         userid=slackapicall.name_to_id(slack_name)
         cardlist=users_with_cards[slack_name]
-        #mapping from slack_id to trello_user_name, full_name
-        trello_user_name = trellocall.slack_name_to_trello_name(slack_name)
-        #print trello_user_name   
-        message= trello_user_name+" ," +" you have "+ str(len(cardlist)) + " task pending that approach the due"
+        ''' no need to match with trello name. slack name is fine '''
+        # #mapping from slack_id to trello_user_name, full_name
+        # trello_user_name = trellocall.slack_name_to_trello_name(slack_name)
+        # #print trello_user_name   
+        message= "<@"+slack_name+"> ," +" you have "+ str(len(cardlist)) + " task pending that approach the due"
         i = 0
         for card in cardlist:
             i+=1
