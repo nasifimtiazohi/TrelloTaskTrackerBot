@@ -12,7 +12,7 @@ import emailing
 members_dict=None
 project_team=None
 testboard=None
-mockdata=None
+
 
 # Set up Trello environment variables, if failed here, please see the README.md
 trelloKey = os.environ.get("TRELLO_API_KEY")
@@ -20,6 +20,8 @@ trelloSecret = os.environ.get("TRELLO_API_SECRET")
 trelloToken = os.environ.get("TRELLO_TOKEN")
 
 #TODO: Usecase3 only asks a person about progress. No matter how many cards are due. Later we'll refine it
+
+
 
 client = TrelloClient(
     api_key = trelloKey,
@@ -85,9 +87,7 @@ def get_all_cards_with_duedate():
             namelist_with_duecards[name].append(c)
     return namelist_with_duecards
 
-def slack_name_to_trello_name(slack_name):
-     mapping = mockdata["slack_name_to_trello_name"]
-     return mapping[slack_name]
+
 
 def get_all_cards_with_duetime(timeinhours):
     current_time=datetime.datetime.now()
@@ -104,32 +104,47 @@ def get_all_cards_with_duetime(timeinhours):
                 duecards.append(c)
     return duecards
 
-def get_all_names_cards_with_duetime(timeinhours):
+def get_cards_for_UC1_alternate():
+    opencards=testboard.open_cards()
+    final=[]
+    for c  in opencards:
+        if isinstance(c.due_date,str) or ('59fe8ffedde6561bfcb1e95d' not in c.label_ids and '59fe8ff79f194304516028fc' not in c.label_ids and '59bdb4181314a33999a2736d' not in c.label_ids and '59fe8fefedb138ebeb4d1cad' not in c.label_ids):
+            final.append(c)
+    return final
+def get_all_cards_for_usecase1():
     current_time=datetime.datetime.now()
     current_time=current_time.replace(tzinfo=pytz.utc)
-    print "hello",testboard.name
     opencards=testboard.open_cards()
-    duecards=[]
+    Easy = "yellow"
+    Median = "sky"
+    Hard = "black"
+    Finished= "green"
+    ''' card labels:
+    black 59fe8ffedde6561bfcb1e95d
+    yellow 59fe8fefedb138ebeb4d1cad
+    sky 59fe8ff79f194304516028fc
+    green 59bdb4181314a33999a2736d '''
+    HardCards=[]
+    MediumCards=[]
+    EasyCards=[]
     for c in opencards:
         temp=c.due_date
         if c.due_date:
             temp=temp.replace(tzinfo=pytz.utc)
-            temp2=temp-datetime.timedelta(hours=timeinhours)
-            if current_time<temp and current_time>temp2 and '59bdb4181314a33999a2736d' not in c.label_ids:
-                duecards.append(c)
-    ''' only sending the names for now.
-    In future, we'll send info about each card '''
-    namelist_with_duecards={}
-    for c in duecards:
-        mid=c.member_id[0]
-        name=members_dict[mid]
-        if name not in namelist_with_duecards.keys():
-            l=[]
-            l.append(c)
-            namelist_with_duecards[name]=l
-        else:
-            namelist_with_duecards[name].append(c)
-    return namelist_with_duecards
+            tempHard=temp-datetime.timedelta(hours=48)
+            tempMedium=temp-datetime.timedelta(hours=24)
+            tempEasy=temp-datetime.timedelta(hours=12)
+            print c.name, c.label_ids,c.due_date, current_time,tempHard,tempMedium
+            if current_time<temp and current_time>tempHard and '59bdb4181314a33999a2736d' not in c.label_ids and '59fe8ffedde6561bfcb1e95d' in c.label_ids:
+                print "hard task"
+                HardCards.append(c)
+            elif current_time<temp and current_time>tempMedium and '59bdb4181314a33999a2736d' not in c.label_ids and '59fe8ff79f194304516028fc' in c.label_ids:
+                print "medium task"
+                MediumCards.append(c)
+            elif current_time<temp and current_time>tempEasy and '59bdb4181314a33999a2736d' not in c.label_ids:
+                EasyCards.append(c)
+    final=[EasyCards,MediumCards,HardCards]
+    return final
 
 
 def print_deadline_messages():
@@ -158,12 +173,6 @@ def print_deadline_messages():
         message_list.append(message)
     return message_list
 
-def sendmail(name,message):
-    #print name
-    temp=mockdata['trello_name_to_mailid']
-    mail=temp[name]
-    #print mail
-    emailing.sendmail(mail,message)
 
 def members_dictionary(project_team):
     members = project_team.get_members()
@@ -176,7 +185,6 @@ def var_init():
     global project_team
     global testboard
     global members_dict
-    global mockdata
     teams=client.list_organizations()
     for t in teams:
         if t.name=='510projectteam':
@@ -187,46 +195,51 @@ def var_init():
         if b.name=='Test Board':
             testboard=b
     members_dict=members_dictionary(project_team)
-    with open('mock.json') as json_data:
-        mockdata = json.load(json_data)
-
-
-''' def match_trello_slack_id():
-    userlist= slackapicall.list_users()
-    namelist_with_duecards=get_all_cards_with_duedate()
-    print mockdata['idmatching']
-    for n in namelist_with_duecards:
-        print n
-    print "here's a gap"
-    for d in userlist:
-        print d['slackname'] '''
 
 
 def slackname_with_duecards():
     trelloname_with_duecards=get_all_cards_with_duedate()
-    '''
-    read mock data for matching for now,
-    in future match by mail id?
-    '''
+    slack=slackapicall.nameNmail()
+    participants=project_team.get_members()
+    d={}
+    for p in participants:
+        json_obj = trellocall.client.fetch_json('/members/' + p.id,query_params={'badges': False})
+        d[p.id]=p.full_name.lower()
     slackname_with_duecrds={}
-    mapping = mockdata["trello_to_slack_name"]
 
     for n in trelloname_with_duecards.keys():
-        slackname=mapping[n]
-        slackname_with_duecrds[slackname]=trelloname_with_duecards[n]
+        full_name=d[n]
+        key=None
+        max=0
+        for k in slack.keys():
+            temp=SequenceMatcher(None,k,full_name).ratio()
+            if temp>max:
+                max=temp
+                key=k
+        slackname_with_duecrds[key]=trelloname_with_duecards[n]
     return slackname_with_duecrds
-
 
 
 def slackname_with_duetime(duetime_in_hours):
     trelloname_with_duecards=get_all_names_cards_with_duetime(duetime_in_hours)
-    ''' read mock data for matching for now
-    in future match by mail id? '''
+    slack=slackapicall.nameNmail()
+    participants=project_team.get_members()
+    d={}
+    for p in participants:
+        json_obj = trellocall.client.fetch_json('/members/' + p.id,query_params={'badges': False})
+        d[p.id]=p.full_name.lower()
     slackname_with_duecrds={}
-    mapping = mockdata["trello_to_slack_name"]
+
     for n in trelloname_with_duecards.keys():
-        slackname=mapping[n]
-        slackname_with_duecrds[slackname]=trelloname_with_duecards[n]
+        full_name=d[n]
+        key=None
+        max=0
+        for k in slack.keys():
+            temp=SequenceMatcher(None,k,full_name).ratio()
+            if temp>max:
+                max=temp
+                key=k
+        slackname_with_duecrds[key]=trelloname_with_duecards[n]
     return slackname_with_duecrds
 
 def print_members_points():
@@ -462,10 +475,11 @@ def createCardLabel(card, name, color):
 
 if __name__ == "__main__":
     var_init()
-    ''' read mock data '''
     ''' start experiments from here '''
-    d=slackname_with_duecards()
-    print d
+    cards=testboard.open_cards()
+    for c in cards:
+        print c.name, "closed", c.closed
+
 
 
 

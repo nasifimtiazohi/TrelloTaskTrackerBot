@@ -1,16 +1,16 @@
 import smtplib
+import os
 
-'''
-Gmail:bot510project@gmail.com
-PW:simtiaz1234 
-'''
+
+gmailid=os.environ.get("GMAIL_ID")
+gmailpass=os.environ.get("GMAIL_PASS")
 
 def sendmail(mail,message):
     smtpObj= smtplib.SMTP('smtp.gmail.com',587)
     r=smtpObj.ehlo()
     r=smtpObj.starttls()
-    r=smtpObj.login('bot510project@gmail.com','simtiaz1234')
-    r=smtpObj.sendmail('bot510project@gmail.com',mail,'Subject: checking our bot.\n\n'+message)
+    r=smtpObj.login(gmailid,gmailpass)
+    r=smtpObj.sendmail('bot510project@gmail.com',mail,'Subject: Nagging Reminder.\n\n'+message)
     print r
 
 if __name__=="__main__":

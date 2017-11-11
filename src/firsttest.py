@@ -4,6 +4,7 @@ import time
 import trellocall
 import usecase3
 import usecase1
+import thread
 # import unicodedata
 
 # Set Slack BOT environment variables, if failed here, please see the README.md
@@ -13,7 +14,7 @@ BOT_TOKEN=os.environ.get("BOT_TOKEN")
 AT_BOT = "<@" + BOT_ID + ">"
 EXAMPLE_COMMAND = "do"
 # COMMAND_USECASE_1 = "usecase 1"
-COMMAND_USECASE_2 = "usecase 2"
+COMMAND_USECASE_2 = "show leaderboard"
 COMMAND_USECASE_3 = "usecase 3"
 P_RESPONSE_USECASE_3 = ['done', '1', 'finished', 'completed', "i'm done", "yes", "of course", "i finished", "yep"]
 N_RESPONSE_USECASE_3 = ['pending', '0', 'not yet', 'incomplete', 'wait', 'almost', 'no', 'nah', "i haven't"]
@@ -34,10 +35,7 @@ def handle_command(command, channel):
     print("command receive", command)
 
 
-    # if command.startswith(EXAMPLE_COMMAND):
-    #     response = "Sure...write some more code then I can do that!"
-    #     slack_client.api_call("chat.postMessage", channel=channel,
-    #                       text=response, as_user=True)
+    #why is this function not printing leaderboard from the database?
     if command.startswith(COMMAND_USECASE_2):
         messages=trellocall.getPerformancePoints()
         #trellocall.pushPerformanceToLeaderBoard(messages)
@@ -120,8 +118,12 @@ if __name__ == "__main__":
     READ_WEBSOCKET_DELAY = 1 # 1 second delay between reading from firehose
     if slack_client.rtm_connect():
         print("Taskbot connected and running!")
+        try:
+            thread.start_new_thread(usecase1.mainFlow,("UC1-mainflow",60*3,))
+            thread.start_new_thread(usecase1.alternateFlow,("UC2-alternateflow",60*5,))
+        except:
+            print "thread could not be started"
         while True:
-            #usecase1.perform()
             command, channel = parse_slack_output(slack_client.rtm_read())
             #usecase3_final_function()
             if command and channel:
