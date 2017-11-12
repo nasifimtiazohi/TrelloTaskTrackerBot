@@ -1,6 +1,7 @@
 import smtplib
 import os
-
+os.environ["GMAIL_ID"]='bot510project@gmail.com'
+os.environ["GMAIL_PASS"]='simtiaz1234'
 
 gmailid=os.environ.get("GMAIL_ID")
 gmailpass=os.environ.get("GMAIL_PASS")

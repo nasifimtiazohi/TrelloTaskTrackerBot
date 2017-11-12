@@ -1,5 +1,6 @@
 from trello import TrelloClient
 from trello import label as trelloLabel
+from difflib import SequenceMatcher
 import fetch_from_db
 import struct
 import datetime
@@ -13,7 +14,12 @@ members_dict=None
 project_team=None
 testboard=None
 
-
+trelloKey='dbf6947f87a8dcb83f090731a27e8bd4'
+trelloSecret='f57a6c66081742aa5f6149d329c3581d53231c308e4cc9f78b31230ce13b3bb8'
+trelloToken='414df911de9e839c8ab9838c8fa1723107fba5848e5049269d88e5e94a348f31'
+os.environ["TRELLO_API_KEY"]=trelloKey
+os.environ["TRELLO_API_SECRET"]=trelloSecret
+os.environ["TRELLO_TOKEN"]=trelloToken
 # Set up Trello environment variables, if failed here, please see the README.md
 trelloKey = os.environ.get("TRELLO_API_KEY")
 trelloSecret = os.environ.get("TRELLO_API_SECRET")
@@ -204,7 +210,7 @@ def slackname_with_duecards():
     d={}
     for p in participants:
         json_obj = trellocall.client.fetch_json('/members/' + p.id,query_params={'badges': False})
-        d[p.id]=p.full_name.lower()
+        d[p.username]=p.full_name.lower()
     slackname_with_duecrds={}
 
     for n in trelloname_with_duecards.keys():
@@ -226,21 +232,51 @@ def slackname_with_duetime(duetime_in_hours):
     participants=project_team.get_members()
     d={}
     for p in participants:
-        json_obj = trellocall.client.fetch_json('/members/' + p.id,query_params={'badges': False})
-        d[p.id]=p.full_name.lower()
+        #print dir(p)
+        json_obj = client.fetch_json('/members/' + p.id,query_params={'badges': False})
+        d[p.username]=p.full_name.lower()
     slackname_with_duecrds={}
 
     for n in trelloname_with_duecards.keys():
+        print "trello id",n
         full_name=d[n]
         key=None
         max=0
         for k in slack.keys():
+            print "slack k",k
             temp=SequenceMatcher(None,k,full_name).ratio()
             if temp>max:
                 max=temp
                 key=k
         slackname_with_duecrds[key]=trelloname_with_duecards[n]
     return slackname_with_duecrds
+
+def get_all_names_cards_with_duetime(timeinhours):
+    current_time=datetime.datetime.now()
+    current_time=current_time.replace(tzinfo=pytz.utc)
+    #print "hello",testboard.name
+    opencards=testboard.open_cards()
+    duecards=[]
+    for c in opencards:
+        temp=c.due_date
+        if c.due_date:
+            temp=temp.replace(tzinfo=pytz.utc)
+            temp2=temp-datetime.timedelta(hours=timeinhours)
+            if current_time<temp and current_time>temp2 and '59bdb4181314a33999a2736d' not in c.label_ids:
+                duecards.append(c)
+    ''' only sending the names for now.
+    In future, we'll send info about each card '''
+    namelist_with_duecards={}
+    for c in duecards:
+        mid=c.member_id[0]
+        name=members_dict[mid]
+        if name not in namelist_with_duecards.keys():
+            l=[]
+            l.append(c)
+            namelist_with_duecards[name]=l
+        else:
+            namelist_with_duecards[name].append(c)
+    return namelist_with_duecards
 
 def print_members_points():
     teams = client.list_organizations()
@@ -476,9 +512,7 @@ def createCardLabel(card, name, color):
 if __name__ == "__main__":
     var_init()
     ''' start experiments from here '''
-    cards=testboard.open_cards()
-    for c in cards:
-        print c.name, "closed", c.closed
+    slackname_with_duetime(24)
 
 
 
