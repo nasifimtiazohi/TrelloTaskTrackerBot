@@ -30,6 +30,7 @@ Our bot runs on the assumption that a team will have their workspace both on "Sl
 
 ### Task Tracking
 [Trello Task Manager](https://trello.com/b/MXYu6ZEy/task-manager-bot)  Used for task tracking like worksheet. 
+[Github Issues](https://github.ncsu.edu/yhu22/CSC510_F17_Project/issues) Issues to be solved for the implementation.
 
 [Testing Board](https://trello.com/b/3L2DxAis/test-board) Trello board for us to test the function.
 
