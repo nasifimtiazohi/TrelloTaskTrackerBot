@@ -82,6 +82,17 @@ def list_users():
         d[c['name']]=c['id']
     return d
 
+def list_users_byID():
+    d={}
+    call= slack_client.api_call("users.list")
+    users=call['members']
+    for c in users:
+        # profile=c['profile']
+        # if 'email' in profile.keys():
+        #     print profile['email']
+        #     print profile['real_name']
+        d[c['id']]=c['name']
+    return d
 def nameNmail():
     d={}
     call= slack_client.api_call("users.list")

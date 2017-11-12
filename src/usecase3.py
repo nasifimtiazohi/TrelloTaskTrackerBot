@@ -6,8 +6,15 @@ from datetime import datetime
 from fetch_from_db import get_user_points, add_card
 
 ''' nasif:
-  1. why do we initialize database everytime?
+  1. why do we initialize database everytime? Because our trello card may change everyday.
   2. Are we not penalizing points and posting shame message on general channel? '''
+
+''' Xiaoting:
+  Fix problems in UC3, 
+  1. reply to individual person, instad of all
+  2. after reply to each person, update the trello card and also database information
+  3. Post Congratulation message, penality message'''
+
 
 config = {
   "apiKey": "AIzaSyCC5OzyEqGBcGZkpyUP90qUnyCCJY8SRQ8",
@@ -32,7 +39,7 @@ db = firebase.database()
 '''
 
 def database_init():
-  # Init Firebase database everytime
+  # Init Firebase database everyday
   all_card_info = []
   all_card_info = trellocall.get_all_cards_of_user()
   for card_info in all_card_info:
@@ -67,6 +74,7 @@ def reward_points(user, points):
   '''
   Reward points according to rewarding principles
   Save points to database under each person's name
+  update trello label from red to green
 
   Example:
   reward_points("yhu22", 50)
@@ -78,6 +86,17 @@ def reward_points(user, points):
   '''
   # print("Before adding reward points: ",get_user_points(user))
   db.child("leaderboard/" + user).update({'total_points': (get_user_points(user) + points)})
+ 
+  users_with_cards=trellocall.slackname_with_duetime(20) 
+  
+  for u in users_with_cards.keys():
+        #get uid
+        userid=slackapicall.fullname_to_id(u)
+        cardlist=users_with_cards[u]
+        #trellocall.completeCards(card_id, cardlist)
+        for card in cardlist:
+          #TODO: user with multiple cards
+           trellocall.update_progress(user, card)
   # print("After adding reward points: ",get_user_points(user))
 
 def post_public_message():
@@ -88,7 +107,7 @@ def post_public_message():
   Args:
   '''
   #if the user finish the task, says congratulations to him
-  users_with_cards=trellocall.slackname_with_duetime(48) #this function is returning due cards.. How do you measure if they are finished?
+  users_with_cards=trellocall.slackname_with_duetime(20) #this function is returning due cards.. How do you measure if they are finished?
   dm_channel=[]
   for u in users_with_cards.keys():
         #get uid
@@ -125,20 +144,19 @@ def check_progress():
   dm_channel=[]
   # u is the slack_id, e.g. xfu7
   for slack_name in users_with_cards.keys():
-        #message= u
-        #get uid
-        #print slackapicall.name_to_id(u)
+
+        print "People with due cards"+ slack_name
         userid=slackapicall.fullname_to_id(slack_name)
         cardlist=users_with_cards[slack_name]
         ''' no need to match with trello name. slack name is fine '''
         # #mapping from slack_id to trello_user_name, full_name
         # trello_user_name = trellocall.slack_name_to_trello_name(slack_name)
-        # #print trello_user_name   
+        # #print trello_user_name
         message= "<@"+userid+"> ," +" you have "+ str(len(cardlist)) + " task pending that approach the due"
         i = 0
         for card in cardlist:
             i+=1
-            message+=". Task "+ str(i) +": "+ card.name+" ,please respond with the following numbers: 1 for complete;  0 for incomplete." 
+            message+=". Task "+ str(i) +": "+ card.name+" ,please respond your status of completeness in the following format: @taskbot YOUR STATUS" 
         l=[]
         channel=slackapicall.open_im(userid)
         #print u,userid,channel

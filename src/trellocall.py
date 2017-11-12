@@ -37,6 +37,11 @@ client = TrelloClient(
 )
 # return a list of things:
 # card_id, user_id, due_date, card_name, points, progress
+
+# This function update trello card label from red to green
+def update_progress():
+    users_with_cards=slackname_with_duetime(20)
+
 def get_all_cards_of_user():
     opencards = testboard.open_cards()
     all_card_info=[]

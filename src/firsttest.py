@@ -23,7 +23,7 @@ N_RESPONSE_USECASE_3 = ['pending', '0', 'not yet', 'incomplete', 'wait', 'almost
 
 #slack_client = SlackClient(os.environ.get("BOT_TOKEN"))
 slack_client= SlackClient(BOT_TOKEN)
-def handle_command(command, channel):
+def handle_command(command, channel, command_userid):
     """
         Receives commands directed at the bot and determines if they
         are valid commands. If so, then acts on the commands. If not,
@@ -63,17 +63,25 @@ def handle_command(command, channel):
 
     # if any(command in s for s in P_RESPONSE_USECASE_3):
     elif command in P_RESPONSE_USECASE_3 and channel not in slackapicall.public_channels():
-       usecase3_post_congratuation_message('C7EK8ECP3')
+       print "usecase 3"
+       usecase3_post_congratuation_message('C7EK8ECP3', command_userid)
+       #update the trello card and also database information
+       usecase3.database_init()
+       usecase3.reward_points(command_userid, 50)
+
 
     # if any(command in s for s in N_RESPONSE_USECASE_3):
     elif command in N_RESPONSE_USECASE_3 and channel not in slackapicall.public_channels():
-       message = "{I don't for whom this message intended to. But I need to know. } Alright, your task is pending, please work harder!"
+        #map from command_userid to userid
+       d = slackapicall.list_users_byID()
+       username = d[command_userid]
+       message = "<@" + username +"> " +  "has a task pending, please work harder!"
        slack_client.api_call("chat.postMessage", channel='C7EK8ECP3',
                           text=message, as_user=True)
        #for key in messages.keys():
            #message = str(key) + ": " + str(messages[key])
-       slack_client.api_call("chat.postMessage", channel=channel,
-                          text=message, as_user=True)
+       #slack_client.api_call("chat.postMessage", channel=channel,
+                          #text=message, as_user=True)
     else:
         slack_client.api_call("chat.postMessage", channel=channel,
                           text=response, as_user=True)
@@ -88,15 +96,17 @@ def usecase3_final_function(threadName, delay):
                             text=response, as_user=True)
         time.sleep(delay)
 
-def usecase3_post_congratuation_message(channel):
+def usecase3_post_congratuation_message(channel, userid):
     #Post congraduate message
     #Post only once after the user finished
+    #Post to the specific person who respond 
     dm_channels=usecase3.post_public_message()
     for d in dm_channels:
-        response=d[4]
-        print "The channel is" + channel
-        slack_client.api_call("chat.postMessage", channel=channel,
-                          text=response, as_user=True)
+        print "Testing: "+ d[0]+  " and " + userid
+        if userid == d[0]:
+            response=d[4]
+            print "The channel is" + channel
+            slack_client.api_call("chat.postMessage", channel=channel, text=response, as_user=True)
 
 
 def parse_slack_output(slack_rtm_output):
@@ -112,10 +122,13 @@ def parse_slack_output(slack_rtm_output):
                 print output['text']
             if output and 'text' in output and AT_BOT in output['text']:
                 # return text after the @ mention, whitespace removed
-                #todo: only works with texts after the mention, need to fix
+                #todo: only works with texts after the mention, need to fix 
+                print "This current user is responding: "+ output['user'] 
+
                 return output['text'].split(AT_BOT)[1].strip().lower(), \
-                       output['channel']
-    return None, None
+                       output['channel'],\
+                       output['user']
+    return None, None, None
 
 if __name__ == "__main__":
     READ_WEBSOCKET_DELAY = 1 # 1 second delay between reading from firehose
@@ -128,10 +141,11 @@ if __name__ == "__main__":
         except:
             print "thread could not be started"
         while True:
-            command, channel = parse_slack_output(slack_client.rtm_read())
-            #usecase3_final_function()
+            command, channel, command_userid = parse_slack_output(slack_client.rtm_read())
             if command and channel:
-                handle_command(command, channel)
+                    print "handle commands"
+                    handle_command(command, channel, command_userid)
+            #usecase3_final_function()
             time.sleep(READ_WEBSOCKET_DELAY)
     else:
         print ("Connection failed. Invalid Slack token or bot ID?")
