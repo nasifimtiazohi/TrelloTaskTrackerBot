@@ -32,11 +32,9 @@ def database_init():
   all_card_info = []
   all_card_info = trellocall.get_all_cards_of_user()
   for card_info in all_card_info:
-    #print card_info
     add_card(card_info[0], card_info[1], card_info[2], card_info[3], card_info[4])
 
 # If user complete the task, we will add points for this user and then update his performance point
-
 
 '''
 Fetch data from trello and store it into database
