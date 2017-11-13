@@ -99,7 +99,7 @@ def usecase3_final_function(threadName, delay):
 def usecase3_post_congratuation_message(channel, userid):
     #Post congraduate message
     #Post only once after the user finished
-    #Post to the specific person who respond 
+    #Post to the specific person who respond
     dm_channels=usecase3.post_public_message()
     for d in dm_channels:
         print "Testing: "+ d[0]+  " and " + userid
@@ -122,8 +122,8 @@ def parse_slack_output(slack_rtm_output):
                 print output['text']
             if output and 'text' in output and AT_BOT in output['text']:
                 # return text after the @ mention, whitespace removed
-                #todo: only works with texts after the mention, need to fix 
-                print "This current user is responding: "+ output['user'] 
+                #todo: only works with texts after the mention, need to fix
+                print "This current user is responding: "+ output['user']
 
                 return output['text'].split(AT_BOT)[1].strip().lower(), \
                        output['channel'],\
