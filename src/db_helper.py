@@ -70,6 +70,7 @@ def total_points_init():
   for user in all_users.each():
     db.child("leaderboard/" + user.key() + "/total_points").set(0)
 
+# total_points_init()
 
 def get_user_points(user):
   '''
@@ -120,6 +121,69 @@ def update_card_progress(user, card_id, progress):
   '''
   db.child("leaderboard/" + user + "/cards/" + card_id).update({'progress': progress})
 
+def add_field_to_card(user, card_id, field, value):
+  '''
+  Add field to a card in database
+
+  Example:
+  add_field_to_card("otto292", "59eb634b9c84cc02182a487b", "done", False)
+
+  Args:
+    user (string): user_id
+    card_id (string): card id
+    field (string): new field
+    value (type depends): value of the new field
+  '''
+  db.child("leaderboard/" + user + "/cards/" + card_id).update({field: value})
+
+def set_field_value_of_card(user, card_id, field, value):
+  '''
+  Set the value of field to a card in database
+
+  Example:
+  set_field_value_of_card("otto292", "59eb634b9c84cc02182a487b", "done", True)
+
+  Args:
+    user (string): user_id
+    card_id (string): card id
+    field (string): new field
+    value (type depends): value of the new field
+  '''
+  db.child("leaderboard/" + user + "/cards/" + card_id + "/" + field).set(value)
+
+def add_field_to_allcards(field, value):
+  '''
+  Add the new field with certain value to all cards
+
+  Example:
+  add_field_to_allcards("done", False)
+
+  Args:
+    field (string): new field
+    value (type depends): value of the new field
+  '''
+  all_users = db.child("leaderboard/").get()
+  for user in all_users.each():
+    all_cards = db.child("leaderboard/" + user.key() + "/cards/").get()
+    for card in all_cards.each():
+      db.child("leaderboard/" + user.key() + "/cards/" + card.key()).update({field: value})
+
+def set_field_value_of_allcards(field, value):
+  '''
+  Apply the same change of one field of card to all cards
+
+  Example:
+  set_field_value_of_allcards("done", True)
+
+  Args:
+    field (string): new field
+    value (type depends): value of the new field
+  '''
+  all_users = db.child("leaderboard/").get()
+  for user in all_users.each():
+    all_cards = db.child("leaderboard/" + user.key() + "/cards/").get()
+    for card in all_cards.each():
+      db.child("leaderboard/" + user.key() + "/cards/" + card.key() + "/" + field).set(value)
 
 def print_leaderboard():
   '''

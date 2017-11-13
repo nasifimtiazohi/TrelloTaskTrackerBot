@@ -105,7 +105,7 @@ def usecase3_final_function(threadName, delay):
 def usecase3_post_congratuation_message(channel, userid):
     #Post congraduate message
     #Post only once after the user finished
-    #Post to the specific person who respond 
+    #Post to the specific person who respond
     dm_channels=usecase3.post_public_message()
     for d in dm_channels:
         print "Testing: "+ d[0]+  " and " + userid
