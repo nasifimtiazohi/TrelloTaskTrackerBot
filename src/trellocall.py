@@ -1,7 +1,7 @@
 from trello import TrelloClient
 from trello import label as trelloLabel
 from difflib import SequenceMatcher
-import fetch_from_db
+import db_helper
 import struct
 import datetime
 import os
@@ -207,6 +207,9 @@ def var_init():
             testboard=b
     members_dict=members_dictionary(project_team)
 
+def trelloname_with_duetime(duetime_in_hours):
+    trelloname_with_duecards=get_all_names_cards_with_duetime(duetime_in_hours)
+    return trelloname_with_duecards
 
 def slackname_with_duecards():
     trelloname_with_duecards=get_all_cards_with_duedate()

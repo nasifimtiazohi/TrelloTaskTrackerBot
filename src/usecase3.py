@@ -3,7 +3,7 @@ import trellocall
 from firebase import firebase
 import pyrebase
 from datetime import datetime
-from fetch_from_db import get_user_points, add_card
+from db_helper import get_user_points, add_card
 
 ''' nasif:
   1. why do we initialize database everytime? Because our trello card may change everyday.
@@ -12,7 +12,7 @@ from fetch_from_db import get_user_points, add_card
 ''' Xiaoting:
   Fix problems in UC3, 
   1. reply to individual person, instad of all
-  2. after reply to each person, update the trello card and also database information
+  2. after replying to each person, update the trello card and also database information
   3. Post Congratulation message, penality message'''
 
 
@@ -156,7 +156,7 @@ def check_progress():
         i = 0
         for card in cardlist:
             i+=1
-            message+=". Task "+ str(i) +": "+ card.name+" ,please respond your status of completeness in the following format: @taskbot YOUR STATUS" 
+            message+=". Task "+ str(i) +": "+ card.name+" ,please respond your status of completeness AND the name of the task: @taskbot YOUR STATUS, YOUR TASK" 
         l=[]
         channel=slackapicall.open_im(userid)
         #print u,userid,channel
