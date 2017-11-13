@@ -107,6 +107,9 @@ def store_total_points(performance):
 # performance = {'guanxuyu': 15, 'otto292': 25, 'xiaotingfu1': 30, 'sheikhnasifimtiaz': 20, 'vinay638': 10}
 # store_total_points(performance)
 
+def check_if_done(user, card_id):
+  print db.child("leaderboard/" + user + "/cards/" + card_id + "/done").get().val()
+
 def update_card_progress(user, card_id, progress):
   '''
   Update card progress for user's card
