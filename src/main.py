@@ -66,6 +66,16 @@ def handle_command(command, channel):
                           text=message, as_user=True)
         for key in messages.keys():
             message = str(key) + ": " + str(messages[key])
+            if str(key) == 'vinay638':
+                message = str(key) + ":                 " + str(messages[key])
+            if str(key) == 'otto292':
+                message = str(key) + ":                   " + str(messages[key])
+            if str(key) == 'xiaotingfu1':
+                message = str(key) + ":             " + str(messages[key])
+            if str(key) == 'sheikhnasifimtiaz':
+                message = str(key) + ":   " + str(messages[key])
+            if str(key) == 'guanxuyu':
+                message = str(key) + ":                " + str(messages[key])
             slack_client.api_call("chat.postMessage", channel=channel,
                           text=message, as_user=True)
     elif command in N_RESPONSE_USECASE_3 and channel not in slackapicall.public_channels():
