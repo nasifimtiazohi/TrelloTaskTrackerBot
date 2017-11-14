@@ -26,12 +26,13 @@ os.environ["TRELLO_TOKEN"]=trelloToken
 trelloKey = os.environ.get("TRELLO_API_KEY")
 trelloSecret = os.environ.get("TRELLO_API_SECRET")
 trelloToken = os.environ.get("TRELLO_TOKEN")
-slackname_to_trelloname = {
-        'simtiaz':'sheikhnasifimtiaz',
-        'gyu9':"guanxuyu",
-        'xfu7':'xiaotingfu1',
-        'vgupta8':'vinay638',
-        'yhu22': 'otto292'}
+slackname_to_trelloname_dict={}
+# slackname_to_trelloname = {
+#         'simtiaz':'sheikhnasifimtiaz',
+#         'gyu9':"guanxuyu",
+#         'xfu7':'xiaotingfu1',
+#         'vgupta8':'vinay638',
+#         'yhu22': 'otto292'}
 
 #TODO: Usecase3 only asks a person about progress. No matter how many cards are due. Later we'll refine it
 
@@ -43,7 +44,29 @@ client = TrelloClient(
     token=trelloToken,
     token_secret=None
 )
+def slackname_to_trelloname(slackname):
+    slackname_to_trelloname_dict={}
+    duecards=get_all_cards_for_usecase1()
+    participants=project_team.get_members()
+    d={}
+    slack=slackapicall.fullnameNname()
 
+    for p in participants:
+        json_obj = client.fetch_json('/members/' + p.id,query_params={'badges': False})
+        #print "dir" ,dir(p)
+        d[p.full_name.lower()]=p.username
+    for trelloname in d.keys():
+        key=None
+        max=0
+        for k in slack.keys():
+            temp=SequenceMatcher(None,k,trelloname).ratio()
+            if temp>max:
+                max=temp
+                key=k
+        tempname=key
+        slackname_to_trelloname_dict[slack[tempname]]=d[trelloname]
+    print slackname_to_trelloname_dict
+    return slackname_to_trelloname_dict[slackname]
 
 def get_all_cards():
     opencards = testboard.open_cards()
@@ -242,14 +265,14 @@ def slackname_with_duecards():
         slackname_with_duecrds[key]=trelloname_with_duecards[n]
     return slackname_with_duecrds
 
-def slackname_to_trelloname(slackname):
-    return {
-        "simtiaz" : "sheikhnasifimtiaz",
-        "gyu9":"guanxuyu",
-        "xfu7":"xiaotingfu1",
-        "vgupta8":"vinay638",
-        "yhu22": "otto292"
-    }.get(x)
+# def slackname_to_trelloname(slackname):
+#     return {
+#         "simtiaz" : "sheikhnasifimtiaz",
+#         "gyu9":"guanxuyu",
+#         "xfu7":"xiaotingfu1",
+#         "vgupta8":"vinay638",
+#         "yhu22": "otto292"
+#     }.get(x)
 
 def slackname_with_duetime(duetime_in_hours):
     trelloname_with_duecards=get_all_names_cards_with_duetime(duetime_in_hours)
@@ -510,7 +533,12 @@ def getPointsOfCard(card_id, cards):
                     completemarker= True
 
             for label in card.list_labels:
+<<<<<<< HEAD
                 if  completemarker== False:
+=======
+                if  completemarker== False: 
+                    print "incomplete" 
+>>>>>>> 3043cbfffde7e56a697f7e6c9da462e1a9516987
                     if label.color == Easy:
                         peformance = peformance - 50
                         break
@@ -645,7 +673,7 @@ def getAllTargets():
 if __name__ == "__main__":
     var_init()
     ''' start experiments from here '''
-    slackname_with_duetime(24)
+    slackname_to_trelloname("xfu7")
 
 print "trellocall initialization start"
 var_init()
