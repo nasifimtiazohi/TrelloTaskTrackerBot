@@ -51,7 +51,7 @@ def database_init():
     # print("user_name", card_info[3])
     # print("card_id", card_info[4])
     # print("userid", card_info[5])
-    add_card(card_info[0], card_info[1], card_info[2], card_info[3], card_info[4], "false")
+    add_card(str(card_info[0]), str(card_info[1]), str(card_info[2]), str(card_info[3]), str(card_info[4]), "false")
 
 def update_progres(trello_username, card_id):
    #update progress
@@ -61,13 +61,13 @@ def reward_points(trello_username, card_id, points):
  # reward points
   db.child("leaderboard/" + trello_username).update({'total_points': (get_user_points(trello_username) + points)})
 
-def sync_card_info(due_date, card_name, progress, user_name, card_id):
+def sync_card_info():
   all_card_info = []
   all_card_info = trellocall.get_all_cards_of_user()
   for card_info in all_card_info:
     # detect if there are new cards
-    data = {"due_date": due_date, "card_name": card_name, "progress": progress}
-    db.child("leaderboard/" + user_name + "/cards/"+ card_id).update(data)
+    data = {"due_date": str(card_info[0]), "card_name": str(card_info[1]), "progress": str(card_info[2])}
+    db.child("leaderboard/" + str(card_info[3]) + "/cards/"+ str(card_info[4])).update(data)
 
 
 def add_card(due_date, card_name, progress, user_name, card_id, is_congrats):
