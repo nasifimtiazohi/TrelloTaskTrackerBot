@@ -122,7 +122,7 @@ def handle_command(command, channel):
     elif command.startswith(COMMAND_SHOW_TARGET):
         messages = trellocall.getAllTargets()
         #trellocall.pushPerformanceToLeaderBoard(messages)
-        message = "Individual Performance List"
+        message = "Individual Targets List"
         slack_client.api_call("chat.postMessage", channel=channel,
                           text=message, as_user=True)
         for key in messages.keys():
