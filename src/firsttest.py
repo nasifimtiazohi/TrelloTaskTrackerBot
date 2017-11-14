@@ -23,6 +23,12 @@ COMMAND_USECASE_2 = "show leaderboard"
 COMMAND_USECASE_3 = "usecase 3"
 P_RESPONSE_USECASE_3 = ['done', '1', 'finished', 'completed', "i'm done", "yes", "of course", "i finished", "yep"]
 N_RESPONSE_USECASE_3 = ['pending', '0', 'not yet', 'incomplete', 'wait', 'almost', 'no', 'nah', "i haven't"]
+slackname_to_trelloname = {
+        'simtiaz':'sheikhnasifimtiaz',
+        'gyu9':"guanxuyu",
+        'xfu7':'xiaotingfu1',
+        'vgupta8':'vinay638',
+        'yhu22': 'otto292'}
 
 #slack_client = SlackClient(os.environ.get("BOT_TOKEN"))
 slack_client= SlackClient(BOT_TOKEN)
@@ -54,24 +60,27 @@ def handle_command(command, channel, command_userid, command_card_id):
 
     elif command in P_RESPONSE_USECASE_3 and channel not in slackapicall.public_channels():
        d = slackapicall.list_users_byID()
-       trello_username = d[command_userid]
-       print "Completed User: " + trello_username
+       slack_username = d[command_userid]
+       trello_username = slackname_to_trelloname[slack_username]
+       
        #usecase3_post_congratuation_message('C7EK8ECP3', command_userid)
        # map from command_userid to trello_username
        duecardlist = []
        users_with_duecards=trellocall.trelloname_with_duetime(20)
        for user in users_with_duecards.keys():
          if user== trello_username:
+             print user
              duecardlist=users_with_duecards[user]
        # Map from card name to card id
        # Parse command task name to id
        # search in data base 
+       print "Debug: trello_username: " + trello_username
+       print "Debug: command_cardname: " + command_cardname
        card_id = db_helper.getCardIdbyCardName(trello_username, command_cardname)
-       print "The Card name is: "+ command_cardname
-       print "The Card id is: "+card_id
+       print "Debug: card_id: " + card_id
        # Update progress to complete
        usecase3.update_progres(trello_username, card_id)
-       if db_helper.get_progress_of_card(trello_username, card_id) == "Completed" & db_helper.check_if_done(trello_username, card.id) == "false":
+       if db_helper.get_progress_of_card(trello_username, card_id) == "Completed" & db_helper.check_if_done(trello_username, card_id) == "false":
                 #DO 1: Update point and set progress to "Completed"
                 db_helper.update_congratualtion_status(trello_username, card_id) # set is_congratulated to "true"
                 usecase3.reward_points(trello_username, card_id, trellocall.getPointsOfCard(card_id, duecardlist))
@@ -87,7 +96,8 @@ def handle_command(command, channel, command_userid, command_card_id):
     elif command in N_RESPONSE_USECASE_3 and channel not in slackapicall.public_channels():
         #map from command_userid to userid
        d = slackapicall.list_users_byID()
-       username = d[command_userid]
+       slack_username = d[command_userid]
+       trello_username = slackname_to_trelloname[slack_username]
        message = "<@" + username +"> " +  "has a task pending, please work harder!"
        slack_client.api_call("chat.postMessage", channel='C7EK8ECP3',
                           text=message, as_user=True)
@@ -144,7 +154,7 @@ def parse_slack_output(slack_rtm_output):
                 return output['text'].split(AT_BOT)[1].split(SPLITER)[0].strip().lower(), \
                        output['channel'],\
                        output['user'],\
-                       output['text'].split(SPLITER)[1]
+                       output['text'].split(SPLITER)[1].strip().lower()
     return None, None, None, None
 
 if __name__ == "__main__":

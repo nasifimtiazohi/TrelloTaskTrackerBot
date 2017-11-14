@@ -73,21 +73,22 @@ def total_points_init():
   for user in all_users.each():
     db.child("leaderboard/" + user.key() + "/total_points").set(0)
 
+# This function search in firebase database using cardname and return the card id 
 def getCardIdbyCardName(user, cardname):
-  #bug
-  users_by_card_name = db.child("leaderboard/" + user).order_by_child("card_name").equal_to(cardname).get()
-  return users_by_card_name.key()
-
-
-
+  # retrieve parent key by child value
+  cards = db.child("leaderboard/" + user + "/cards").get()
+  for card in cards.each():
+    card_name_in_db = db.child("leaderboard/" + user + "/cards/"+ card.key()+ "/card_name").get().val()
+    if card_name_in_db == cardname:
+      return card.key()
 def update_congratualtion_status(user, card_id):
-  db.child("leaderboard/" + user + "/" + card_id).update({'is_congratulated': "true"})
+  db.child("leaderboard/" + user + "/cards/" + card_id).update({'is_congratulated': "true"})
 
 def check_if_done(user, card_id):
-  return (db.child("leaderboard/" + user + "/" + card_id + "/is_congratulated").get().val())
+  return (db.child("leaderboard/" + user + "/cards/" + card_id +"/is_congratulated").get().val())
 def get_progress_of_card(user, card_id):
 
-  return (db.child("leaderboard/" + user + "/" + card_id + "/progress").get().val())
+  return (db.child("leaderboard/" + user + "/cards/" + card_id + "/progress").get().val())
 
 def get_user_points(user):
   '''
@@ -155,8 +156,6 @@ def store_target_points(targets):
     # new_total_points = {'total_points': value}
     db.child("leaderboard/" + key).update({'target_points': value})
 
-def check_if_done(user, card_id):
-  print db.child("leaderboard/" + user + "/cards/" + card_id + "/done").get().val()
 
 def update_card_progress(user, card_id, progress):
   '''
@@ -253,3 +252,5 @@ def print_leaderboard():
   print(sorted_leaderboard) # change print to return for later use to export to trello platform
 
 # print_leaderboard()
+
+#print getCardIdbyCardName("xiaotingfu1", 'example task 2')
