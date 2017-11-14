@@ -18,6 +18,7 @@ AT_BOT = "<@" + BOT_ID + ">"
 SPLITER = "&gt;"
 EXAMPLE_COMMAND = "do"
 COMMAND_USECASE_2 = "show leaderboard"
+COMMAND_SHOW_TARGET = "show targets board"
 COMMAND_USECASE_3 = "usecase 3"
 P_RESPONSE_USECASE_3 = ['done', '1', 'finished', 'completed', "i'm done", "yes", "of course", "i finished", "yep"]
 N_RESPONSE_USECASE_3 = ['pending', '0', 'not yet', 'incomplete', 'wait', 'almost', 'no', 'nah', "i haven't"]
@@ -61,6 +62,36 @@ def handle_command(command, channel, command_userid):
                           text=message, as_user=True)
         for key in messages.keys():
             message = str(key) + ": " + str(messages[key])
+            if str(key) == 'vinay638':
+                message = str(key) + ":                 " + str(messages[key])
+            if str(key) == 'otto292':
+                message = str(key) + ":                   " + str(messages[key])
+            if str(key) == 'xiaotingfu1':
+                message = str(key) + ":             " + str(messages[key])
+            if str(key) == 'sheikhnasifimtiaz':
+                message = str(key) + ":   " + str(messages[key])
+            if str(key) == 'guanxuyu':
+                message = str(key) + ":                " + str(messages[key])
+            slack_client.api_call("chat.postMessage", channel=channel,
+                          text=message, as_user=True)
+    elif command.startswith(COMMAND_SHOW_TARGET):
+        messages=trellocall.getAllTargets()
+        #trellocall.pushPerformanceToLeaderBoard(messages)
+        message = "Individual Target List"
+        slack_client.api_call("chat.postMessage", channel=channel,
+                          text=message, as_user=True)
+        for key in messages.keys():
+            message = str(key) + ": " + str(messages[key])
+            if str(key) == 'vinay638':
+                message = str(key) + ":                 " + str(messages[key])
+            if str(key) == 'otto292':
+                message = str(key) + ":                   " + str(messages[key])
+            if str(key) == 'xiaotingfu1':
+                message = str(key) + ":             " + str(messages[key])
+            if str(key) == 'sheikhnasifimtiaz':
+                message = str(key) + ":   " + str(messages[key])
+            if str(key) == 'guanxuyu':
+                message = str(key) + ":                " + str(messages[key])
             slack_client.api_call("chat.postMessage", channel=channel,
                           text=message, as_user=True)
     elif command in N_RESPONSE_USECASE_3 and channel not in slackapicall.public_channels():

@@ -509,8 +509,12 @@ def getPointsOfCard(card_id, cards):
                     completemarker= True
 
             for label in card.list_labels:
+<<<<<<< HEAD
                 if  completemarker== False: 
                     print "incomplete" 
+=======
+                if  completemarker== False:
+>>>>>>> 4ecd6446b1af868a1900ac67d995f9f2aa41de36
                     if label.color == Easy:
                         peformance = peformance - 50
                         break
@@ -634,6 +638,13 @@ def getUserIncompleteCardsWithInInterval(userID, endTime):
                     allCards.append(card)
     incompletedCards = getAllIncompletedCardsAtCurrentInterval(allCards, endTime)
     return incompletedCards
+
+def getAllTargets():
+    targetPoints = {}
+    for memberID in members_dict.keys():
+        targetPoint = db_helper.get_user_target_points(members_dict[memberID])
+        targetPoints[members_dict[memberID]] = targetPoint
+    return targetPoints
 
 if __name__ == "__main__":
     var_init()
