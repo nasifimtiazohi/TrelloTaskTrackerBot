@@ -1,18 +1,22 @@
 # Task Manager BOT #
 
-Note: The MILESTONE: SERVICE should refer to **service** branch.
-
 Before running our code, please install some packages and setup the
 environment variables, please see [Prerequisite](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/service/src/README.md)
 
 ### Link to Screencast for SERVICE Milestone
 [Screencast]()
 
-### Files Related to BOT Milestone
+### Files Related to SERVICE Milestone
+
+**Platform**
+1. Slack
+1. Trello
+1. Firebase 
 
 File | Description
 ---  | ---
-
+[Reward Principle](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/CalculateGradePrinciples.md) | Reward Priciple that describes how we calculate the reward points and evaluate the difficulty of task
+[db_helper.py](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/service/src/db_helper.py) | Contains many helper functions deal with the firebase database
 
 ### Group Members
 
