@@ -12,15 +12,6 @@ config = {
   "storageBucket": "taskmangerbot.appspot.com"
 }
 
-  # 1. Add all the cards of the user to the database
-  # Nested DB structure:
-  #+userid
-  #-------total_points
-  #------+card_id
-  #--------------due_date(string)
-  #--------------card_name (string)
-  #--------------points (int)
-  #--------------progress (string)
 
 # init the firebase config
 firebase = pyrebase.initialize_app(config)
