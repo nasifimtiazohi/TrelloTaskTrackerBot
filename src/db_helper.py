@@ -43,7 +43,7 @@ def get_all_info():
 def database_init():
   # Init Firebase database everyday
   all_card_info = []
-  all_card_info = trellocall.get_all_cards_of_user()
+  all_card_info = trellocall.get_all_cards()
   for card_info in all_card_info:
     # detect if there are new cards
     add_card(card_info[0], card_info[1], card_info[2], card_info[3], card_info[4], "false")
@@ -53,9 +53,12 @@ def update_progres(trello_username, card_id):
    #update progress
    db.child("leaderboard/" + trello_username+ "/cards/" + card_id).update({'progress': "Completed"})
 
-def reward_points(trello_username, card_id, points):
+def reward_points(trello_username, points):
  # reward points
-  db.child("leaderboard/" + trello_username).update({'total_points': (get_user_points(trello_username) + points)})
+ # TypeError: unsupported operand type(s) for +: 'NoneType' and 'int'
+  total = get_user_points(trello_username) + points
+  print total
+  db.child("leaderboard/" + trello_username).update({'total_points':total })
     
 def add_card(due_date, card_name, progress, user_name, card_id, is_congrats):
   '''
@@ -91,14 +94,20 @@ def total_points_init():
   for user in all_users.each():
     db.child("leaderboard/" + user.key() + "/total_points").set(0)
 
+#################################################################################################################
+
 # This function search in firebase database using cardname and return the card id 
+
+#################################################################################################################
 def getCardIdbyCardName(user, cardname):
   # retrieve parent key by child value
   cards = db.child("leaderboard/" + user + "/cards").get()
   for card in cards.each():
     card_name_in_db = db.child("leaderboard/" + user + "/cards/"+ card.key()+ "/card_name").get().val()
-    if card_name_in_db == cardname:
+    card_name_in_db = card_name_in_db.strip().lower()
+    if card_name_in_db == cardname.strip().lower():
       return card.key()
+  
 def update_congratualtion_status(user, card_id):
   db.child("leaderboard/" + user + "/cards/" + card_id).update({'is_congrats': "true"})
 
@@ -119,8 +128,9 @@ def get_user_points(user):
       user (string): user id
   '''
   # comment out the line below line to test the output value
-  # print(db.child("leaderboard/" + user + "/total_points").get().val())
-  return (db.child("leaderboard/" + user + "/total_points").get().val())
+  #print(db.child("leaderboard/" + user + "/total_points").get().val())
+  points = db.child("leaderboard/" + user + "/total_points").get().val()
+  return points
 
 def get_user_target_points(user):
   '''
@@ -266,5 +276,6 @@ def print_leaderboard():
   sorted_leaderboard = sorted(leaderboard.items(), key=operator.itemgetter(1), reverse=True)
   print(sorted_leaderboard) # change print to return for later use to export to trello platform
 
-# print_leaderboard()
-#print getCardIdbyCardName("xiaotingfu1", 'example task 2')
+#reward_points("xiaotingfu1", 50)
+#print_leaderboard()
+#print getCardIdbyCardName("xiaotingfu1", ' fix bugs for use case 3')
