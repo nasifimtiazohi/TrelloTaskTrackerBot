@@ -319,7 +319,6 @@ def print_members_points():
                             membersPoint[idMembersDict[memberID]] += int(points)
     return membersPoint
 
-
 def getInterval(timeInHours):
     endTime = datetime.datetime.utcnow()
     endTime = endTime.replace(tzinfo=pytz.utc)
@@ -350,10 +349,6 @@ def getAllIncompletedCards(cards):
         if lables != None :
             for lable in lables:
                 if lable.color == inCompletedLable:
-                    '''if card.due_date:
-                        dueDate = card.due_date
-                        dueDate = dueDate.replace(tzinfo=pytz.utc)
-                        if dueDate < currentTime:'''
                     inCompletedCards.append(card)
     return inCompletedCards
 
@@ -440,6 +435,7 @@ def updatePerformancePoints():
     hello
 
 def getPerformancePoints():
+    inactivePenalty = -1
     openCards = getAllOpenCards()
     members = members_dict.keys()
     memberCards = {}
@@ -452,8 +448,8 @@ def getPerformancePoints():
             for memberId in card.member_ids:
                 memberCards[memberId].append(card)
 
-    intervalLength = 5 # length of interval, hours
-    interval = getInterval(5)
+    intervalLength = 24 # length of interval, hours
+    interval = getInterval(intervalLength)
     performance = {}
     for memberID in memberCards.keys():
         cards = memberCards[memberID]
@@ -473,7 +469,11 @@ def getPerformancePoints():
             currentIncompleteCards = getAllIncompletedCardsAtCurrentInterval(incompletedCards, interval[1])
             penalty = getPenalty(currentIncompleteCards)
         prevPoint = fetch_from_db.get_user_points(members_dict[memberID])
-        performance[memberID] = rewardsAndBouns + penalty + prevPoint
+
+        if rewardsAndBouns == 0:
+            performance[memberID] = rewardsAndBouns + penalty + prevPoint + inactivePenalty
+        else:
+            performance[memberID] = rewardsAndBouns + penalty + prevPoint
     memberPerformance = {}
     for memberID in members_dict.keys():
         memberPerformance[members_dict[memberID]] = performance[memberID]
@@ -516,16 +516,22 @@ def createCardLabel(card, name, color):
         }
     )
 
+def getUserIncompleteCardsWithInInterval(userID, endTime):
+    openCards = getAllOpenCards()
+    allCards = []
+
+    for card in openCards:
+        if card.member_ids:
+            for memberId in card.member_ids:
+                if memberId == userID:
+                    allCards.append(card)
+    incompletedCards = getAllIncompletedCardsAtCurrentInterval(allCards, endTime)
+    return incompletedCards
 
 if __name__ == "__main__":
     var_init()
     ''' start experiments from here '''
     slackname_with_duetime(24)
-
-
-
-
-
 
 print "trellocall initialization start"
 var_init()
