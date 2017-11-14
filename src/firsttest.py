@@ -6,6 +6,8 @@ import slackapicall
 import usecase3
 import usecase1
 import thread
+import db_helper
+
 # import unicodedata
 os.environ["BOT_TOKEN"]='xoxb-266498254006-btD2n1TcKdi5MY6AKlPGTwnm'
 os.environ["BOT_ID"]='U7UEN7G06'
@@ -64,15 +66,21 @@ def handle_command(command, channel, command_userid):
 
     # if any(command in s for s in P_RESPONSE_USECASE_3):
     # elif command in P_RESPONSE_USECASE_3 and channel not in slackapicall.public_channels():
-elif command in P_RESPONSE_USECASE_3 and channel not in slackapicall.public_channels():
+    elif command in P_RESPONSE_USECASE_3 and channel not in slackapicall.public_channels():
        print "usecase 3"
        print("user: ", d[command_userid])
        usecase3_post_congratuation_message('C7EK8ECP3', command_userid)
        # map from command_userid to trello_username
-    #    duecardlist=trellocall.trelloname_with_duetime(20)
-    #    for card in duecardlist:
-    #        if card.progress == "completed" && !check_if_done(card.id):
-    #             usecase3_post_congratuation_message('C7EK8ECP3', command_userid)
+       duecardlist=trellocall.trelloname_with_duetime(20)
+       # Update progress to complete
+
+       #db.child("leaderboard/" + trello_username+ "/" + card_id).update({'total_points': (get_user_points(user) + points)})
+       for card in duecardlist:
+           if (db_helper.get_progress_of_card(trello_username, card.id) == "completed") & db_helper.check_if_done(card.id):
+                #DO 1: Update point and progress in db
+                usecase3.reward_points_in_db(trello_username, card.id, 50)
+                #DO 2: Post congratulation message to this user
+                usecase3_post_congratuation_message('C7EK8ECP3', command_userid)
        #update the trello card and also database information
        usecase3.database_init()
 
@@ -96,6 +104,7 @@ elif command in P_RESPONSE_USECASE_3 and channel not in slackapicall.public_chan
 
 def usecase3_final_function(threadName, delay):
     while True:
+        usecase3.database_init()
         dm_channels=usecase3.check_progress()
         for d in dm_channels:
             channel=d[2]
