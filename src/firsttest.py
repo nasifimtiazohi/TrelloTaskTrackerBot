@@ -42,7 +42,7 @@ def handle_command(command, channel, command_userid, command_card_id):
 
     #nasif: why is this function not printing leaderboard from the database?
     if command.startswith(COMMAND_USECASE_2):
-        messages=trellocall.getPerformancePoints()
+        messages=trellocall.getPrevTotalPoint()
         #trellocall.pushPerformanceToLeaderBoard(messages)
         message = "Individual Performance List"
         slack_client.api_call("chat.postMessage", channel=channel,
