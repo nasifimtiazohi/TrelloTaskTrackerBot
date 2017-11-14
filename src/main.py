@@ -23,6 +23,7 @@ COMMAND_SHOW_TARGET = "show targets board"
 COMMAND_USECASE_3 = "usecase 3"
 P_RESPONSE_USECASE_3 = ['done', '1', 'finished', 'completed', "i'm done", "yes", "of course", "i finished", "yep"]
 N_RESPONSE_USECASE_3 = ['pending', '0', 'not yet', 'incomplete', 'wait', 'almost', 'no', 'nah', "i haven't"]
+RESET_TOTAL_SCORES = "reset leaderboard"
 
 # slackname_to_trelloname = {
 #         'simtiaz':'sheikhnasifimtiaz',
@@ -42,7 +43,7 @@ slack_client= SlackClient(BOT_TOKEN)
 #         command: string, the parsed command from slack user output
 #         channel: the target channel to post message
 #                                                                             #
-############################################################################### 
+###############################################################################
 def handle_command(command, channel, command_userid):
     """
         Receives commands directed at the bot and determines if they
@@ -102,7 +103,11 @@ def handle_command(command, channel, command_userid):
        trello_username = trellocall.slackname_to_trelloname[slack_username]
        message = "<@" + command_userid +"> " +  "has a task pending, please work harder!"
        slack_client.api_call("chat.postMessage", channel='C7EK8ECP3',
-                          text=message, as_user=True)    
+                          text=message, as_user=True)
+    elif command in RESET_TOTAL_SCORES and channel not in slackapicall.public_channels():
+       print "Reset the leaderboard..."
+       db_helper.total_points_init()
+       db_helper.print_leaderboard() 
     else:
         slack_client.api_call("chat.postMessage", channel=channel,
                           text=response, as_user=True)
@@ -151,7 +156,7 @@ def handle_command_for_usecase3(command, channel, command_userid, command_cardna
                     print "inside if 1: " + user
                     #Get all cards belong to this user
                     duecardlist=users_with_duecards[user]
-            # BUG: duecard info is not updated after the label is updated      
+            # BUG: duecard info is not updated after the label is updated
             trellocall.completeCards(card_id,duecardlist)
             # TODO: get all cards of the user twice
             users_with_duecards2=trellocall.trelloname_with_duetime(20)
@@ -174,7 +179,7 @@ def handle_command_for_usecase3(command, channel, command_userid, command_cardna
 
        else:
             # If cannot find command in the database, prompt user to input again
-            message = "Well, your status is: " + command + ", however, the task you input seems incorrect, please try again..." 
+            message = "Well, your status is: " + command + ", however, the task you input seems incorrect, please try again..."
             slack_client.api_call("chat.postMessage", channel=channel,text=message, as_user=True)
 
 def usecase3_final_function(threadName, delay):
@@ -222,9 +227,9 @@ if __name__ == "__main__":
     if slack_client.rtm_connect():
         print("Taskbot connected and running!")
         try:
-            #thread.start_new_thread(usecase1.mainFlow,("UC1-mainflow",60*3,))
-            #thread.start_new_thread(usecase1.alternateFlow,("UC2-alternateflow",60*5,))
-            thread.start_new_thread(usecase2.mainFlow, 24*60*60)
+            thread.start_new_thread(usecase1.mainFlow,("UC1-mainflow",60*3,))
+            thread.start_new_thread(usecase1.alternateFlow,("UC2-alternateflow",60*5,))
+            thread.start_new_thread(usecase2.mainFlow, ("Usecase2", 24*60*60))
             thread.start_new_thread(usecase3_final_function,("Usecase3",60*3))
         except:
             print "thread could not be started"
