@@ -48,6 +48,7 @@ def add_card(due_date, card_name, progress, user_name, card_id):
                     card_info[4] = user_name
                     card_info[5] = card_id
                     card_info[6] = userid
+  
   Example:
   add_card("yhu22", "2017-10-25T16:00:00.000Z", 8, "test add card to firebase via python code", 50, "completed")
 
@@ -59,7 +60,7 @@ def add_card(due_date, card_name, progress, user_name, card_id):
       points (int): points reward for the task
       progress (string): progress of the task, "completed" or "pending"
   '''
-  data = {"due_date": due_date, "card_name": card_name, "progress": progress}
+  data = {"due_date": due_date, "card_name": card_name, "progress": progress, "is_congratulated": "false"}
   db.child("leaderboard/" + user_name + "/cards/"+ card_id).set(data)
 
 def total_points_init():
@@ -70,7 +71,15 @@ def total_points_init():
   for user in all_users.each():
     db.child("leaderboard/" + user.key() + "/total_points").set(0)
 
-# total_points_init()
+
+def update_congratualtion_status(user, card_id):
+  db.child("leaderboard/" + user + "/" + card_id).update({'is_congratulated': "true"})
+  
+def check_if_done(user, card_id):
+  return (db.child("leaderboard/" + user + "/" + card_id + "/is_congratulated").get().val())
+def get_progress_of_card(user, card_id):
+
+  return (db.child("leaderboard/" + user + "/" + card_id + "/progress").get().val())
 
 def get_user_points(user):
   '''
