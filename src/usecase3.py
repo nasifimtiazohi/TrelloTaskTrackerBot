@@ -15,7 +15,7 @@ from datetime import datetime
 #      it will post reminder message to a public channel and add penalties in his score in the leaderboard.
 #
 #      Alternative flow:
-#      A1: 1.If information is missing about any member, 
+#      A1: 1.If information is missing about any member,
 #       it will post message to public channel that the member is inactive.                                     #
 #################################################################################################################
 #
@@ -24,20 +24,20 @@ from datetime import datetime
 #     related to the requirements of use case 3
 #
 #   Function:
-#    
-#    post_public_message(): 
-#   
+#
+#    post_public_message():
+#
 #################################################################################################################
 
 
 ################################################################################################################
-# Function: 
+# Function:
 # name:
-#       check_progress() : keep track of user progress and send message to ask for their input        
+#       check_progress() : keep track of user progress and send message to ask for their input
 #       sspost_public_message(): post message to slack in response to user input
-#         
+#
 # return:
-#         dm_channel: list of 
+#         dm_channel: list of
 #                              userid: trello user id
 #                              u: email id i.e. xfu7
 #                              channel: direct message channel
@@ -66,11 +66,11 @@ def post_public_message():
   return dm_channel
 
 ################################################################################################################
-# Function: 
+# Function:
 # name:
-#         check_progress() 
+#         check_progress()
 # return:
-#         dm_channel: list of 
+#         dm_channel: list of
 #                              userid: trello user id
 #                              slack_name: email id i.e. xfu7
 #                              channel: direct message channel
@@ -82,7 +82,7 @@ def post_public_message():
 #     1. We will update his progress (="completed") in database and also update the points to his total points (reward)
 #     2. We will update trello, mark the card as DONE automatically
 #     3. we will send congraculation message in public channel, so user's teammate can find their motivation of working harder
-#   If user ignore our reminder, or he provide an negative reponse, 
+#   If user ignore our reminder, or he provide an negative reponse,
 #     we will do the following things:
 #     1. We will update his progress (="pending")in database and also update the points to his total points (penality)
 #     2. Keep sending the reminder
@@ -101,10 +101,9 @@ def check_progress():
         i = 0
         for card in cardlist:
             i+=1
-            message+=". Task "+ str(i) +": "+ card.name+" ,please respond your status of completeness AND the name of the task: @taskbot YOUR STATUS, YOUR TASK Name, separated using ' , ' sysmbol. e.g: Completed, Task 1" 
+            message+=". Task "+ str(i) +": "+ card.name+" ,please respond your status of completeness AND the name of the task: @taskbot YOUR STATUS, YOUR TASK Name, separated using ' , ' sysmbol. e.g: Completed, Task 1"
         l=[]
         channel=slackapicall.open_im(userid)
         l.extend((userid,slack_name,channel,cardlist,message))
         dm_channel.append(l)
   return dm_channel
-
