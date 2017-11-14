@@ -22,6 +22,7 @@ COMMAND_USECASE_2 = "show leaderboard"
 COMMAND_USECASE_3 = "usecase 3"
 P_RESPONSE_USECASE_3 = ['done', '1', 'finished', 'completed', "i'm done", "yes", "of course", "i finished", "yep"]
 N_RESPONSE_USECASE_3 = ['pending', '0', 'not yet', 'incomplete', 'wait', 'almost', 'no', 'nah', "i haven't"]
+RESET_TOTAL_SCORES = "reset leaderboard"
 
 slackname_to_trelloname = {
         'simtiaz':'sheikhnasifimtiaz',
@@ -125,6 +126,10 @@ def handle_command_for_usecase3(command, channel, command_userid, command_cardna
        message = "<@" + username +"> " +  "has a task pending, please work harder!"
        slack_client.api_call("chat.postMessage", channel='C7EK8ECP3',
                           text=message, as_user=True)
+    elif command in RESET_TOTAL_SCORES and channel not in slackapicall.public_channels():
+       print "Reset the leaderboard..."
+       db_helper.total_points_init()
+       db_helper.print_leaderboard()            
 
 def usecase3_final_function(threadName, delay):
     while True:
