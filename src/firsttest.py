@@ -37,12 +37,12 @@ def handle_command(command, channel, command_userid, command_card_id):
                "* command with numbers, delimited by spaces."
     # preprocess the input command to small case and cast from unicode string to string
     command = str(command).lower()
-
+    
     print("command receive", command)
 
     #nasif: why is this function not printing leaderboard from the database?
     if command.startswith(COMMAND_USECASE_2):
-        messages=trellocall.getPerformancePoints()
+        messages=trellocall.getPrevTotalPoint()
         #trellocall.pushPerformanceToLeaderBoard(messages)
         message = "Individual Performance List"
         slack_client.api_call("chat.postMessage", channel=channel,
@@ -81,6 +81,7 @@ def handle_command(command, channel, command_userid, command_card_id):
                 message = "<@" + trello_username + ">" +  ", your performance score have been updated to: " + str(trellocall.getPointsOfCard(card_id, duecardlist))
                 slack_client.api_call("chat.postMessage", channel='C7EK8ECP3',text=message, as_user=True)
 
+    #    usecase3.reward_points(command_userid, 50)
 
     # if any(command in s for s in N_RESPONSE_USECASE_3):
     elif command in N_RESPONSE_USECASE_3 and channel not in slackapicall.public_channels():
@@ -135,10 +136,10 @@ def parse_slack_output(slack_rtm_output):
                 print output['text']
             if output and 'text' in output and AT_BOT in output['text'] and SPLITER in output['text']  :
                 # return text after the @ mention, whitespace removed
-                #TODO: only works with texts after the mention, need to fix 
+                #TODO: only works with texts after the mention, need to fix
                 #How to parse multiple commands
 
-                print "This current user is responding: "+ output['user'] 
+                print "This current user is responding: "+ output['user']
 
                 return output['text'].split(AT_BOT)[1].split(SPLITER)[0].strip().lower(), \
                        output['channel'],\
