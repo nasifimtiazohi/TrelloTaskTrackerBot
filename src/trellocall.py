@@ -536,8 +536,9 @@ def getPointsOfCard(card_id, cards):
                 if label.color == Complete:
                     completemarker= True
             for label in card.list_labels:
-                if  completemarker== False: 
-                    print "incomplete" 
+
+                if  completemarker== False:
+
                     if label.color == Easy:
                         peformance = peformance - 50
                         break
