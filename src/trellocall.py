@@ -9,7 +9,7 @@ import pytz
 import slackapicall
 import json
 import emailing
-from db_helper import add_card
+from db_helper import add_card, get_user_points, store_total_points, get_progress_of_card
 
 members_dict=None
 project_team=None
@@ -42,23 +42,16 @@ client = TrelloClient(
     token=trelloToken,
     token_secret=None
 )
-# return a list of things:
-# card_id, user_id, due_date, card_name, points, progress
 
-# This function update trello card label from red to green
-def update_progress():
-    users_with_cards=slackname_with_duetime(20)
 
-def get_all_cards_of_user():
+def get_all_cards():
     opencards = testboard.open_cards()
     all_card_info=[]
-    #print "The performance point: "+getPerformancePoints()
     for c in opencards:
         card_info = []
         for userid in c.member_ids:
             user_name = members_dict[userid]
             # 'sheikhnasifimtiaz' is a slack name
-            #if user_name == 'sheikhnasifimtiaz':
             due_date = c.due
             card_id = c.id
             card_name = c.name
@@ -72,13 +65,21 @@ def get_all_cards_of_user():
                 card_info.append(user_name)
                 card_info.append(card_id)
                 card_info.append(userid)
-                #card_info.extend((due_date, userid, due_date, card_name, user_name, progress))
                 all_card_info.append(card_info)
-            #points = getPerformancePoints()[userid]
-            #progress = getCardProgress(card_id)
-            #how to know if the card is due or not
-            #card_info.append(card_id, userid, due_date, card_name, points, progress)
     return all_card_info
+
+def get_all_cards_of_user(trello_username):
+    opencards = testboard.open_cards()
+    all_cards=[]
+    for c in opencards:
+        card_info = []
+        for userid in c.member_ids:
+            user_name = members_dict[userid]
+            # 'sheikhnasifimtiaz' is a slack name
+            if user_name == trello_username:
+                all_cards.append(c)
+
+    return all_cards
 
 def get_all_cards_with_duedate():
     current_time=datetime.datetime.now()
@@ -504,12 +505,16 @@ def getPointsOfCard(card_id, cards):
     for card in cards :
        if card.id == card_id:
             for label in card.list_labels:
-
                 if label.color == Complete:
                     completemarker= True
 
             for label in card.list_labels:
+<<<<<<< HEAD
+                if  completemarker== False: 
+                    print "incomplete" 
+=======
                 if  completemarker== False:
+>>>>>>> 4ecd6446b1af868a1900ac67d995f9f2aa41de36
                     if label.color == Easy:
                         peformance = peformance - 50
                         break
@@ -633,6 +638,13 @@ def getUserIncompleteCardsWithInInterval(userID, endTime):
                     allCards.append(card)
     incompletedCards = getAllIncompletedCardsAtCurrentInterval(allCards, endTime)
     return incompletedCards
+
+def getAllTargets():
+    targetPoints = {}
+    for memberID in members_dict.keys():
+        targetPoint = db_helper.get_user_target_points(members_dict[memberID])
+        targetPoints[members_dict[memberID]] = targetPoint
+    return targetPoints
 
 if __name__ == "__main__":
     var_init()
