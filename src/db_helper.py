@@ -82,10 +82,10 @@ def getCardIdbyCardName(user, cardname):
     if card_name_in_db == cardname:
       return card.key()
 def update_congratualtion_status(user, card_id):
-  db.child("leaderboard/" + user + "/cards/" + card_id).update({'is_congratulated': "true"})
+  db.child("leaderboard/" + user + "/cards/" + card_id).update({'is_congrats': "true"})
 
 def check_if_done(user, card_id):
-  return (db.child("leaderboard/" + user + "/cards/" + card_id +"/is_congratulated").get().val())
+  return (db.child("leaderboard/" + user + "/cards/" + card_id +"/is_congrats").get().val())
 def get_progress_of_card(user, card_id):
 
   return (db.child("leaderboard/" + user + "/cards/" + card_id + "/progress").get().val())
