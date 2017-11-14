@@ -1,5 +1,6 @@
 from firebase import firebase
 import pyrebase
+import trellocall
 import operator
 # import trellocall
 
@@ -11,15 +12,6 @@ config = {
   "storageBucket": "taskmangerbot.appspot.com"
 }
 
-  # 1. Add all the cards of the user to the database
-  # Nested DB structure:
-  #+userid
-  #-------total_points
-  #------+card_id
-  #--------------due_date(string)
-  #--------------card_name (string)
-  #--------------points (int)
-  #--------------progress (string)
 
 # init the firebase config
 firebase = pyrebase.initialize_app(config)
@@ -39,28 +31,69 @@ def get_all_info():
   users = db.child("leaderboard").get()
   print(users.val())
 
+#init list of all cards
+'''
+                    card_info[0]= due_date
+                    card_info[1]= card_name
+                    card_info[2]= progress
+                    card_info[3] = user_name
+                    card_info[4] = card_id
+
+'''
+# only call once at the beginning
+def database_init():
+  # Init Firebase database everyday
+  all_card_info = []
+  all_card_info = trellocall.get_all_cards()
+  for card_info in all_card_info:
+    # detect if there are new cards
+    # print("user_name", card_info[3])
+    # print("card_id", card_info[4])
+    # print("userid", card_info[5])
+    add_card(str(card_info[0]), str(card_info[1]), str(card_info[2]), str(card_info[3]), str(card_info[4]), "false")
+
+def update_progres(trello_username, card_id):
+   #update progress
+   db.child("leaderboard/" + trello_username+ "/cards/" + card_id).update({'progress': "Completed"})
+
+def reward_points(trello_username, points):
+ # reward points
+ # TypeError: unsupported operand type(s) for +: 'NoneType' and 'int'
+  total = get_user_points(trello_username) + points
+  print total
+  db.child("leaderboard/" + trello_username).update({'total_points':total })
+    
+  db.child("leaderboard/" + trello_username).update({'total_points': (get_user_points(trello_username) + points)})
+
+def sync_card_info():
+  all_card_info = []
+  all_card_info = trellocall.get_all_cards_of_user()
+  for card_info in all_card_info:
+    # detect if there are new cards
+    data = {"due_date": str(card_info[0]), "card_name": str(card_info[1]), "progress": str(card_info[2])}
+    db.child("leaderboard/" + str(card_info[3]) + "/cards/"+ str(card_info[4])).update(data)
+
+
 def add_card(due_date, card_name, progress, user_name, card_id, is_congrats):
   '''
   Add card to certain member
                     card_info[0]= due_date
                     card_info[1]= card_name
-                    card_info[2]= 20
-                    card_info[3]= progress
-                    card_info[4] = user_name
-                    card_info[5] = card_id
-                    card_info[6] = userid
+                    card_info[2]= progress
+                    card_info[3] = user_name
+                    card_info[4] = card_id
+                    card_info[5] = is_congrats
 
   Example:
-  add_card("yhu22", "2017-10-25T16:00:00.000Z", 8, "test add card to firebase via python code", 50, "completed", "False")
+  add_card("2017-10-25T16:00:00.000Z", "test add card to firebase via python code", "completed", "otto292", "59eba737418e777a4ac31360", "false")
 
   Args:
-      user (string): user id
       due_date (string): due date from trello card
-      hours (int): number of hours to complete the task
-      name (string): name of the card
-      points (int): points reward for the task
+      card_name (string): name of the card
       progress (string): progress of the task, "completed" or "pending"
-      is_congrats (boolean): has been post congrats message or not
+      user_name (string): user id
+      card_id (string): card id
+      is_congrats (string): has been post congrats message or not
   '''
   data = {"due_date": due_date, "card_name": card_name, "progress": progress, "is_congrats": is_congrats}
   db.child("leaderboard/" + user_name + "/cards/"+ card_id).set(data)
@@ -73,14 +106,21 @@ def total_points_init():
   for user in all_users.each():
     db.child("leaderboard/" + user.key() + "/total_points").set(0)
 
+#################################################################################################################
+
 # This function search in firebase database using cardname and return the card id 
+
+#################################################################################################################
+# This function search in firebase database using cardname and return the card id
 def getCardIdbyCardName(user, cardname):
   # retrieve parent key by child value
   cards = db.child("leaderboard/" + user + "/cards").get()
   for card in cards.each():
     card_name_in_db = db.child("leaderboard/" + user + "/cards/"+ card.key()+ "/card_name").get().val()
-    if card_name_in_db == cardname:
+    card_name_in_db = card_name_in_db.strip().lower()
+    if card_name_in_db == cardname.strip().lower():
       return card.key()
+  
 def update_congratualtion_status(user, card_id):
   db.child("leaderboard/" + user + "/cards/" + card_id).update({'is_congrats': "true"})
 
@@ -89,6 +129,13 @@ def check_if_done(user, card_id):
 def get_progress_of_card(user, card_id):
 
   return (db.child("leaderboard/" + user + "/cards/" + card_id + "/progress").get().val())
+
+def add_field_to_allusers(field, value):
+  all_users = db.child("leaderboard/").get()
+  for user in all_users.each():
+    db.child("leaderboard/" + user.key()).update({field: value})
+
+add_field_to_allusers("target_points", 100)
 
 def get_user_points(user):
   '''
@@ -101,8 +148,9 @@ def get_user_points(user):
       user (string): user id
   '''
   # comment out the line below line to test the output value
-  # print(db.child("leaderboard/" + user + "/total_points").get().val())
-  return (db.child("leaderboard/" + user + "/total_points").get().val())
+  #print(db.child("leaderboard/" + user + "/total_points").get().val())
+  points = db.child("leaderboard/" + user + "/total_points").get().val()
+  return points
 
 def get_user_target_points(user):
   '''
@@ -121,12 +169,9 @@ def get_user_target_points(user):
 def store_total_points(performance):
   '''
   Store total points to the database
-
   Example:
   performance = {'guanxuyu': 15, 'otto292': 25, 'xiaotingfu1': 30, 'sheikhnasifimtiaz': 20, 'vinay638': 10}
   store_total_points(performance)
-
-
   Args:
     performance is a dict which keys are the user id and values are the total points
 
@@ -155,7 +200,6 @@ def store_target_points(targets):
   for key, value in targets.iteritems():
     # new_total_points = {'total_points': value}
     db.child("leaderboard/" + key).update({'target_points': value})
-
 
 def update_card_progress(user, card_id, progress):
   '''
@@ -251,6 +295,6 @@ def print_leaderboard():
   sorted_leaderboard = sorted(leaderboard.items(), key=operator.itemgetter(1), reverse=True)
   print(sorted_leaderboard) # change print to return for later use to export to trello platform
 
-# print_leaderboard()
-
-#print getCardIdbyCardName("xiaotingfu1", 'example task 2')
+#reward_points("xiaotingfu1", 50)
+#print_leaderboard()
+#print getCardIdbyCardName("xiaotingfu1", ' fix bugs for use case 3')

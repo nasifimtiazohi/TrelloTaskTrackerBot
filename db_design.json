@@ -5,136 +5,174 @@
         "59eb63651eca77c2f1bc66f6" : {
           "card_name" : "Development for Use Case 2",
           "due_date" : "2017-10-25T16:00:00.000Z",
+          "is_congrats" : "false",
           "progress" : "Completed"
         },
         "59eba771f8f92ef35eab3291" : {
           "card_name" : "Unit Test 2",
-          "due_date" : "2017-10-31T16:00:00.000Z",
+          "due_date" : "2017-11-12T17:00:00.000Z",
+          "is_congrats" : "false",
           "progress" : "Completed"
         },
         "59eba7a2a8d62519c971ec81" : {
           "card_name" : "Bot interaction",
           "due_date" : "2017-10-31T16:00:00.000Z",
-          "progress" : "Completed"
+          "is_congrats" : "false",
+          "progress" : "Pending"
         },
         "59fea98788b17190bcb0e37f" : {
           "card_name" : "TestLoL",
           "due_date" : "2017-11-05T05:10:00.000Z",
+          "is_congrats" : "false",
           "progress" : "Completed"
         },
         "59feb6cd2d4c9f588948d8c6" : {
           "card_name" : "TestDota",
           "due_date" : "2017-11-05T05:00:00.000Z",
+          "is_congrats" : "false",
           "progress" : "Completed"
         }
       },
-      "total_points" : -4170
+      "target_points" : 100,
+      "total_points" : -550
     },
     "otto292" : {
       "cards" : {
         "59eb634b9c84cc02182a487b" : {
           "card_name" : "Create Mocking data",
           "due_date" : "2017-10-25T16:00:00.000Z",
+          "is_congrats" : "false",
           "progress" : "Completed"
         },
         "59eba737418e777a4ac31360" : {
           "card_name" : "Unit Test 1",
           "due_date" : "2017-10-28T16:00:00.000Z",
+          "is_congrats" : "false",
           "progress" : "Completed"
         },
         "59eba77b04ae9502e6025f8c" : {
           "card_name" : "Slack Integration",
           "due_date" : "2017-10-11T16:00:00.000Z",
-          "progress" : "Completed"
+          "is_congrats" : "false",
+          "progress" : "Pending"
         }
       },
-      "total_points" : -1680
+      "target_points" : 100,
+      "total_points" : -270
     },
     "sheikhnasifimtiaz" : {
       "cards" : {
         "59eb635c44521cf59ae2d2c3" : {
           "card_name" : "Development for Use Case 1",
           "due_date" : "2017-10-25T16:00:00.000Z",
+          "is_congrats" : "false",
           "progress" : "Completed"
         },
         "59eb636b1314cd6969a277b7" : {
           "card_name" : "Development for Use case 3",
           "due_date" : "2017-10-26T03:59:00.000Z",
-          "progress" : "Completed"
+          "is_congrats" : "false",
+          "progress" : "Pending"
         },
         "59ed2447190a151e849b7179" : {
           "card_name" : "example task 4",
-          "due_date" : "2017-11-08T17:00:00.000Z",
-          "progress" : "Completed"
-        },
-        "59fd526370393da3391d3c75" : {
-          "card_name" : "emergency task",
-          "due_date" : "2017-11-04T16:00:00.000Z",
-          "points" : 20,
+          "due_date" : "2017-11-14T17:00:00.000Z",
+          "is_congrats" : "false",
           "progress" : "Pending"
-        },
-        "59fd56bb7e1807eb6839686b" : {
-          "card_name" : "donetask",
-          "due_date" : "2017-11-04T16:00:00.000Z",
-          "progress" : "Completed"
         },
         "59ff885b16b59ae9b29d1ef7" : {
           "card_name" : "test duecards",
           "due_date" : "2017-11-06T17:00:00.000Z",
+          "is_congrats" : "false",
           "progress" : "Completed"
         }
       },
-      "total_points" : -1680
+      "target_points" : 100,
+      "total_points" : -310
     },
     "vinay638" : {
       "cards" : {
         "59eb56e53c8b6af5708302b2" : {
           "card_name" : "example task 3",
           "due_date" : "2017-10-19T16:00:00.000Z",
-          "progress" : "Completed"
+          "is_congrats" : "false",
+          "progress" : "Pending"
         },
         "59eba77536b7a12a37fbb415" : {
           "card_name" : "Unit Test 3",
           "due_date" : "2017-11-16T17:00:00.000Z",
-          "progress" : "Completed"
+          "is_congrats" : "false",
+          "progress" : "Pending"
         }
       },
-      "total_points" : -1650
+      "target_points" : 100,
+      "total_points" : -900
     },
     "xiaotingfu1" : {
       "cards" : {
         "59dd512fbfd77119f4557639" : {
           "card_name" : "MILESTONE: BOT",
           "due_date" : "2017-10-25T16:00:00.000Z",
+          "is_congrats" : "false",
           "progress" : "Completed"
         },
         "59ea45bf8088d0a9cda61c49" : {
           "card_name" : "example task 2",
-          "due_date" : "2017-11-08T17:00:00.000Z",
+          "due_date" : "2017-11-14T17:00:00.000Z",
+          "is_congrats" : "false",
+          "progress" : "Completed"
+        },
+        "59eba0ac9f1432f4e063b353" : {
+          "card_name" : "Xiaoting",
+          "due_date" : "2017-11-11T23:00:00.000Z",
+          "is_congrats" : false,
           "progress" : "Completed"
         },
         "59eba7b4cd8fad69bfba8e63" : {
           "card_name" : "Trello Integration",
           "due_date" : "2017-10-31T16:00:00.000Z",
+          "is_congrats" : "false",
+          "progress" : "Pending"
+        },
+        "59ed2447190a151e849b7179" : {
+          "card_name" : "example task 4",
+          "due_date" : "2017-11-14T17:00:00.000Z",
+          "is_congrats" : "false",
           "progress" : "Completed"
         },
         "59fd526370393da3391d3c75" : {
           "card_name" : "emergency task",
-          "due_date" : "2017-11-04T16:00:00.000Z",
+          "due_date" : "2017-11-11T17:00:00.000Z",
+          "is_congrats" : "false",
           "progress" : "Completed"
         },
         "59ff88811b3404758592ca5f" : {
           "card_name" : "test",
           "due_date" : "2017-11-06T17:00:00.000Z",
+          "is_congrats" : "false",
           "progress" : "Completed"
         },
         "5a00b84c3272b84227f55ed5" : {
           "card_name" : "Usecase 3",
           "due_date" : "2017-11-09T17:00:00.000Z",
-          "progress" : "Completed"
+          "is_congrats" : "false",
+          "progress" : "Pending"
+        },
+        "5a0b316128cfb723896c0d4f" : {
+          "card_name" : "Fix bugs for use case 3",
+          "due_date" : "2017-11-15T05:00:00.000Z",
+          "is_congrats" : "false",
+          "progress" : "Pending"
+        },
+        "5a0b4b661052de0f7a3a4be6" : {
+          "card_name" : "Fix bugs in main.py, organize structure",
+          "due_date" : "2017-11-15T05:00:00.000Z",
+          "is_congrats" : "false",
+          "progress" : "Pending"
         }
       },
-      "total_points" : -2940
+      "target_points" : 100,
+      "total_points" : -70
     }
   }
 }

@@ -1,7 +1,7 @@
 from trello import TrelloClient
 from trello import label as trelloLabel
 from difflib import SequenceMatcher
-import db_helper
+# import db_helper
 import struct
 import datetime
 import os
@@ -9,6 +9,7 @@ import pytz
 import slackapicall
 import json
 import emailing
+from db_helper import add_card
 
 members_dict=None
 project_team=None
@@ -41,23 +42,16 @@ client = TrelloClient(
     token=trelloToken,
     token_secret=None
 )
-# return a list of things:
-# card_id, user_id, due_date, card_name, points, progress
 
-# This function update trello card label from red to green
-def update_progress():
-    users_with_cards=slackname_with_duetime(20)
 
-def get_all_cards_of_user():
+def get_all_cards():
     opencards = testboard.open_cards()
     all_card_info=[]
-    #print "The performance point: "+getPerformancePoints()
     for c in opencards:
         card_info = []
         for userid in c.member_ids:
             user_name = members_dict[userid]
             # 'sheikhnasifimtiaz' is a slack name
-            #if user_name == 'sheikhnasifimtiaz':
             due_date = c.due
             card_id = c.id
             card_name = c.name
@@ -71,13 +65,21 @@ def get_all_cards_of_user():
                 card_info.append(user_name)
                 card_info.append(card_id)
                 card_info.append(userid)
-                #card_info.extend((due_date, userid, due_date, card_name, user_name, progress))
                 all_card_info.append(card_info)
-            #points = getPerformancePoints()[userid]
-            #progress = getCardProgress(card_id)
-            #how to know if the card is due or not
-            #card_info.append(card_id, userid, due_date, card_name, points, progress)
     return all_card_info
+
+def get_all_cards_of_user(trello_username):
+    opencards = testboard.open_cards()
+    all_cards=[]
+    for c in opencards:
+        card_info = []
+        for userid in c.member_ids:
+            user_name = members_dict[userid]
+            # 'sheikhnasifimtiaz' is a slack name
+            if user_name == trello_username:
+                all_cards.append(c)
+
+    return all_cards
 
 def get_all_cards_with_duedate():
     current_time=datetime.datetime.now()
@@ -240,13 +242,13 @@ def slackname_with_duecards():
     return slackname_with_duecrds
 
 def slackname_to_trelloname(slackname):
-    return {  
+    return {
         "simtiaz" : "sheikhnasifimtiaz",
         "gyu9":"guanxuyu",
         "xfu7":"xiaotingfu1",
         "vgupta8":"vinay638",
         "yhu22": "otto292"
-    }.get(x) 
+    }.get(x)
 
 def slackname_with_duetime(duetime_in_hours):
     trelloname_with_duecards=get_all_names_cards_with_duetime(duetime_in_hours)
@@ -421,7 +423,7 @@ def getRewardsAndBonus_of_A_Card(card_id, cards):
                     break
                 if label.color == Hard:
                     points += 50
-                    break  
+                    break
     return points
 
 def getRewardsAndBonus(cards):
@@ -496,20 +498,18 @@ def getPointsOfCard(card_id, cards):
     Easy = "yellow"
     Median = "sky"
     Hard = "black"
-
     Complete = "green"
     Incomplete = "red"
     completemarker = False
     # A Card should have two labels
     for card in cards :
-       if card.id == card_id:     
+       if card.id == card_id:
             for label in card.list_labels:
-
                 if label.color == Complete:
                     completemarker= True
 
             for label in card.list_labels:
-                if  completemarker== False:  
+                if  completemarker== False:
                     if label.color == Easy:
                         peformance = peformance - 50
                         break
@@ -518,7 +518,7 @@ def getPointsOfCard(card_id, cards):
                         break
                     if label.color == Hard:
                         peformance = peformance - 10
-                        break 
+                        break
                 if  completemarker== True:
                     if label.color == Easy:
                         peformance += 10
