@@ -21,3 +21,6 @@ def mainFlow(threadName, delay):
         if dayCount == 7:
             dayCount = 0
         time.sleep(24*60*60)
+
+
+db_helper.sync_card_info()

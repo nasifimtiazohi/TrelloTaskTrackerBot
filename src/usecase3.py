@@ -101,8 +101,9 @@ def check_progress():
         i = 0
         for card in cardlist:
             i+=1
-            message+=". Task "+ str(i) +": "+ card.name+" ,please respond your status of completeness AND the name of the task: @taskbot YOUR STATUS, YOUR TASK Name, separated using ' , ' sysmbol. e.g: Completed, Task 1"
+            message+=". Task "+ str(i) +": "+ card.name
         l=[]
+        message += " ,please respond your status of completeness AND the name of the task: @taskbot YOUR STATUS, YOUR TASK NAME, separated using ' > ' sysmbol. e.g: Completed > Task 1"
         channel=slackapicall.open_im(userid)
         l.extend((userid,slack_name,channel,cardlist,message))
         dm_channel.append(l)
