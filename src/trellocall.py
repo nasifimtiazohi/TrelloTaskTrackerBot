@@ -582,7 +582,7 @@ def getPrevTotalPoint():
     prevPoints = {}
     for memberID in members_dict.keys():
         prevPoint = db_helper.get_user_points(members_dict[memberID])
-        prevPoints[memberID] = prevPoint
+        prevPoints[members_dict[memberID]] = prevPoint
     return prevPoints
 
 def pushPerformanceToLeaderBoard(performance):
