@@ -96,6 +96,7 @@ def list_users_byID():
 def fullnameNname():
     d={}
     call= slack_client.api_call("users.list")
+    print (dir(call))
     users=call['members']
     for c in users:
         profile=c['profile']

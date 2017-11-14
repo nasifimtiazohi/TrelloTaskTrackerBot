@@ -44,26 +44,25 @@ def get_all_info():
 def database_init():
   # Init Firebase database everyday
   all_card_info = []
-  all_card_info = trellocall.get_all_cards_of_user()
-
+  all_card_info = trellocall.get_all_cards()
   for card_info in all_card_info:
-    # detect if there are new cards
-    # print("user_name", card_info[3])
-    # print("card_id", card_info[4])
-    # print("userid", card_info[5])
-    add_card(str(card_info[0]), str(card_info[1]), str(card_info[2]), str(card_info[3]), str(card_info[4]), "false")
+    if card_info[2] == "Completed":
+      add_card(str(card_info[0]), str(card_info[1]), str(card_info[2]), str(card_info[3]), str(card_info[4]), "true")
+    elif card_info[2] == "Pending":
+      add_card(str(card_info[0]), str(card_info[1]), str(card_info[2]), str(card_info[3]), str(card_info[4]), "false")
 
 def update_progres(trello_username, card_id):
    #update progress
    db.child("leaderboard/" + trello_username+ "/cards/" + card_id).update({'progress': "Completed"})
 
-def reward_points(trello_username, card_id, points):
+def reward_points(trello_username, points):
  # reward points
-  db.child("leaderboard/" + trello_username).update({'total_points': (get_user_points(trello_username) + points)})
+  total = get_user_points(trello_username) + points
+  db.child("leaderboard/" + trello_username).update({'total_points': total})
 
 def sync_card_info():
   all_card_info = []
-  all_card_info = trellocall.get_all_cards_of_user()
+  all_card_info = trellocall.get_all_cards()
   for card_info in all_card_info:
     # detect if there are new cards
     data = {"due_date": str(card_info[0]), "card_name": str(card_info[1]), "progress": str(card_info[2])}
@@ -108,7 +107,8 @@ def getCardIdbyCardName(user, cardname):
   cards = db.child("leaderboard/" + user + "/cards").get()
   for card in cards.each():
     card_name_in_db = db.child("leaderboard/" + user + "/cards/"+ card.key()+ "/card_name").get().val()
-    if card_name_in_db == cardname:
+    card_name_in_db = card_name_in_db.strip().lower()
+    if card_name_in_db == cardname.strip().lower():
       return card.key()
 def update_congratualtion_status(user, card_id):
   db.child("leaderboard/" + user + "/cards/" + card_id).update({'is_congrats': "true"})
@@ -284,4 +284,4 @@ def print_leaderboard():
   print(sorted_leaderboard) # change print to return for later use to export to trello platform
 
 # print_leaderboard()
-#print getCardIdbyCardName("xiaotingfu1", 'example task 2')
+#print getCardIdbyCardName("sheikhnasifimtiaz", )

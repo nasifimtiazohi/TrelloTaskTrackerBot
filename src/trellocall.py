@@ -8,7 +8,8 @@ import pytz
 import slackapicall
 import json
 import emailing
-from db_helper import add_card, get_user_points, store_total_points, get_progress_of_card
+# from db_helper import add_card, get_user_points, store_total_points, get_progress_of_card
+import db_helper
 
 members_dict=None
 project_team=None
