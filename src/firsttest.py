@@ -37,7 +37,7 @@ def handle_command(command, channel, command_userid, command_card_id):
                "* command with numbers, delimited by spaces."
     # preprocess the input command to small case and cast from unicode string to string
     command = str(command).lower()
-    
+
     print("command receive", command)
 
     #nasif: why is this function not printing leaderboard from the database?
@@ -67,7 +67,7 @@ def handle_command(command, channel, command_userid, command_card_id):
 
        # Update progress to complete
        usecase3.update_progres(trello_username, command_card_id)
-       if db_helper.get_progress_of_card(trello_username, command_card_id) == "Completed" & db_helper.check_if_done(trello_username, card.id) == "false":
+       if db_helper.get_progress_of_card(trello_username, command_card_id) == "Completed" and not db_helper.check_if_done(trello_username, card.id):
                 #DO 1: Update point and set progress to "Completed"
                 db_helper.update_congratualtion_status(trello_username, card.id) # set is_congratulated to "true"
                 usecase3.reward_points(trello_username, card.id, trellocall.getPointsOfCard(card.id, duecardlist))

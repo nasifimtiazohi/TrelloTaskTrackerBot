@@ -79,9 +79,16 @@ def update_congratualtion_status(user, card_id):
 
 def check_if_done(user, card_id):
   return (db.child("leaderboard/" + user + "/" + card_id + "/is_congratulated").get().val())
-def get_progress_of_card(user, card_id):
 
+def get_progress_of_card(user, card_id):
   return (db.child("leaderboard/" + user + "/" + card_id + "/progress").get().val())
+
+def add_field_to_allusers(field, value):
+  all_users = db.child("leaderboard/").get()
+  for user in all_users.each():
+    db.child("leaderboard/" + user.key()).update({field: value})
+
+add_field_to_allusers("target_points", 100)
 
 def get_user_points(user):
   '''
@@ -119,7 +126,7 @@ def store_total_points(performance):
 # store_total_points(performance)
 
 def check_if_done(user, card_id):
-  print db.child("leaderboard/" + user + "/cards/" + card_id + "/done").get().val()
+  return db.child("leaderboard/" + user + "/cards/" + card_id + "/done").get().val()
 
 def update_card_progress(user, card_id, progress):
   '''
