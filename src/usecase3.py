@@ -177,4 +177,4 @@ def calculate_time_period():
 if __name__=="__main__":
     d = check_progress()
     # database_init()
-    print d
+    # print d

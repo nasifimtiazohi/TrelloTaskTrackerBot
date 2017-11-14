@@ -1,7 +1,7 @@
 from firebase import firebase
 import pyrebase
 import operator
-import trellocall
+# import trellocall
 
 
 config = {

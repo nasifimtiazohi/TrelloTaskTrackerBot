@@ -34,7 +34,7 @@ def handle_command(command, channel, command_userid):
                "* command with numbers, delimited by spaces."
     # preprocess the input command to small case and cast from unicode string to string
     command = str(command).lower()
-
+    d = slackapicall.list_users_byID()
     print("command receive", command)
 
 
@@ -63,8 +63,10 @@ def handle_command(command, channel, command_userid):
     #                       text=response, as_user=True)
 
     # if any(command in s for s in P_RESPONSE_USECASE_3):
-    elif command in P_RESPONSE_USECASE_3 and channel not in slackapicall.public_channels():
+    # elif command in P_RESPONSE_USECASE_3 and channel not in slackapicall.public_channels():
+elif command in P_RESPONSE_USECASE_3 and channel not in slackapicall.public_channels():
        print "usecase 3"
+       print("user: ", d[command_userid])
        usecase3_post_congratuation_message('C7EK8ECP3', command_userid)
        # map from command_userid to trello_username
     #    duecardlist=trellocall.trelloname_with_duetime(20)
@@ -73,8 +75,8 @@ def handle_command(command, channel, command_userid):
     #             usecase3_post_congratuation_message('C7EK8ECP3', command_userid)
        #update the trello card and also database information
        usecase3.database_init()
-       usecase3.reward_points(command_userid, 50)
 
+    #    usecase3.reward_points(command_userid, 50)
 
     # if any(command in s for s in N_RESPONSE_USECASE_3):
     elif command in N_RESPONSE_USECASE_3 and channel not in slackapicall.public_channels():
@@ -128,10 +130,10 @@ def parse_slack_output(slack_rtm_output):
                 print output['text']
             if output and 'text' in output and AT_BOT in output['text']:
                 # return text after the @ mention, whitespace removed
-                #TODO: only works with texts after the mention, need to fix 
+                #TODO: only works with texts after the mention, need to fix
                 #How to parse multiple commands
 
-                print "This current user is responding: "+ output['user'] 
+                print "This current user is responding: "+ output['user']
 
                 return output['text'].split(AT_BOT)[1].strip().lower(), \
                        output['channel'],\
