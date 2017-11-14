@@ -72,7 +72,7 @@ Find all the cards of each user
 
 def update_progres(trello_username, card_id):
    #update progress
-   db.child("leaderboard/" + trello_username+ "/" + card_id).update({'progress': "Completed"})
+   db.child("leaderboard/" + trello_username+ "/cards/" + card_id).update({'progress': "Completed"})
 
 def reward_points(trello_username, card_id, points):
  # reward points

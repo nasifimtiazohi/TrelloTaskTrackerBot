@@ -601,6 +601,7 @@ def pushPerformanceToLeaderBoard(performance):
     params:
         cards: should be the collections of all opened cards, can be get from getAllOpenCards()
         cardID: is the target card whose status should be changed from "to do" to "Done"
+        updateCardLabelToComplete
 '''
 def completeCards(cardID, cards):
     for card in cards:

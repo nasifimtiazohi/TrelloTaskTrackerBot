@@ -80,15 +80,19 @@ def handle_command(command, channel, command_userid, command_card_id):
        print "Debug: card_id: " + card_id
        # Update progress to complete
        usecase3.update_progres(trello_username, card_id)
-       if db_helper.get_progress_of_card(trello_username, card_id) == "Completed" & db_helper.check_if_done(trello_username, card_id) == "false":
+       # TODO: 1. Do not congra for many times; 2. Update trello label
+       if db_helper.get_progress_of_card(trello_username, card_id) == "Completed" and db_helper.check_if_done(trello_username, card_id) == "false":
+                print "inside if"
                 #DO 1: Update point and set progress to "Completed"
                 db_helper.update_congratualtion_status(trello_username, card_id) # set is_congratulated to "true"
                 usecase3.reward_points(trello_username, card_id, trellocall.getPointsOfCard(card_id, duecardlist))
                 #DO 2: Post congratulation message to this user
-                usecase3_post_congratuation_message('C7EK8ECP3', card_id)
+                usecase3_post_congratuation_message('C7EK8ECP3', command_userid)
                 #DO 3: Post performance score to this user
-                message = "<@" + trello_username + ">" +  ", your performance score have been updated to: " + str(trellocall.getPointsOfCard(card_id, duecardlist))
+                message = "<@" + command_userid + ">" +  ", your performance score have been updated to: " + str(trellocall.getPointsOfCard(card_id, duecardlist))
                 slack_client.api_call("chat.postMessage", channel='C7EK8ECP3',text=message, as_user=True)
+                #DO 4: update trello label
+                trellocall.completeCards(card_id,duecardlist)
 
     #    usecase3.reward_points(command_userid, 50)
 
@@ -144,13 +148,18 @@ def parse_slack_output(slack_rtm_output):
         for output in output_list:
             if 'text' in output:
                 print output['text']
-            if output and 'text' in output and AT_BOT in output['text'] and SPLITER in output['text']  :
+            if output and 'text' in output and AT_BOT in output['text']:
+                print "This current user is responding: "+ output['user']
+                return output['text'].split(AT_BOT)[1].split(SPLITER)[0].strip().lower(), \
+                       output['channel'],\
+                       output['user']
+
+            if output and 'text' in output and AT_BOT in output['text'] and SPLITER in output['text']:
                 # return text after the @ mention, whitespace removed
                 #TODO: only works with texts after the mention, need to fix
                 #How to parse multiple commands
 
-                print "This current user is responding: "+ output['user']
-
+                #print "This current user is responding: "+ output['user']
                 return output['text'].split(AT_BOT)[1].split(SPLITER)[0].strip().lower(), \
                        output['channel'],\
                        output['user'],\
@@ -168,12 +177,18 @@ if __name__ == "__main__":
         except:
             print "thread could not be started"
         while True:
+
             command, channel, command_userid, command_cardname = parse_slack_output(slack_client.rtm_read())
-            if command and channel:
+            # These are all the required commands for use case 3
+            if command and channel and command_userid and command_cardname:
                     print "command: " + command
                     print "command cardname: " + command_cardname
                     print "command userid: " + command_userid
                     handle_command(command, channel, command_userid, command_cardname)
+            # TODO: debug with the following line, how to handle two variables for use case 2 and 1
+            if command and channel and command_userid:
+                handle_command(command, channel, command_userid, command_cardname)
+
             #usecase3_final_function()
             time.sleep(READ_WEBSOCKET_DELAY)
     else:
