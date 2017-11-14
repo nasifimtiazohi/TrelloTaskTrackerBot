@@ -24,6 +24,12 @@ os.environ["TRELLO_TOKEN"]=trelloToken
 trelloKey = os.environ.get("TRELLO_API_KEY")
 trelloSecret = os.environ.get("TRELLO_API_SECRET")
 trelloToken = os.environ.get("TRELLO_TOKEN")
+slackname_to_trelloname = {
+        'simtiaz':'sheikhnasifimtiaz',
+        'gyu9':"guanxuyu",
+        'xfu7':'xiaotingfu1',
+        'vgupta8':'vinay638',
+        'yhu22': 'otto292'}
 
 #TODO: Usecase3 only asks a person about progress. No matter how many cards are due. Later we'll refine it
 
@@ -233,6 +239,14 @@ def slackname_with_duecards():
         slackname_with_duecrds[key]=trelloname_with_duecards[n]
     return slackname_with_duecrds
 
+def slackname_to_trelloname(slackname):
+    return {  
+        "simtiaz" : "sheikhnasifimtiaz",
+        "gyu9":"guanxuyu",
+        "xfu7":"xiaotingfu1",
+        "vgupta8":"vinay638",
+        "yhu22": "otto292"
+    }.get(x) 
 
 def slackname_with_duetime(duetime_in_hours):
     trelloname_with_duecards=get_all_names_cards_with_duetime(duetime_in_hours)
