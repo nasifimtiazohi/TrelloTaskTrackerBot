@@ -16,8 +16,8 @@ File | Description
 
 ### Group Members
 
-Name | Unity ID 
---- | --- 
+Name | Unity ID
+--- | ---
 Xiaoting Fu | xfu7
 Vinay Gupta | vgupta8
 Nasif Imtiaz | simtiaz
@@ -25,11 +25,11 @@ Yu-Ching Hu | yhu22
 Guanxu Yu | gyu9
 
 ## Milestone - SERVICE ##
-Our bot runs on the assumption that a team will have their workspace both on "Slack" and "Trello". They use trello to keep track of their tasks, and "Slack" for communication. With necessary permissions, our bot resides in Slack and also can fetch/post data on Trello workspace of the team. 
+Our bot runs on the assumption that a team will have their workspace both on "Slack" and "Trello". They use trello to keep track of their tasks, and "Slack" for communication. With necessary permissions, our bot resides in Slack and also can fetch/post data on Trello workspace of the team.
 
 
 ### Task Tracking
-[Trello Task Manager](https://trello.com/b/MXYu6ZEy/task-manager-bot)  Used for task tracking like worksheet. 
+[Trello Task Manager](https://trello.com/b/MXYu6ZEy/task-manager-bot)  Used for task tracking like worksheet.
 [Github Issues](https://github.ncsu.edu/yhu22/CSC510_F17_Project/issues) Issues to be solved for the implementation.
 
 [Testing Board](https://trello.com/b/3L2DxAis/test-board) Trello board for us to test the function.

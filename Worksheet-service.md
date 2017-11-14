@@ -3,7 +3,7 @@
 | Deliverable   | Item/Status   |  Assignee
 | ------------- | ------------  |  ------------
 | Update Milestone: Bot within 2 weeks: Mocking, Bot implementation, Task tracking || Everyone
-| Create a new bot token | old token got disabled by slack | 
+| Create a new bot token | old token got disabled by slack |
 | Complete Use case 1 | need to run it constantly | Nasif
 | Complete Use case 3 | need to run it constantly | Vinay
 | Deploy and setup of the Virtual Machine and databse| | Xiaoting Fu
