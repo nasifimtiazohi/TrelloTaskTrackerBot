@@ -1,5 +1,6 @@
 from firebase import firebase
 import pyrebase
+import trellocall
 import operator
 # import trellocall
 
@@ -39,6 +40,32 @@ def get_all_info():
   users = db.child("leaderboard").get()
   print(users.val())
 
+#init list of all cards
+'''
+                    card_info[0]= due_date
+                    card_info[1]= card_name
+                    card_info[2]= progress
+                    card_info[3] = user_name
+                    card_info[4] = card_id
+                
+'''
+def database_init():
+  # Init Firebase database everyday
+  all_card_info = []
+  all_card_info = trellocall.get_all_cards_of_user()
+  for card_info in all_card_info:
+    # detect if there are new cards
+    add_card(card_info[0], card_info[1], card_info[2], card_info[3], card_info[4], "false")
+
+
+def update_progres(trello_username, card_id):
+   #update progress
+   db.child("leaderboard/" + trello_username+ "/cards/" + card_id).update({'progress': "Completed"})
+
+def reward_points(trello_username, card_id, points):
+ # reward points
+  db.child("leaderboard/" + trello_username).update({'total_points': (get_user_points(trello_username) + points)})
+    
 def add_card(due_date, card_name, progress, user_name, card_id, is_congrats):
   '''
   Add card to certain member

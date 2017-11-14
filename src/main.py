@@ -104,7 +104,7 @@ def handle_command_for_usecase3(command, channel, command_userid, command_cardna
        card_id = db_helper.getCardIdbyCardName(trello_username, command_cardname)
        print "Debug: card_id: " + card_id
        #DO 0: Update database Set progress to "Completed"
-       usecase3.update_progres(trello_username, card_id)
+       db_helper.update_progres(trello_username, card_id)
        #DO 4: update trello label
        trellocall.completeCards(card_id,duecardlist)
        # TODO: 1. Do not congra for many times; 2. Update trello label
@@ -112,7 +112,7 @@ def handle_command_for_usecase3(command, channel, command_userid, command_cardna
                 print "inside if"
                 #DO 1: Update performance point
                 db_helper.update_congratualtion_status(trello_username, card_id) # set is_congratulated to "true"
-                usecase3.reward_points(trello_username, card_id, trellocall.getPointsOfCard(card_id, duecardlist))
+                db_helper.reward_points(trello_username, card_id, trellocall.getPointsOfCard(card_id, duecardlist))
                 #DO 2: Post congratulation message to this user
                 usecase3_post_congratuation_message('C7EK8ECP3', command_userid)
                 #DO 3: Post performance score to this user
@@ -130,7 +130,7 @@ def handle_command_for_usecase3(command, channel, command_userid, command_cardna
 
 def usecase3_final_function(threadName, delay):
     while True:
-        #usecase3.database_init()
+        #db_helper.database_init()
         dm_channels=usecase3.check_progress()
         for directMessage in dm_channels:
             channel=directMessage[2]
