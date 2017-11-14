@@ -564,6 +564,13 @@ def getPerformancePoints():
     db_helper.store_total_points(memberPerformance)
     return memberPerformance
 
+def getPrevTotalPoint():
+    prevPoints = {}
+    for memberID in members_dict.keys():
+        prevPoint = fetch_from_db.get_user_points(members_dict[memberID])
+        prevPoints[memberID] = prevPoint
+    return prevPoints
+
 def pushPerformanceToLeaderBoard(performance):
     leaderList = testboard.list_lists()
     for list in leaderList:
