@@ -10,7 +10,7 @@ from db_helper import get_user_points, add_card
   2. Are we not penalizing points and posting shame message on general channel? '''
 
 ''' Xiaoting:
-  Fix problems in UC3, 
+  Fix problems in UC3,
   1. reply to individual person, instad of all
   2. after replying to each person, update the trello card and also database information
   3. Post Congratulation message, penality message'''
@@ -35,7 +35,7 @@ db = firebase.database()
                     card_info[2]= progress
                     card_info[3] = user_name
                     card_info[4] = card_id
-                
+
 '''
 
 def database_init():
@@ -43,7 +43,7 @@ def database_init():
   all_card_info = []
   all_card_info = trellocall.get_all_cards_of_user()
   for card_info in all_card_info:
-    add_card(card_info[0], card_info[1], card_info[2], card_info[3], card_info[4])
+    add_card(card_info[0], card_info[1], card_info[2], card_info[3], card_info[4], False)
 
 # If user complete the task, we will add points for this user and then update his performance point
 
@@ -86,9 +86,9 @@ def reward_points(user, points):
   '''
   # print("Before adding reward points: ",get_user_points(user))
   db.child("leaderboard/" + user).update({'total_points': (get_user_points(user) + points)})
- 
-  users_with_cards=trellocall.slackname_with_duetime(20) 
-  
+
+  users_with_cards=trellocall.slackname_with_duetime(20)
+
   for u in users_with_cards.keys():
         #get uid
         userid=slackapicall.fullname_to_id(u)
@@ -130,11 +130,11 @@ def check_progress():
   2. We will update trello, mark the card as DONE automatically
   3. we will send congraculation message in public channel, so user's teammate can find their motivation of working harder
 
-  If user ignore our reminder, or he provide an negative reponse, 
+  If user ignore our reminder, or he provide an negative reponse,
   we will do the following things:
   1. We will update his progress (="pending")in database and also update the points to his total points (penality)
   2. Keep sending the reminder
-  
+
   Example:
   check_progress()
   Args:
@@ -156,7 +156,7 @@ def check_progress():
         i = 0
         for card in cardlist:
             i+=1
-            message+=". Task "+ str(i) +": "+ card.name+" ,please respond your status of completeness AND the name of the task: @taskbot YOUR STATUS, YOUR TASK" 
+            message+=". Task "+ str(i) +": "+ card.name+" ,please respond your status of completeness AND the name of the task: @taskbot YOUR STATUS, YOUR TASK"
         l=[]
         channel=slackapicall.open_im(userid)
         #print u,userid,channel
@@ -171,10 +171,10 @@ def calculate_time_period():
   This function should be always running and monitoring the progress
   This function can be triggered by a time event
 
-  Args:     
+  Args:
   '''
 
 if __name__=="__main__":
     d = check_progress()
-    #database_init()
-    #print d
+    # database_init()
+    print d
