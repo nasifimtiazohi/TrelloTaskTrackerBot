@@ -1,5 +1,6 @@
 from firebase import firebase
 import pyrebase
+import trellocall
 import operator
 # import trellocall
 
@@ -11,15 +12,6 @@ config = {
   "storageBucket": "taskmangerbot.appspot.com"
 }
 
-  # 1. Add all the cards of the user to the database
-  # Nested DB structure:
-  #+userid
-  #-------total_points
-  #------+card_id
-  #--------------due_date(string)
-  #--------------card_name (string)
-  #--------------points (int)
-  #--------------progress (string)
 
 # init the firebase config
 firebase = pyrebase.initialize_app(config)
@@ -38,6 +30,32 @@ def get_all_info():
 
   users = db.child("leaderboard").get()
   print(users.val())
+
+#init list of all cards
+'''
+                    card_info[0]= due_date
+                    card_info[1]= card_name
+                    card_info[2]= progress
+                    card_info[3] = user_name
+                    card_info[4] = card_id
+
+'''
+def database_init():
+  # Init Firebase database everyday
+  all_card_info = []
+  all_card_info = trellocall.get_all_cards_of_user()
+  for card_info in all_card_info:
+    # detect if there are new cards
+    add_card(card_info[0], card_info[1], card_info[2], card_info[3], card_info[4], "false")
+
+
+def update_progres(trello_username, card_id):
+   #update progress
+   db.child("leaderboard/" + trello_username+ "/cards/" + card_id).update({'progress': "Completed"})
+
+def reward_points(trello_username, card_id, points):
+ # reward points
+  db.child("leaderboard/" + trello_username).update({'total_points': (get_user_points(trello_username) + points)})
 
 def add_card(due_date, card_name, progress, user_name, card_id, is_congrats):
   '''
@@ -73,21 +91,22 @@ def total_points_init():
   for user in all_users.each():
     db.child("leaderboard/" + user.key() + "/total_points").set(0)
 
+# This function search in firebase database using cardname and return the card id
 def getCardIdbyCardName(user, cardname):
-  #bug
-  users_by_card_name = db.child("leaderboard/" + user).order_by_child("card_name").equal_to(cardname).get()
-  return users_by_card_name.key()
-
-
-
+  # retrieve parent key by child value
+  cards = db.child("leaderboard/" + user + "/cards").get()
+  for card in cards.each():
+    card_name_in_db = db.child("leaderboard/" + user + "/cards/"+ card.key()+ "/card_name").get().val()
+    if card_name_in_db == cardname:
+      return card.key()
 def update_congratualtion_status(user, card_id):
-  db.child("leaderboard/" + user + "/" + card_id).update({'is_congratulated': "true"})
+  db.child("leaderboard/" + user + "/cards/" + card_id).update({'is_congrats': "true"})
 
 def check_if_done(user, card_id):
-  return (db.child("leaderboard/" + user + "/" + card_id + "/is_congratulated").get().val())
-
+  return (db.child("leaderboard/" + user + "/cards/" + card_id +"/is_congrats").get().val())
 def get_progress_of_card(user, card_id):
-  return (db.child("leaderboard/" + user + "/" + card_id + "/progress").get().val())
+
+  return (db.child("leaderboard/" + user + "/cards/" + card_id + "/progress").get().val())
 
 def add_field_to_allusers(field, value):
   all_users = db.child("leaderboard/").get()
@@ -127,12 +146,9 @@ def get_user_target_points(user):
 def store_total_points(performance):
   '''
   Store total points to the database
-
   Example:
   performance = {'guanxuyu': 15, 'otto292': 25, 'xiaotingfu1': 30, 'sheikhnasifimtiaz': 20, 'vinay638': 10}
   store_total_points(performance)
-
-
   Args:
     performance is a dict which keys are the user id and values are the total points
 
@@ -161,9 +177,6 @@ def store_target_points(targets):
   for key, value in targets.iteritems():
     # new_total_points = {'total_points': value}
     db.child("leaderboard/" + key).update({'target_points': value})
-
-def check_if_done(user, card_id):
-  return db.child("leaderboard/" + user + "/cards/" + card_id + "/done").get().val()
 
 def update_card_progress(user, card_id, progress):
   '''
@@ -260,3 +273,4 @@ def print_leaderboard():
   print(sorted_leaderboard) # change print to return for later use to export to trello platform
 
 # print_leaderboard()
+#print getCardIdbyCardName("xiaotingfu1", 'example task 2')
