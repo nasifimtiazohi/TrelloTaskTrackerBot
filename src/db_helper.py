@@ -121,12 +121,9 @@ def get_user_target_points(user):
 def store_total_points(performance):
   '''
   Store total points to the database
-
   Example:
   performance = {'guanxuyu': 15, 'otto292': 25, 'xiaotingfu1': 30, 'sheikhnasifimtiaz': 20, 'vinay638': 10}
   store_total_points(performance)
-
-
   Args:
     performance is a dict which keys are the user id and values are the total points
 
@@ -252,5 +249,4 @@ def print_leaderboard():
   print(sorted_leaderboard) # change print to return for later use to export to trello platform
 
 # print_leaderboard()
-
 #print getCardIdbyCardName("xiaotingfu1", 'example task 2')

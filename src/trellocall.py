@@ -496,7 +496,6 @@ def getPointsOfCard(card_id, cards):
     Easy = "yellow"
     Median = "sky"
     Hard = "black"
-
     Complete = "green"
     Incomplete = "red"
     completemarker = False
