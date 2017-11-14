@@ -394,6 +394,27 @@ def getAllIncompletedCardsAtCurrentInterval(cards, endTimePoint):
             currentIncompleteCards.append(card)
     return currentIncompleteCards
 
+def getRewardsAndBonus_of_A_Card(card_id, cards):
+
+    points = 0
+    Easy = "yellow"
+    Median = "sky"
+    Hard = "black"
+
+    for card in cards :
+       if card.id == card_id:
+            for label in card.list_labels:
+                if label.color == Easy:
+                    points += 10
+                    break
+                if label.color == Median:
+                    points += 40
+                    break
+                if label.color == Hard:
+                    points += 50
+                    break  
+    return points
+
 def getRewardsAndBonus(cards):
 
     points = 0
@@ -432,12 +453,68 @@ def getPenalty(cards):
                 break
     return penalty
 
+def getPenalty_of_A_Card(card_id, cards):
+    penalty = 0
+    Easy = "yellow"
+    Median = "sky"
+    Hard = "black"
+
+    for card in cards :
+       if card.id == card_id:
+            for label in card.list_labels:
+                if label.color == Easy:
+                    penalty = penalty - 50
+                    break
+                if label.color == Median:
+                    penalty = penalty - 30
+                    break
+                if label.color == Hard:
+                    penalty = penalty - 10
+                    break
+    return penalty
+
 ### What is the thing returns???
 #performance = {'gyu9': 10, 'yhu22': 20, 'xfu7': 30, 'simtiaz': 20, 'vinay638': 10}
-
-def updatePerformancePoints():
+'''
+    params:
+        trello_username: trello username
+        card_id: specific card id under this user
+'''
+def getPointsOfCard(card_id):
     #....
-    hello
+    # find the difficulty level and calculate point
+    peformance = 0
+    # completeness and difficulty level
+    Easy = "yellow"
+    Median = "sky"
+    Hard = "black"
+    Complete = "red"
+    Incomplete = "green"
+    for card in cards :
+       if card.id == card_id:
+            for label in card.list_labels:
+                if label.color == Complete:
+                    if label.color == Easy:
+                        peformance = peformance - 50
+                        break
+                    if label.color == Median:
+                        peformance = peformance - 30
+                        break
+                    if label.color == Hard:
+                        peformance = peformance - 10
+                        break
+                if label.color == Incomplete:
+                    if label.color == Easy:
+                        peformance += 10
+                        break
+                    if label.color == Median:
+                        peformance += 40
+                        break
+                    if label.color == Hard:
+                        peformance += 50
+                        break
+    return peformance
+
 
 def getPerformancePoints():
     openCards = getAllOpenCards()
@@ -477,7 +554,7 @@ def getPerformancePoints():
     memberPerformance = {}
     for memberID in members_dict.keys():
         memberPerformance[members_dict[memberID]] = performance[memberID]
-    fetch_from_db.store_total_points(memberPerformance)
+    db_helper.store_total_points(memberPerformance)
     return memberPerformance
 
 def pushPerformanceToLeaderBoard(performance):
