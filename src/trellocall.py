@@ -9,8 +9,12 @@ import pytz
 import slackapicall
 import json
 import emailing
+<<<<<<< HEAD
 import db_helper
 #from db_helper import add_card
+=======
+from db_helper import add_card, get_user_points, store_total_points, get_progress_of_card
+>>>>>>> c03a22dc8d012ba08fb2ebdc85bdc7dd6b3fe83d
 
 members_dict=None
 project_team=None
@@ -535,6 +539,12 @@ def getPointsOfCard(card_id, cards):
             for label in card.list_labels:
                 if  completemarker== False: 
                     print "incomplete" 
+<<<<<<< HEAD
+=======
+=======
+                if  completemarker== False:
+>>>>>>> 4ecd6446b1af868a1900ac67d995f9f2aa41de36
+>>>>>>> c03a22dc8d012ba08fb2ebdc85bdc7dd6b3fe83d
                     if label.color == Easy:
                         peformance = peformance - 50
                         break
@@ -658,6 +668,13 @@ def getUserIncompleteCardsWithInInterval(userID, endTime):
                     allCards.append(card)
     incompletedCards = getAllIncompletedCardsAtCurrentInterval(allCards, endTime)
     return incompletedCards
+
+def getAllTargets():
+    targetPoints = {}
+    for memberID in members_dict.keys():
+        targetPoint = db_helper.get_user_target_points(members_dict[memberID])
+        targetPoints[members_dict[memberID]] = targetPoint
+    return targetPoints
 
 if __name__ == "__main__":
     var_init()

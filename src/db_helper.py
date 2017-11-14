@@ -46,11 +46,10 @@ def database_init():
   all_card_info = []
   all_card_info = trellocall.get_all_cards()
   for card_info in all_card_info:
-    # detect if there are new cards
-    # print("user_name", card_info[3])
-    # print("card_id", card_info[4])
-    # print("userid", card_info[5])
-    add_card(str(card_info[0]), str(card_info[1]), str(card_info[2]), str(card_info[3]), str(card_info[4]), "false")
+    if card_info[2] == "Completed":
+      add_card(str(card_info[0]), str(card_info[1]), str(card_info[2]), str(card_info[3]), str(card_info[4]), "true")
+    elif card_info[2] == "Pending":
+      add_card(str(card_info[0]), str(card_info[1]), str(card_info[2]), str(card_info[3]), str(card_info[4]), "false")
 
 def update_progres(trello_username, card_id):
    #update progress
@@ -62,12 +61,11 @@ def reward_points(trello_username, points):
   total = get_user_points(trello_username) + points
   print total
   db.child("leaderboard/" + trello_username).update({'total_points':total })
-    
-  db.child("leaderboard/" + trello_username).update({'total_points': (get_user_points(trello_username) + points)})
+  #db.child("leaderboard/" + trello_username).update({'total_points': (get_user_points(trello_username) + points)})
 
 def sync_card_info():
   all_card_info = []
-  all_card_info = trellocall.get_all_cards_of_user()
+  all_card_info = trellocall.get_all_cards()
   for card_info in all_card_info:
     # detect if there are new cards
     data = {"due_date": str(card_info[0]), "card_name": str(card_info[1]), "progress": str(card_info[2])}

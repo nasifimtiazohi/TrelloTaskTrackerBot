@@ -10,14 +10,23 @@ slackname_to_trelloname = {
         'vgupta8':'vinay638',
         'yhu22': 'otto292'}
 trelloname  = slackname_to_trelloname['xfu7']
-print trelloname 
 
 #delay should be hours
 def mainFlow(threadName, delay):
     dayCount = 0
+    members_dict = trellocall.members_dict
     while True:
         dayCount += 1
         trellocall.getPerformancePoints()
         if dayCount == 7:
+            currentTargets = trellocall.getAllTargets()
+            prevTotalPoints = trellocall.getPrevTotalPoint()
+            targetPoints = {}
+            for memberID in members_dict.keys():
+                targetPoints[members_dict[memberID]] = currentTargets[members_dict[memberID]] + prevTotalPoints[members_dict[memberID]]/10
+            db_helper.store_target_points(targetPoints)
             dayCount = 0
         time.sleep(24*60*60)
+
+
+db_helper.sync_card_info()
