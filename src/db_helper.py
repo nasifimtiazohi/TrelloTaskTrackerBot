@@ -73,6 +73,12 @@ def total_points_init():
   for user in all_users.each():
     db.child("leaderboard/" + user.key() + "/total_points").set(0)
 
+def getCardIdbyCardName(user, cardname):
+  #bug
+  users_by_card_name = db.child("leaderboard/" + user).order_by_child("card_name").equal_to(cardname).get()
+  return users_by_card_name.key()
+
+
 
 def update_congratualtion_status(user, card_id):
   db.child("leaderboard/" + user + "/" + card_id).update({'is_congratulated': "true"})

@@ -37,7 +37,7 @@ db = firebase.database()
                     card_info[4] = card_id
 
 '''
-
+#TODO: hard code to not update False field everytime
 def database_init():
   # Init Firebase database everyday
   all_card_info = []

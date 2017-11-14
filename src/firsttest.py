@@ -64,17 +64,21 @@ def handle_command(command, channel, command_userid, command_card_id):
          if user== trello_username:
              duecardlist=users_with_duecards[user]
        # Map from card name to card id
-
+       # Parse command task name to id
+       # search in data base
+       card_id = db_helper.getCardIdbyCardName(trello_username, command_cardname)
+       print "The Card name is: "+ command_cardname
+       print "The Card id is: "+card_id
        # Update progress to complete
        usecase3.update_progres(trello_username, command_card_id)
        if db_helper.get_progress_of_card(trello_username, command_card_id) == "Completed" and not db_helper.check_if_done(trello_username, card.id):
                 #DO 1: Update point and set progress to "Completed"
-                db_helper.update_congratualtion_status(trello_username, card.id) # set is_congratulated to "true"
-                usecase3.reward_points(trello_username, card.id, trellocall.getPointsOfCard(card.id, duecardlist))
+                db_helper.update_congratualtion_status(trello_username, card_id) # set is_congratulated to "true"
+                usecase3.reward_points(trello_username, card_id, trellocall.getPointsOfCard(card_id, duecardlist))
                 #DO 2: Post congratulation message to this user
-                usecase3_post_congratuation_message('C7EK8ECP3', command_userid)
+                usecase3_post_congratuation_message('C7EK8ECP3', card_id)
                 #DO 3: Post performance score to this user
-                message = "<@" + trello_username + ">" +  ", your performance score have been updated to: " + str(trellocall.getPointsOfCard(card.id, duecardlist))
+                message = "<@" + trello_username + ">" +  ", your performance score have been updated to: " + str(trellocall.getPointsOfCard(card_id, duecardlist))
                 slack_client.api_call("chat.postMessage", channel='C7EK8ECP3',text=message, as_user=True)
 
     #    usecase3.reward_points(command_userid, 50)
@@ -137,7 +141,7 @@ def parse_slack_output(slack_rtm_output):
 
                 print "This current user is responding: "+ output['user']
 
-                return output['text'].split(AT_BOT)[1].strip().lower(), \
+                return output['text'].split(AT_BOT)[1].split(SPLITER)[0].strip().lower(), \
                        output['channel'],\
                        output['user'],\
                        output['text'].split(SPLITER)[1]
@@ -154,10 +158,12 @@ if __name__ == "__main__":
         except:
             print "thread could not be started"
         while True:
-            command, channel, command_userid = parse_slack_output(slack_client.rtm_read())
+            command, channel, command_userid, command_cardname = parse_slack_output(slack_client.rtm_read())
             if command and channel:
-                    print "handle commands"
-                    handle_command(command, channel, command_userid, command_card_id)
+                    print "command: " + command
+                    print "command cardname: " + command_cardname
+                    print "command userid: " + command_userid
+                    handle_command(command, channel, command_userid, command_cardname)
             #usecase3_final_function()
             time.sleep(READ_WEBSOCKET_DELAY)
     else:
