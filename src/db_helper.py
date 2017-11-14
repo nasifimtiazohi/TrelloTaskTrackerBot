@@ -97,6 +97,20 @@ def get_user_points(user):
   # print(db.child("leaderboard/" + user + "/total_points").get().val())
   return (db.child("leaderboard/" + user + "/total_points").get().val())
 
+def get_user_target_points(user):
+  '''
+  Get the target points from the user
+
+  Example:
+  get_target_points("guanxuyu")
+
+  Args:
+      user (string): user id
+  '''
+  # comment out the line below line to test the output value
+  # print(db.child("leaderboard/" + user + "/total_points").get().val())
+  return (db.child("leaderboard/" + user + "/target_points").get().val())
+
 def store_total_points(performance):
   '''
   Store total points to the database
@@ -117,6 +131,23 @@ def store_total_points(performance):
 # modify the value here to test
 # performance = {'guanxuyu': 15, 'otto292': 25, 'xiaotingfu1': 30, 'sheikhnasifimtiaz': 20, 'vinay638': 10}
 # store_total_points(performance)
+
+def store_target_points(targets):
+  '''
+  Store total points to the database
+
+  Example:
+  targets = {'guanxuyu': 15, 'otto292': 25, 'xiaotingfu1': 30, 'sheikhnasifimtiaz': 20, 'vinay638': 10}
+  store_total_points(performance)
+
+
+  Args:
+    targest is a dict which keys are the user id and values are the total points
+
+  '''
+  for key, value in targets.iteritems():
+    # new_total_points = {'total_points': value}
+    db.child("leaderboard/" + key).update({'target_points': value})
 
 def check_if_done(user, card_id):
   print db.child("leaderboard/" + user + "/cards/" + card_id + "/done").get().val()
