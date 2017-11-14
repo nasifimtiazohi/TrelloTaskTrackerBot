@@ -9,12 +9,8 @@ import pytz
 import slackapicall
 import json
 import emailing
-<<<<<<< HEAD
 import db_helper
 #from db_helper import add_card
-=======
-from db_helper import add_card, get_user_points, store_total_points, get_progress_of_card
->>>>>>> c03a22dc8d012ba08fb2ebdc85bdc7dd6b3fe83d
 
 members_dict=None
 project_team=None
@@ -539,12 +535,6 @@ def getPointsOfCard(card_id, cards):
             for label in card.list_labels:
                 if  completemarker== False: 
                     print "incomplete" 
-<<<<<<< HEAD
-=======
-=======
-                if  completemarker== False:
->>>>>>> 4ecd6446b1af868a1900ac67d995f9f2aa41de36
->>>>>>> c03a22dc8d012ba08fb2ebdc85bdc7dd6b3fe83d
                     if label.color == Easy:
                         peformance = peformance - 50
                         break
