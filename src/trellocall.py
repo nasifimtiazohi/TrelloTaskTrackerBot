@@ -1,7 +1,7 @@
 from trello import TrelloClient
 from trello import label as trelloLabel
 from difflib import SequenceMatcher
-import db_helper
+# import db_helper
 import struct
 import datetime
 import os
@@ -9,6 +9,7 @@ import pytz
 import slackapicall
 import json
 import emailing
+from db_helper import add_card
 
 members_dict=None
 project_team=None
@@ -240,13 +241,13 @@ def slackname_with_duecards():
     return slackname_with_duecrds
 
 def slackname_to_trelloname(slackname):
-    return {  
+    return {
         "simtiaz" : "sheikhnasifimtiaz",
         "gyu9":"guanxuyu",
         "xfu7":"xiaotingfu1",
         "vgupta8":"vinay638",
         "yhu22": "otto292"
-    }.get(x) 
+    }.get(x)
 
 def slackname_with_duetime(duetime_in_hours):
     trelloname_with_duecards=get_all_names_cards_with_duetime(duetime_in_hours)
@@ -421,7 +422,7 @@ def getRewardsAndBonus_of_A_Card(card_id, cards):
                     break
                 if label.color == Hard:
                     points += 50
-                    break  
+                    break
     return points
 
 def getRewardsAndBonus(cards):
@@ -501,14 +502,14 @@ def getPointsOfCard(card_id, cards):
     completemarker = False
     # A Card should have two labels
     for card in cards :
-       if card.id == card_id:     
+       if card.id == card_id:
             for label in card.list_labels:
 
                 if label.color == Complete:
                     completemarker= True
 
             for label in card.list_labels:
-                if  completemarker== False:  
+                if  completemarker== False:
                     if label.color == Easy:
                         peformance = peformance - 50
                         break
@@ -517,7 +518,7 @@ def getPointsOfCard(card_id, cards):
                         break
                     if label.color == Hard:
                         peformance = peformance - 10
-                        break 
+                        break
                 if  completemarker== True:
                     if label.color == Easy:
                         peformance += 10
