@@ -566,7 +566,7 @@ def getPerformancePoints():
         if incompletedCards :
             currentIncompleteCards = getAllIncompletedCardsAtCurrentInterval(incompletedCards, interval[1])
             penalty = getPenalty(currentIncompleteCards)
-        prevPoint = fetch_from_db.get_user_points(members_dict[memberID])
+        prevPoint = db_helper.get_user_points(members_dict[memberID])
 
         if rewardsAndBouns == 0:
             performance[memberID] = rewardsAndBouns + penalty + prevPoint + inactivePenalty
@@ -581,7 +581,7 @@ def getPerformancePoints():
 def getPrevTotalPoint():
     prevPoints = {}
     for memberID in members_dict.keys():
-        prevPoint = fetch_from_db.get_user_points(members_dict[memberID])
+        prevPoint = db_helper.get_user_points(members_dict[memberID])
         prevPoints[memberID] = prevPoint
     return prevPoints
 
