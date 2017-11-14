@@ -475,20 +475,27 @@ def getPenalty_of_A_Card(card_id, cards):
         trello_username: trello username
         card_id: specific card id under this user
 '''
-def getPointsOfCard(card_id):
-    #....
+def getPointsOfCard(card_id, cards):
     # find the difficulty level and calculate point
     peformance = 0
     # completeness and difficulty level
     Easy = "yellow"
     Median = "sky"
     Hard = "black"
-    Complete = "red"
-    Incomplete = "green"
+
+    Complete = "green"
+    Incomplete = "red"
+    completemarker = False
+    # A Card should have two labels
     for card in cards :
-       if card.id == card_id:
+       if card.id == card_id:     
             for label in card.list_labels:
+
                 if label.color == Complete:
+                    completemarker= True
+
+            for label in card.list_labels:
+                if  completemarker== False:  
                     if label.color == Easy:
                         peformance = peformance - 50
                         break
@@ -497,8 +504,8 @@ def getPointsOfCard(card_id):
                         break
                     if label.color == Hard:
                         peformance = peformance - 10
-                        break
-                if label.color == Incomplete:
+                        break 
+                if  completemarker== True:
                     if label.color == Easy:
                         peformance += 10
                         break

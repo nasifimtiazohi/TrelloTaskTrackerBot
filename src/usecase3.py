@@ -70,29 +70,13 @@ Find all the cards of each user
    Run the bot and fetch data from trello
 '''
 
-def update_progress_and_reward_points_in_db(trello_username, card_id, points):
+def update_progres(trello_username, card_id):
    #update progress
    db.child("leaderboard/" + trello_username+ "/" + card_id).update({'progress': "Completed"})
-   # reward points
-   db.child("leaderboard/" + trello_username).update({'total_points': (get_user_points(trello_username) + points)})
 
-
-def reward_points_in_db(trello_username, card_id, points):
-  '''
-  Reward points according to rewarding principles
-  Save points to database under each person's name
-  update trello label from red to green
-
-  Example:
-  reward_points("yhu22", 50)
-
-  Args:
-        user (string): user id
-        points (int): points reward for the task
-
-  '''
-  # print("Before adding reward points: ",get_user_points(user))
-  db.child("leaderboard/" + trello_username).update({'total_points': (get_user_points(user) + points)})
+def reward_points(trello_username, card_id, points):
+ # reward points
+  db.child("leaderboard/" + trello_username).update({'total_points': (get_user_points(trello_username) + points)})
 
 def post_public_message():
   '''
@@ -151,7 +135,7 @@ def check_progress():
         i = 0
         for card in cardlist:
             i+=1
-            message+=". Task "+ str(i) +": "+ card.name+" ,please respond your status of completeness AND the name of the task: @taskbot YOUR STATUS, YOUR TASK"
+            message+=". Task "+ str(i) +": "+ card.name+" ,please respond your status of completeness AND the name of the task: @taskbot YOUR STATUS, YOUR TASK Number, separated using ' , ' sysmbol. e.g: Completed, 1 where 1 means Task 1"
         l=[]
         channel=slackapicall.open_im(userid)
         #print u,userid,channel

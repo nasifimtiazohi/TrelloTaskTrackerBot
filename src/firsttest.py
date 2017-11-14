@@ -16,6 +16,7 @@ BOT_ID=os.environ.get("BOT_ID")
 BOT_TOKEN=os.environ.get("BOT_TOKEN")
 
 AT_BOT = "<@" + BOT_ID + ">"
+SPLITER = ","
 EXAMPLE_COMMAND = "do"
 # COMMAND_USECASE_1 = "usecase 1"
 COMMAND_USECASE_2 = "show leaderboard"
@@ -25,7 +26,7 @@ N_RESPONSE_USECASE_3 = ['pending', '0', 'not yet', 'incomplete', 'wait', 'almost
 
 #slack_client = SlackClient(os.environ.get("BOT_TOKEN"))
 slack_client= SlackClient(BOT_TOKEN)
-def handle_command(command, channel, command_userid):
+def handle_command(command, channel, command_userid, command_card_id):
     """
         Receives commands directed at the bot and determines if they
         are valid commands. If so, then acts on the commands. If not,
@@ -36,9 +37,8 @@ def handle_command(command, channel, command_userid):
                "* command with numbers, delimited by spaces."
     # preprocess the input command to small case and cast from unicode string to string
     command = str(command).lower()
-    d = slackapicall.list_users_byID()
+    
     print("command receive", command)
-
 
     #nasif: why is this function not printing leaderboard from the database?
     if command.startswith(COMMAND_USECASE_2):
@@ -51,38 +51,31 @@ def handle_command(command, channel, command_userid):
             message = str(key) + ": " + str(messages[key])
             slack_client.api_call("chat.postMessage", channel=channel,
                           text=message, as_user=True)
-        #todo
-    # elif COMMAND_USECASE_3 in command:
-    #     dm_channels=usecase3.check_progress()
-    #     for d in dm_channels:
-    #         channel=d[2]
-    #         response=d[4]
-    #         # cardlist=d[3]
-    #         # print "bal",channel
-    #         # for c in cardlist:
-    #         #     response+=c.name
-    #         slack_client.api_call("chat.postMessage", channel=channel,
-    #                       text=response, as_user=True)
 
-    # if any(command in s for s in P_RESPONSE_USECASE_3):
-    # elif command in P_RESPONSE_USECASE_3 and channel not in slackapicall.public_channels():
     elif command in P_RESPONSE_USECASE_3 and channel not in slackapicall.public_channels():
-       print "usecase 3"
-       print("user: ", d[command_userid])
-       usecase3_post_congratuation_message('C7EK8ECP3', command_userid)
+       d = slackapicall.list_users_byID()
+       trello_username = d[command_userid]
+       print "Completed User: " + trello_username
+       #usecase3_post_congratuation_message('C7EK8ECP3', command_userid)
        # map from command_userid to trello_username
-       duecardlist=trellocall.trelloname_with_duetime(20)
-       # Update progress to complete
+       duecardlist = []
+       users_with_duecards=trellocall.trelloname_with_duetime(20)
+       for user in users_with_duecards.keys():
+         if user== trello_username:
+             duecardlist=users_with_duecards[user]
+       # Map from card name to card id
 
-       #db.child("leaderboard/" + trello_username+ "/" + card_id).update({'total_points': (get_user_points(user) + points)})
-       for card in duecardlist:
-           if (db_helper.get_progress_of_card(trello_username, card.id) == "completed") & db_helper.check_if_done(card.id):
-                #DO 1: Update point and progress in db
-                usecase3.reward_points_in_db(trello_username, card.id, 50)
+       # Update progress to complete
+       usecase3.update_progres(trello_username, command_card_id)
+       if db_helper.get_progress_of_card(trello_username, command_card_id) == "Completed" & db_helper.check_if_done(trello_username, card.id) == "false":
+                #DO 1: Update point and set progress to "Completed"
+                db_helper.update_congratualtion_status(trello_username, card.id) # set is_congratulated to "true"
+                usecase3.reward_points(trello_username, card.id, trellocall.getPointsOfCard(card.id, duecardlist))
                 #DO 2: Post congratulation message to this user
                 usecase3_post_congratuation_message('C7EK8ECP3', command_userid)
-       #update the trello card and also database information
-       usecase3.database_init()
+                #DO 3: Post performance score to this user
+                message = "<@" + trello_username + ">" +  ", your performance score have been updated to: " + str(trellocall.getPointsOfCard(card.id, duecardlist))
+                slack_client.api_call("chat.postMessage", channel='C7EK8ECP3',text=message, as_user=True)
 
     #    usecase3.reward_points(command_userid, 50)
 
@@ -137,7 +130,7 @@ def parse_slack_output(slack_rtm_output):
         for output in output_list:
             if 'text' in output:
                 print output['text']
-            if output and 'text' in output and AT_BOT in output['text']:
+            if output and 'text' in output and AT_BOT in output['text'] and SPLITER in output['text']  :
                 # return text after the @ mention, whitespace removed
                 #TODO: only works with texts after the mention, need to fix
                 #How to parse multiple commands
@@ -146,8 +139,9 @@ def parse_slack_output(slack_rtm_output):
 
                 return output['text'].split(AT_BOT)[1].strip().lower(), \
                        output['channel'],\
-                       output['user']
-    return None, None, None
+                       output['user'],\
+                       output['text'].split(SPLITER)[1]
+    return None, None, None, None
 
 if __name__ == "__main__":
     READ_WEBSOCKET_DELAY = 1 # 1 second delay between reading from firehose
@@ -163,7 +157,7 @@ if __name__ == "__main__":
             command, channel, command_userid = parse_slack_output(slack_client.rtm_read())
             if command and channel:
                     print "handle commands"
-                    handle_command(command, channel, command_userid)
+                    handle_command(command, channel, command_userid, command_card_id)
             #usecase3_final_function()
             time.sleep(READ_WEBSOCKET_DELAY)
     else:
