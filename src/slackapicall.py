@@ -93,6 +93,14 @@ def list_users_byID():
         #     print profile['real_name']
         d[c['id']]=c['name']
     return d
+def fullnameNname():
+    d={}
+    call= slack_client.api_call("users.list")
+    users=call['members']
+    for c in users:
+        profile=c['profile']
+        d[profile['real_name'].lower()]=c['name']
+    return d
 def nameNmail():
     d={}
     call= slack_client.api_call("users.list")
@@ -108,4 +116,4 @@ def nameNmail():
 
 
 if __name__== "__main__":
-    print public_channels()
+    print fullnameNname()
