@@ -20,6 +20,7 @@ SPLITER = ","
 EXAMPLE_COMMAND = "do"
 # COMMAND_USECASE_1 = "usecase 1"
 COMMAND_USECASE_2 = "show leaderboard"
+COMMAND_SHOW_TARGET = "show targets board"
 COMMAND_USECASE_3 = "usecase 3"
 P_RESPONSE_USECASE_3 = ['done', '1', 'finished', 'completed', "i'm done", "yes", "of course", "i finished", "yep"]
 N_RESPONSE_USECASE_3 = ['pending', '0', 'not yet', 'incomplete', 'wait', 'almost', 'no', 'nah', "i haven't"]
@@ -108,6 +109,16 @@ def handle_command(command, channel):
     if command.startswith(COMMAND_USECASE_2):
         messages=trellocall.getPrevTotalPoint()
         #trellocall.pushPerformanceToLeaderBoard(messages)
+        message = "Individual Target List"
+        slack_client.api_call("chat.postMessage", channel=channel,
+                          text=message, as_user=True)
+        for key in messages.keys():
+            message = str(key) + ": " + str(messages[key])
+            slack_client.api_call("chat.postMessage", channel=channel,
+                          text=message, as_user=True)
+    elif command.startswith(COMMAND_SHOW_TARGET):
+        messages = trellocall.getAllTargets()
+        #trellocall.pushPerformanceToLeaderBoard(messages)
         message = "Individual Performance List"
         slack_client.api_call("chat.postMessage", channel=channel,
                           text=message, as_user=True)
@@ -115,7 +126,6 @@ def handle_command(command, channel):
             message = str(key) + ": " + str(messages[key])
             slack_client.api_call("chat.postMessage", channel=channel,
                           text=message, as_user=True)
-
     else:
         slack_client.api_call("chat.postMessage", channel=channel,
                           text=response, as_user=True)

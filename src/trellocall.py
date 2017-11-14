@@ -634,6 +634,13 @@ def getUserIncompleteCardsWithInInterval(userID, endTime):
     incompletedCards = getAllIncompletedCardsAtCurrentInterval(allCards, endTime)
     return incompletedCards
 
+def getAllTargets():
+    targetPoints = {}
+    for memberID in members_dict.keys():
+        targetPoint = db_helper.get_user_target_points(members_dict[memberID])
+        targetPoints[members_dict[memberID]] = targetPoint
+    return targetPoints
+
 if __name__ == "__main__":
     var_init()
     ''' start experiments from here '''
