@@ -40,7 +40,6 @@ def handle_command(command, channel, command_userid, command_card_id):
     command = str(command).lower()
 
     print("command receive", command)
-
     #nasif: why is this function not printing leaderboard from the database?
     if command.startswith(COMMAND_USECASE_2):
         messages=trellocall.getPrevTotalPoint()

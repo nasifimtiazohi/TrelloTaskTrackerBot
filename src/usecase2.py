@@ -27,3 +27,6 @@ def mainFlow(threadName, delay):
             db_helper.store_target_points(targetPoints)
             dayCount = 0
         time.sleep(24*60*60)
+
+
+db_helper.sync_card_info()
