@@ -18,6 +18,7 @@ AT_BOT = "<@" + BOT_ID + ">"
 SPLITER = "&gt;"
 EXAMPLE_COMMAND = "do"
 COMMAND_USECASE_2 = "show leaderboard"
+COMMAND_SHOW_TARGET = "show targets board"
 COMMAND_USECASE_3 = "usecase 3"
 P_RESPONSE_USECASE_3 = ['done', '1', 'finished', 'completed', "i'm done", "yes", "of course", "i finished", "yep"]
 N_RESPONSE_USECASE_3 = ['pending', '0', 'not yet', 'incomplete', 'wait', 'almost', 'no', 'nah', "i haven't"]
@@ -40,13 +41,8 @@ slack_client= SlackClient(BOT_TOKEN)
 #         command: string, the parsed command from slack user output
 #         channel: the target channel to post message
 #                                                                             #
-<<<<<<< HEAD
-############################################################################### 
-def handle_command(command, channel, command_userid):
-=======
 ###############################################################################
 def handle_command(command, channel):
->>>>>>> 1d913012dc94cd89b98416bd3954698fd1925626
     """
         Receives commands directed at the bot and determines if they
         are valid commands. If so, then acts on the commands. If not,
@@ -62,6 +58,26 @@ def handle_command(command, channel):
         messages=trellocall.getPrevTotalPoint()
         #trellocall.pushPerformanceToLeaderBoard(messages)
         message = "Individual Performance List"
+        slack_client.api_call("chat.postMessage", channel=channel,
+                          text=message, as_user=True)
+        for key in messages.keys():
+            message = str(key) + ": " + str(messages[key])
+            if str(key) == 'vinay638':
+                message = str(key) + ":                 " + str(messages[key])
+            if str(key) == 'otto292':
+                message = str(key) + ":                   " + str(messages[key])
+            if str(key) == 'xiaotingfu1':
+                message = str(key) + ":             " + str(messages[key])
+            if str(key) == 'sheikhnasifimtiaz':
+                message = str(key) + ":   " + str(messages[key])
+            if str(key) == 'guanxuyu':
+                message = str(key) + ":                " + str(messages[key])
+            slack_client.api_call("chat.postMessage", channel=channel,
+                          text=message, as_user=True)
+    elif command.startswith(COMMAND_SHOW_TARGET):
+        messages=trellocall.getAllTargets()
+        #trellocall.pushPerformanceToLeaderBoard(messages)
+        message = "Individual Target List"
         slack_client.api_call("chat.postMessage", channel=channel,
                           text=message, as_user=True)
         for key in messages.keys():
