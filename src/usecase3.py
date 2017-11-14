@@ -70,7 +70,14 @@ Find all the cards of each user
    Run the bot and fetch data from trello
 '''
 
-def reward_points(user, points):
+def update_progress_and_reward_points_in_db(trello_username, card_id, points):
+   #update progress
+   db.child("leaderboard/" + trello_username+ "/" + card_id).update({'progress': "Completed"})
+   # reward points
+   db.child("leaderboard/" + trello_username).update({'total_points': (get_user_points(trello_username) + points)})
+
+
+def reward_points_in_db(trello_username, card_id, points):
   '''
   Reward points according to rewarding principles
   Save points to database under each person's name
@@ -85,19 +92,7 @@ def reward_points(user, points):
 
   '''
   # print("Before adding reward points: ",get_user_points(user))
-  db.child("leaderboard/" + user).update({'total_points': (get_user_points(user) + points)})
- 
-  users_with_cards=trellocall.slackname_with_duetime(20) 
-  
-  for u in users_with_cards.keys():
-        #get uid
-        userid=slackapicall.fullname_to_id(u)
-        cardlist=users_with_cards[u]
-        #trellocall.completeCards(card_id, cardlist)
-        for card in cardlist:
-          #TODO: user with multiple cards
-           trellocall.update_progress(user, card)
-  # print("After adding reward points: ",get_user_points(user))
+  db.child("leaderboard/" + trello_username).update({'total_points': (get_user_points(user) + points)})
 
 def post_public_message():
   '''
@@ -164,17 +159,3 @@ def check_progress():
         dm_channel.append(l)
   return dm_channel
 
-def calculate_time_period():
-  '''
-  Check progress of each member's progress twich a day:
-  7:00 AM and 11:00 PM
-  This function should be always running and monitoring the progress
-  This function can be triggered by a time event
-
-  Args:     
-  '''
-
-if __name__=="__main__":
-    d = check_progress()
-    #database_init()
-    #print d
