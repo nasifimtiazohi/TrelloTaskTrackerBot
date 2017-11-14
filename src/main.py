@@ -70,7 +70,7 @@ def handle_command(command, channel):
                           text=response, as_user=True)
 
 ##########################################################################################
-#                               Handle Command for Usecase 2                             #
+#                               Handle Command for Usecase 3                             #
 ##########################################################################################
 # params:                                                                                #
 #         command: string, the parsed command from slack user output                     #
@@ -89,7 +89,7 @@ def handle_command_for_usecase3(command, channel, command_userid, command_cardna
        slackIdToNameDict = slackapicall.list_users_byID()
        # Get Slack user name by slack user id
        slack_username = slackIdToNameDict[command_userid]
-       # Get trello name
+       # Get trello name from slack name
        trello_username = slackname_to_trelloname[slack_username]
        # map from command_userid to trello_username
        duecardlist = []
@@ -107,9 +107,7 @@ def handle_command_for_usecase3(command, channel, command_userid, command_cardna
        db_helper.update_progres(trello_username, card_id)
        #DO 4: update trello label
        trellocall.completeCards(card_id,duecardlist)
-       # TODO: 1. Do not congra for many times; 2. Update trello label
        if db_helper.get_progress_of_card(trello_username, card_id) == "Completed" and db_helper.check_if_done(trello_username, card_id) == "false":
-                print "inside if"
                 #DO 1: Update performance point
                 db_helper.update_congratualtion_status(trello_username, card_id) # set is_congratulated to "true"
                 db_helper.reward_points(trello_username, card_id, trellocall.getPointsOfCard(card_id, duecardlist))
