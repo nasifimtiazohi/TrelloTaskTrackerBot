@@ -40,13 +40,8 @@ slack_client= SlackClient(BOT_TOKEN)
 #         command: string, the parsed command from slack user output
 #         channel: the target channel to post message
 #                                                                             #
-<<<<<<< HEAD
 ############################################################################### 
 def handle_command(command, channel, command_userid):
-=======
-###############################################################################
-def handle_command(command, channel):
->>>>>>> 1d913012dc94cd89b98416bd3954698fd1925626
     """
         Receives commands directed at the bot and determines if they
         are valid commands. If so, then acts on the commands. If not,
