@@ -32,33 +32,16 @@ slackname_to_trelloname = {
 
 #slack_client = SlackClient(os.environ.get("BOT_TOKEN"))
 slack_client= SlackClient(BOT_TOKEN)
-def handle_command(command, channel, command_userid, command_card_id):
-    """
-        Receives commands directed at the bot and determines if they
-        are valid commands. If so, then acts on the commands. If not,
-        returns back what it needs for clarification.
-    """
 
+#                                                       #
+#            Handle Command for Usecase 3               #
+#                                                       #
+def handle_command_for_usecase3(command, channel, command_userid, command_card_id):
     response = "Not sure what you mean. Use the *" + EXAMPLE_COMMAND + \
                "* command with numbers, delimited by spaces."
-    # preprocess the input command to small case and cast from unicode string to string
     command = str(command).lower()
-    
     print("command receive", command)
-
-    #nasif: why is this function not printing leaderboard from the database?
-    if command.startswith(COMMAND_USECASE_2):
-        messages=trellocall.getPrevTotalPoint()
-        #trellocall.pushPerformanceToLeaderBoard(messages)
-        message = "Individual Performance List"
-        slack_client.api_call("chat.postMessage", channel=channel,
-                          text=message, as_user=True)
-        for key in messages.keys():
-            message = str(key) + ": " + str(messages[key])
-            slack_client.api_call("chat.postMessage", channel=channel,
-                          text=message, as_user=True)
-
-    elif command in P_RESPONSE_USECASE_3 and channel not in slackapicall.public_channels():
+    if command in P_RESPONSE_USECASE_3 and channel not in slackapicall.public_channels():
        d = slackapicall.list_users_byID()
        slack_username = d[command_userid]
        trello_username = slackname_to_trelloname[slack_username]
@@ -105,10 +88,34 @@ def handle_command(command, channel, command_userid, command_card_id):
        message = "<@" + username +"> " +  "has a task pending, please work harder!"
        slack_client.api_call("chat.postMessage", channel='C7EK8ECP3',
                           text=message, as_user=True)
-       #for key in messages.keys():
-           #message = str(key) + ": " + str(messages[key])
-       #slack_client.api_call("chat.postMessage", channel=channel,
-                          #text=message, as_user=True)
+
+#                                                       #
+#            Handle Command for Usecase 2               #
+#                                                       #
+def handle_command(command, channel):
+    """
+        Receives commands directed at the bot and determines if they
+        are valid commands. If so, then acts on the commands. If not,
+        returns back what it needs for clarification.
+    """
+    response = "Not sure what you mean. Use the *" + EXAMPLE_COMMAND + \
+               "* command with numbers, delimited by spaces."
+    # preprocess the input command to small case and cast from unicode string to string
+    command = str(command).lower()
+    print("command receive", command)
+
+    #nasif: why is this function not printing leaderboard from the database?
+    if command.startswith(COMMAND_USECASE_2):
+        messages=trellocall.getPrevTotalPoint()
+        #trellocall.pushPerformanceToLeaderBoard(messages)
+        message = "Individual Performance List"
+        slack_client.api_call("chat.postMessage", channel=channel,
+                          text=message, as_user=True)
+        for key in messages.keys():
+            message = str(key) + ": " + str(messages[key])
+            slack_client.api_call("chat.postMessage", channel=channel,
+                          text=message, as_user=True)
+
     else:
         slack_client.api_call("chat.postMessage", channel=channel,
                           text=response, as_user=True)
@@ -149,22 +156,18 @@ def parse_slack_output(slack_rtm_output):
             if 'text' in output:
                 print output['text']
             if output and 'text' in output and AT_BOT in output['text']:
-                print "This current user is responding: "+ output['user']
-                return output['text'].split(AT_BOT)[1].split(SPLITER)[0].strip().lower(), \
-                       output['channel'],\
-                       output['user']
-
-            if output and 'text' in output and AT_BOT in output['text'] and SPLITER in output['text']:
-                # return text after the @ mention, whitespace removed
-                #TODO: only works with texts after the mention, need to fix
-                #How to parse multiple commands
-
-                #print "This current user is responding: "+ output['user']
-                return output['text'].split(AT_BOT)[1].split(SPLITER)[0].strip().lower(), \
+                #if SPLITER in output['text']:
+                     return output['text'].split(AT_BOT)[1].strip().lower(), \
                        output['channel'],\
                        output['user'],\
-                       output['text'].split(SPLITER)[1].strip().lower()
-    return None, None, None, None
+                       #output['text'].split(SPLITER)[1].strip().lower()
+                # else:
+                # split(SPLITER)[0]
+                #     return output['text'].split(AT_BOT)[1].strip().lower(), \
+                #        output['channel']
+                #TODO: only works with texts after the mention, need to fix
+                #How to parse multiple commands
+    return None, None, None
 
 if __name__ == "__main__":
     READ_WEBSOCKET_DELAY = 1 # 1 second delay between reading from firehose
@@ -177,19 +180,20 @@ if __name__ == "__main__":
         except:
             print "thread could not be started"
         while True:
-
-            command, channel, command_userid, command_cardname = parse_slack_output(slack_client.rtm_read())
-            # These are all the required commands for use case 3
-            if command and channel and command_userid and command_cardname:
-                    print "command: " + command
-                    print "command cardname: " + command_cardname
-                    print "command userid: " + command_userid
-                    handle_command(command, channel, command_userid, command_cardname)
-            # TODO: debug with the following line, how to handle two variables for use case 2 and 1
-            if command and channel and command_userid:
-                handle_command(command, channel, command_userid, command_cardname)
-
-            #usecase3_final_function()
-            time.sleep(READ_WEBSOCKET_DELAY)
+                command, channel, command_userid= parse_slack_output(slack_client.rtm_read())
+                if command and channel and command_userid:
+                    if SPLITER in command:
+                    #use case 3
+                        command_cardname = command.split(SPLITER)[1].strip().lower()
+                        command = command.split(SPLITER)[0].strip().lower()
+                        print "command: " + command
+                        print "command cardname: " + command_cardname
+                        print "command userid: " + command_userid
+                        handle_command_for_usecase3(command, channel, command_userid, command_cardname)
+                    else:
+                        #use case 2, no need for further parse of string
+                        handle_command(command, channel)
+              #usecase3_final_function()
+        time.sleep(READ_WEBSOCKET_DELAY)
     else:
         print ("Connection failed. Invalid Slack token or bot ID?")
