@@ -58,7 +58,7 @@ Once a task was assigned, the BOT will send reminder to the assignee and ask for
 According to the different difficulty of task, we will give corresponding reward points once the assignee completed his/her work or deduct points if job did not complete. Besides, there is a leader board that records each member's performance. (i.e. points) We also have individual target board for each member to improve their productivty.
 
 For the interaction between user and the BOT on Slack. We make some rule for the BOT to parse user's command.
-
+For example, 
 
 ### Use Case
 1. Send Nagging Reminder 
