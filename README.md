@@ -4,7 +4,7 @@ Before running our code, please install some packages and setup the
 environment variables, please see [Prerequisite](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/service/src/README.md)
 
 ### Link to Screencast for SERVICE Milestone
-[Screencast]()
+[Usecase 1](https://drive.google.com/a/ncsu.edu/file/d/1cE1X2B7SnvV0PbFdlXffycbGe6KrWbS_/view?usp=sharing)
 
 ### Files Related to SERVICE Milestone
 
@@ -42,6 +42,21 @@ Vinay Gupta | vgupta8
 Nasif Imtiaz | simtiaz
 Yu-Ching Hu | yhu22
 Guanxu Yu | gyu9
+
+### Methodology
+
+#### Trello
+
+When user creates a card, we make it a rule that **Label** of a card stands for the progress or difficulty of a task.
+
+e.g. Green Label(Done), Red Label(To Do) / Yellow Label(Easy), Blue Label(Median), Black Label(Hard)
+Full rules and condition described in [CalculateGradePrinciples.md](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/CalculateGradePrinciples.md)
+
+Once a task was assigned, the BOT will send reminder to the assignee and ask for the progress in a certain time interval. If the assignee did not response, the BOT will keep sending reminder.
+According to the different difficulty of task, we will give corresponding reward points once the assignee completed his/her work or deduct points if job did not complete. Besides, there is a leader board that records each member's performance. (i.e. points) We also have individual target board for each member to improve their productivty.
+
+For the interaction between user and the BOT on Slack. We make some rule for the BOT to parse user's command.
+
 
 ### Use Case
 1. Send Nagging Reminder 
