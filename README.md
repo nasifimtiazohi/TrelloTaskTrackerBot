@@ -16,10 +16,21 @@ environment variables, please see [Prerequisite](https://github.ncsu.edu/yhu22/C
 File | Description
 ---  | ---
 [CalculateGradePrinciples.md](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/CalculateGradePrinciples.md) | Reward Priciple that describes how we calculate the reward points and evaluate the difficulty of task
-[db_helper.py](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/service/src/db_helper.py) | Contains many helper functions deal with the firebase database
 [Database Design](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/service_submit/DatabaseDesign.md)| Display the structure of the our firebase database
 [VM_README.md](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/service_submit/VM_README.md) | The virtual machine we may use later as our server
-[WORKSHEET.md](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/service_submit/Worksheet-service.md)| Currently deprecated. Please refer to [Task Tracking](https://github.ncsu.edu/yhu22/CSC510_F17_Project/tree/service_submit#task-tracking)
+[Worksheet-service.md](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/service_submit/Worksheet-service.md)| Currently deprecated. Please refer to [Task Tracking](https://github.ncsu.edu/yhu22/CSC510_F17_Project/tree/service_submit#task-tracking)
+
+src | Description
+---  | ---
+[db_helper.py](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/service/src/db_helper.py) | Contains many helper functions deal with the firebase database
+[emailing.py](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/service_submit/src/emailing.py) | Helper to send nagging reminder
+[envTest.py](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/service_submit/src/envTest.py) | Test for environment variables setting
+[main.py](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/service_submit/src/main.py) | Integration of our three use cases and host of the BOT on Slack
+[slackapicall.py](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/service_submit/src/slackapicall.py) | Contains many helper functions deal with Slack channel and parser
+[trellocall.py](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/service_submit/src/trellocall.py) | Contains many helper functions parsing card information and list from Trello board
+[usecase1.py](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/service_submit/src/usecase1.py) | Implementation of use case 1
+[usecase2.py](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/service_submit/src/usecase2.py) | Implementation of use case 2
+[usecase3.py](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/service_submit/src/usecase3.py) | Implementation of use case 3
  
 ### Group Members
 
