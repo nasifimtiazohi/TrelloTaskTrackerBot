@@ -23,7 +23,7 @@ There are two factors we are using to reward the out-performed users: task diffi
 
 |Difficulty | color
 |---|---
-|Easy |yellor
+|Easy |yellow
 |Median |sky
 |Hard |black
 
