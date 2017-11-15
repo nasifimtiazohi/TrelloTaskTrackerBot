@@ -47,8 +47,6 @@ Guanxu Yu | gyu9
 
 ### Methodology
 
-#### Trello
-
 When user creates a card, we make it a rule that **Label** of a card stands for the progress or difficulty of a task.
 
 e.g. Green Label(Done), Red Label(To Do) / Yellow Label(Easy), Blue Label(Median), Black Label(Hard)
