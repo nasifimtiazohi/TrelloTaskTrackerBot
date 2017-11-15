@@ -15,7 +15,7 @@ environment variables, please see [Prerequisite](https://github.ncsu.edu/yhu22/C
 
 File | Description
 ---  | ---
-[Reward Principle](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/CalculateGradePrinciples.md) | Reward Priciple that describes how we calculate the reward points and evaluate the difficulty of task
+[CalculateGradePrinciples.md](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/CalculateGradePrinciples.md) | Reward Priciple that describes how we calculate the reward points and evaluate the difficulty of task
 [db_helper.py](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/service/src/db_helper.py) | Contains many helper functions deal with the firebase database
 [Database Design](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/service_submit/DatabaseDesign.md)| Display the structure of the our firebase database
 [VM_README.md](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/service_submit/VM_README.md) | The virtual machine we may use later as our server
