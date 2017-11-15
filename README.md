@@ -95,15 +95,17 @@ A1: 1.	If information is missing about any member, it will post message to publi
 ```
 
 ### Task Tracking
-[Trello Task Manager](https://trello.com/b/MXYu6ZEy/task-manager-bot)  Used for task tracking like worksheet.
+Tool | Description
+---  | ---
+[Trello Task Manager](https://trello.com/b/MXYu6ZEy/task-manager-bot) | Used for task tracking like worksheet.
+[Github Issues](https://github.ncsu.edu/yhu22/CSC510_F17_Project/issues) | Issues to be solved for the implementation.
+[Testing Board](https://trello.com/b/3L2DxAis/test-board) | Trello board for us to test the function.
+[Demo Board](https://trello.com/b/5LYE5kJE/demo-board) | Trello board for demo.
 
-[Github Issues](https://github.ncsu.edu/yhu22/CSC510_F17_Project/issues) Issues to be solved for the implementation.
-
-[Testing Board](https://trello.com/b/3L2DxAis/test-board) Trello board for us to test the function.
-
-### Reference
-1. https://api.slack.com/incoming-webhooks
-2. https://github.com/thisbejim/Pyrebase
-3. https://pypi.python.org/pypi/python-firebase/1.2
-4. https://api.slack.com/rtm
-5. https://github.com/slackapi/python-slackclient
+Reference |
+--- |
+https://api.slack.com/incoming-webhooks |
+https://github.com/thisbejim/Pyrebase |
+https://pypi.python.org/pypi/python-firebase/1.2 |
+https://api.slack.com/rtm |
+https://github.com/slackapi/python-slackclient |
