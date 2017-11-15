@@ -5,6 +5,7 @@ environment variables, please see [Prerequisite](https://github.ncsu.edu/yhu22/C
 
 ### Link to Screencast for SERVICE Milestone
 [Usecase 1](https://drive.google.com/a/ncsu.edu/file/d/1cE1X2B7SnvV0PbFdlXffycbGe6KrWbS_/view?usp=sharing)
+[Usecase 2](https://drive.google.com/a/ncsu.edu/file/d/1rlhtAxn4yDcmkp9bwoapTX_O1Jn10XXu/view?usp=sharing)
 
 ### Files Related to SERVICE Milestone
 
