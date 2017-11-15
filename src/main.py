@@ -164,7 +164,8 @@ def handle_command_for_usecase3(command, channel, command_userid, command_cardna
                         print "reward_point: " + str(reward_point)
                         db_helper.reward_points(trello_username,reward_point)
                         #DO 2: Post congratulation message to this user
-                        usecase3_post_congratuation_message('C7EK8ECP3', command_userid)
+                        message1="Congratulations to <@"+ command_userid+"> ," +" for finishing the task before the deadline!"
+                        slack_client.api_call("chat.postMessage", channel='C7EK8ECP3',text=message1, as_user=True)
                         #DO 3: Post performance score to this user
                         #DO 4: Update total point
                         # TypeError: coercing to Unicode: need string or buffer, int found

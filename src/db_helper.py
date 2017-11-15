@@ -57,11 +57,8 @@ def update_progres(trello_username, card_id):
 
 def reward_points(trello_username, points):
  # reward points
- # TypeError: unsupported operand type(s) for +: 'NoneType' and 'int'
   total = get_user_points(trello_username) + points
-  print total
-  db.child("leaderboard/" + trello_username).update({'total_points':total })
-  #db.child("leaderboard/" + trello_username).update({'total_points': (get_user_points(trello_username) + points)})
+  db.child("leaderboard/" + trello_username).update({'total_points': total})
 
 def sync_card_info():
   all_card_info = []
@@ -145,10 +142,7 @@ def get_user_points(user):
   Args:
       user (string): user id
   '''
-  # comment out the line below line to test the output value
-  #print(db.child("leaderboard/" + user + "/total_points").get().val())
-  points = db.child("leaderboard/" + user + "/total_points").get().val()
-  return points
+  return (db.child("leaderboard/" + user + "/total_points").get().val())
 
 def get_user_target_points(user):
   '''
@@ -295,4 +289,5 @@ def print_leaderboard():
 
 #reward_points("xiaotingfu1", 50)
 #print_leaderboard()
+#print str(get_user_points("xiaotingfu1"))
 #print getCardIdbyCardName("xiaotingfu1", ' fix bugs for use case 3')
