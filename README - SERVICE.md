@@ -4,9 +4,13 @@ Before running our code, please install some packages and setup the
 environment variables, please see [Prerequisite](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/service/src/README.md)
 
 ### Link to Screencast for SERVICE Milestone
+[Intro](https://drive.google.com/file/d/1LtsbSFsaZhQ-AYc5esdJFXA481XKAjUg/view?ts=5a0bc35d)
+
 [Usecase 1](https://drive.google.com/a/ncsu.edu/file/d/1cE1X2B7SnvV0PbFdlXffycbGe6KrWbS_/view?usp=sharing)
 
 [Usecase 2](https://drive.google.com/a/ncsu.edu/file/d/10HoRUdvbmN8EQuk4mZbvEdt7d8rGOHex/view?usp=sharing)
+
+[Usecase 3](https://drive.google.com/file/d/14tf-NjdPnLB-tfzBrNn3XOXR0Wj_y1Sb/view?ts=5a0bc375)
 
 ### Files Related to SERVICE Milestone
 
@@ -57,7 +61,13 @@ According to the different difficulty of task, we will give corresponding reward
 
 For the interaction between user and the BOT on Slack. We make some rule for the BOT to parse user's command.
 For example, in order for our BOT to recognize their command they should use the following format:
-@taskbot > Task 1 (the name of the task).
+@taskbot done > Task 1 (the name of the task).
+
+The name of the task will be printed by the BOT to remind the user.
+
+Here, 'done' is considered as positive response. There are some other positive response words, such as 'finished', 'completed', "i'm done", "yes", "of course", "i finished", "yep", "1".
+
+As for negative words, for example: 'pending', '0', 'not yet', 'incomplete', 'wait', 'almost', 'no', 'nah', "i haven't"
 
 
 ### Use Case
