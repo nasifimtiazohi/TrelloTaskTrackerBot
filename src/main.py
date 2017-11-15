@@ -230,10 +230,10 @@ if __name__ == "__main__":
     if slack_client.rtm_connect():
         print("Taskbot connected and running!")
         try:
-            thread.start_new_thread(usecase1.mainFlow,("UC1-mainflow",60*3,))
-            thread.start_new_thread(usecase1.alternateFlow,("UC2-alternateflow",60*5,))
-            thread.start_new_thread(usecase2.mainFlow, ("Usecase2", 24*60*60))
-            thread.start_new_thread(usecase3_final_function,("Usecase3",60*3))
+            thread.start_new_thread(usecase1.mainFlow,("UC1-mainflow",60*2,))
+            thread.start_new_thread(usecase1.alternateFlow,("UC2-alternateflow",60*2,))
+            #thread.start_new_thread(usecase2.mainFlow, ("Usecase2", 24*60*60))
+            #thread.start_new_thread(usecase3_final_function,("Usecase3",60*3))
         except:
             print "thread could not be started"
         while True:

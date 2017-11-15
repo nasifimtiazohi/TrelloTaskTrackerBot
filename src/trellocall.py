@@ -150,7 +150,14 @@ def get_cards_for_UC1_alternate():
     opencards=testboard.open_cards()
     final=[]
     for c  in opencards:
-        if isinstance(c.due_date,str) or ('59fe8ffedde6561bfcb1e95d' not in c.label_ids and '59fe8ff79f194304516028fc' not in c.label_ids and '59bdb4181314a33999a2736d' not in c.label_ids and '59fe8fefedb138ebeb4d1cad' not in c.label_ids):
+        flag=True
+        if c.list_labels:
+            for label in c.list_labels:
+                if  label.color=='yellow' or label.color=='sky' or label.color=='black' or label.color=='green':
+                    flag=False
+                    break
+        if isinstance(c.due_date,str) or flag:
+            print "bal" ,c.name, c.due_date, type(c.due_date), c.label_ids
             final.append(c)
     return final
 def get_all_cards_for_usecase1():
@@ -176,15 +183,22 @@ def get_all_cards_for_usecase1():
             tempHard=temp-datetime.timedelta(hours=48)
             tempMedium=temp-datetime.timedelta(hours=24)
             tempEasy=temp-datetime.timedelta(hours=12)
-            print c.name, c.label_ids,c.due_date, current_time,tempHard,tempMedium
-            if current_time<temp and current_time>tempHard and '59bdb4181314a33999a2736d' not in c.label_ids and '59fe8ffedde6561bfcb1e95d' in c.label_ids:
-                print "hard task"
+            colors=[]
+            print "heelo", c.list_labels
+            if c.list_labels!=None:
+                for label in c.list_labels:
+                    print label.color
+                    colors.append(label.color)
+            print "colors" ,colors
+            #print c.name, c.label_ids,c.due_date, current_time,tempHard,tempMedium
+            if current_time<temp and current_time>tempHard and 'green' not in colors and 'black' in colors:
+                print "hard task", c.name
                 HardCards.append(c)
-            elif current_time<temp and current_time>tempMedium and '59bdb4181314a33999a2736d' not in c.label_ids and '59fe8ff79f194304516028fc' in c.label_ids:
-                print "medium task"
+            elif current_time<temp and current_time>tempMedium and 'green' not in colors and 'sky' in colors:
+                print "medium task", c.name
                 MediumCards.append(c)
-            elif current_time<temp and current_time>tempEasy and '59bdb4181314a33999a2736d' not in c.label_ids:
-                EasyCards.append(c)
+            elif current_time<temp and current_time>tempEasy and 'green' not in colors and 'yellow' in colors:
+                EasyCards.append(c), c.name
     final=[EasyCards,MediumCards,HardCards]
     return final
 
@@ -234,7 +248,7 @@ def var_init():
             break
     boards = project_team.get_boards(project_team)
     for b in boards:
-        if b.name=='Test Board':
+        if b.name=='Demo Board':
             testboard=b
     members_dict=members_dictionary(project_team)
 
