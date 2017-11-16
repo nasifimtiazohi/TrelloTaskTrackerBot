@@ -4,13 +4,13 @@ Before running our code, please install some packages and setup the
 environment variables, please see [Prerequisite](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/service/src/README.md)
 
 ### Link to Screencast for SERVICE Milestone
-[Intro](https://drive.google.com/file/d/1LtsbSFsaZhQ-AYc5esdJFXA481XKAjUg/view?ts=5a0bc35d)
+[Intro](https://drive.google.com/a/ncsu.edu/file/d/1LtsbSFsaZhQ-AYc5esdJFXA481XKAjUg/view?usp=sharing)
 
 [Usecase 1](https://drive.google.com/a/ncsu.edu/file/d/1cE1X2B7SnvV0PbFdlXffycbGe6KrWbS_/view?usp=sharing)
 
 [Usecase 2](https://drive.google.com/a/ncsu.edu/file/d/10HoRUdvbmN8EQuk4mZbvEdt7d8rGOHex/view?usp=sharing)
 
-[Usecase 3](https://drive.google.com/file/d/14tf-NjdPnLB-tfzBrNn3XOXR0Wj_y1Sb/view?ts=5a0bc375)
+[Usecase 3](https://drive.google.com/a/ncsu.edu/file/d/1UStofIuRr7uT6biEs3nO13eHZwJ9pwLs/view?usp=sharing)
 
 ### Files Related to SERVICE Milestone
 
