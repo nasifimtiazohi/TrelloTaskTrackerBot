@@ -2,14 +2,18 @@ from firebase import firebase
 import pyrebase
 import trellocall
 import operator
+import os
 # import trellocall
-
+apikey = os.getenv('FIREBASE_API_KEY')
+authDomain= os.getenv('FIREBASE_AUTH_DOMAIN')
+databaseURL= os.getenv('FIREBASE_DATABASE_URL')
+storageBucket= os.getenv('FIREBASE_STORAGE_BUCKET')
 
 config = {
-  "apiKey": "AIzaSyCC5OzyEqGBcGZkpyUP90qUnyCCJY8SRQ8",
-  "authDomain": "taskmangerbot.firebaseapp.com",
-  "databaseURL": "https://taskmangerbot.firebaseio.com",
-  "storageBucket": "taskmangerbot.appspot.com"
+  "apiKey": apikey,
+  "authDomain": authDomain,
+  "databaseURL": databaseURL,
+  "storageBucket": storageBucket
 }
 
 
