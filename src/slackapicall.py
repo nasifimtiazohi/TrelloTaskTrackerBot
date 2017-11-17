@@ -17,9 +17,6 @@ slackbot   USLACKBOT
 
 ''' general   C7EK8ECP3 '''
 
-
-os.environ["BOT_TOKEN"]='xoxb-266498254006-btD2n1TcKdi5MY6AKlPGTwnm'
-os.environ["BOT_ID"]='U7UEN7G06'
 BOT_ID=os.environ.get("BOT_ID")
 BOT_TOKEN=os.environ.get("BOT_TOKEN")
 
