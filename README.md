@@ -26,6 +26,7 @@ File | Description
 [Database Design](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/service_submit/DatabaseDesign.md)| Display the structure of the our firebase database
 [VM_README.md](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/service_submit/VM_README.md) | The virtual machine we may use later as our server
 [Worksheet-service.md](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/service_submit/Worksheet-service.md)| Currently deprecated. Please refer to [Task Tracking](https://github.ncsu.edu/yhu22/CSC510_F17_Project/tree/service_submit#task-tracking)
+[src/README.md](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/service_submit/src/README.md)| Deployment Requirements for running our code in your local machine
 
 src | Description
 ---  | ---
