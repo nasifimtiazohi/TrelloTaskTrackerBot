@@ -9,9 +9,6 @@ import usecase1
 import thread
 import db_helper
 
-# import unicodedata
-os.environ["BOT_TOKEN"]='xoxb-266498254006-btD2n1TcKdi5MY6AKlPGTwnm'
-os.environ["BOT_ID"]='U7UEN7G06'
 # Set Slack BOT environment variables, if failed here, please see the README.md
 BOT_ID=os.environ.get("BOT_ID")
 BOT_TOKEN=os.environ.get("BOT_TOKEN")
@@ -24,13 +21,6 @@ COMMAND_USECASE_3 = "usecase 3"
 P_RESPONSE_USECASE_3 = ['done', '1', 'finished', 'completed', "i'm done", "yes", "of course", "i finished", "yep"]
 N_RESPONSE_USECASE_3 = ['pending', '0', 'not yet', 'incomplete', 'wait', 'almost', 'no', 'nah', "i haven't"]
 RESET_TOTAL_SCORES = "reset leaderboard"
-
-# slackname_to_trelloname = {
-#         'simtiaz':'sheikhnasifimtiaz',
-#         'gyu9':"guanxuyu",
-#         'xfu7':'xiaotingfu1',
-#         'vgupta8':'vinay638',
-#         'yhu22': 'otto292'}
 
 #slack_client = SlackClient(os.environ.get("BOT_TOKEN"))
 slack_client= SlackClient(BOT_TOKEN)
