@@ -23,10 +23,10 @@ pip install pyrebase
 ```
 sudo pip install python-firebase
 ```
-
+If you are using a MacOS 
 Add the following environment variables into your ~/.bash_profile
 
-# Add Slack Bot token and Bot Id
+# Set Slack Bot token and Bot Id
 ```bash
 export BOT_TOKEN='xoxb-266498254006-btD2n1TcKdi5MY6AKlPGTwnm'
 export BOT_ID='U7UEN7G06'
