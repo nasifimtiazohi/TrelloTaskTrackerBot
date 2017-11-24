@@ -17,14 +17,16 @@ def mainFlow(threadName, delay):
     members_dict = trellocall.members_dict
     while True:
         dayCount += 1
-        trellocall.getPerformancePoints()
+        trellocall.getPerformancePoints(24)
+        trellocall.updateTargets(24)
         if dayCount == 7:
             currentTargets = trellocall.getAllTargets()
             prevTotalPoints = trellocall.getPrevTotalPoint()
-            targetPoints = {}
+            '''targetPoints = {}
             for memberID in members_dict.keys():
                 targetPoints[members_dict[memberID]] = currentTargets[members_dict[memberID]] + prevTotalPoints[members_dict[memberID]]/10
-            db_helper.store_target_points(targetPoints)
+            db_helper.store_target_points(targetPoints)'''
+            trellocall.updateTargets(24)
             dayCount = 0
         time.sleep(24*60*60)
 
