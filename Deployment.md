@@ -12,10 +12,19 @@ document how these configuration management tools and deployment scripts should 
 ## deploy_bot.yml
 
 Install ansible in both of the virtual machine
-ssh -i "BotVMkey.pem" ubuntu@ec2-18-216-182-115.us-east-2.compute.amazonaws.com
-ssh -i "BotVMkey.pem" ubuntu@ec2-18-220-170-51.us-east-2.compute.amazonaws.com
+* ssh -i "BotVMkey.pem" ubuntu@ec2-18-216-182-115.us-east-2.compute.amazonaws.com
+* ssh -i "BotVMkey.pem" ubuntu@ec2-18-220-170-51.us-east-2.compute.amazonaws.com
+* ssh -i "BotVMkey.pem" ubuntu@ec2-18-217-117-252.us-east-2.compute.amazonaws.com (Test) 18.217.117.252
+
+
+
+## In Host Server Virtual Machine
+1. Create an inventory file with the following content
+[nodes]
+18.217.117.252 ansible_ssh_user=ubuntu ansible_ssh_private_key_file=./BotVMkey.pem
 
 ## Acceptance test instructions
+
 
 Trello
 
