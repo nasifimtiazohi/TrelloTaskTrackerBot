@@ -692,7 +692,7 @@ def updateTargets(intervalLength):
                     break
         targetDict[memberID] = points
     db_helper.store_target_points(targetDict)
-        
+
 
 
 
@@ -708,7 +708,7 @@ def getAllCardsInNextInterval(cards, intervalLength):
             targetCards.append(card)
     return targetCards
 
-    
+
 
 if __name__ == "__main__":
     var_init()

@@ -140,8 +140,6 @@ def get_user_points(user):
   Args:
       user (string): user id
   '''
-  # comment out the line below line to test the output value
-  # print(db.child("leaderboard/" + user + "/total_points").get().val())
   return (db.child("leaderboard/" + user + "/total_points").get().val())
 
 def get_user_target_points(user):
@@ -287,5 +285,7 @@ def print_leaderboard():
   sorted_leaderboard = sorted(leaderboard.items(), key=operator.itemgetter(1), reverse=True)
   print(sorted_leaderboard) # change print to return for later use to export to trello platform
 
-# print_leaderboard()
-#print getCardIdbyCardName("sheikhnasifimtiaz", )
+#reward_points("xiaotingfu1", 50)
+#print_leaderboard()
+#print str(get_user_points("xiaotingfu1"))
+#print getCardIdbyCardName("xiaotingfu1", ' fix bugs for use case 3')
