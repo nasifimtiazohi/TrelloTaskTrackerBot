@@ -571,9 +571,7 @@ def getMemberCardDict():
                 memberCards[memberId].append(card)
     return memberCards
 
-def getPerformancePoints(intervalLength): # interval Length should be in hours, usually it should be 24
-    inactivePenalty = -1
-    memberCards = getMemberCardDict() # get member card dict
+   memberCards = getMemberCardDict() # get member card dict
     #intervalLength = 24 # length of interval, hours
     interval = getInterval(intervalLength)
     performance = {}
@@ -693,9 +691,6 @@ def updateTargets(intervalLength):
         targetDict[memberID] = points
     db_helper.store_target_points(targetDict)
 
-
-
-
 def getAllCardsInNextInterval(cards, intervalLength):
     startTime = datetime.datetime.utcnow()
     startTime = endTime.replace(tzinfo=pytz.utc)
@@ -707,8 +702,6 @@ def getAllCardsInNextInterval(cards, intervalLength):
         if dueDate <= endTime and dueDate >= startTime:
             targetCards.append(card)
     return targetCards
-
-
 
 if __name__ == "__main__":
     var_init()
