@@ -1,6 +1,7 @@
 from trello import TrelloClient
 from trello import label as trelloLabel
 from difflib import SequenceMatcher
+# import db_helper
 import struct
 import datetime
 import os
@@ -8,18 +9,32 @@ import pytz
 import slackapicall
 import json
 import emailing
-# from db_helper import add_card, get_user_points, store_total_points, get_progress_of_card
-import db_helper
+from db_helper import add_card, get_user_points, store_total_points, get_progress_of_card
 
 members_dict=None
 project_team=None
 testboard=None
 
+trelloKey='dbf6947f87a8dcb83f090731a27e8bd4'
+trelloSecret='f57a6c66081742aa5f6149d329c3581d53231c308e4cc9f78b31230ce13b3bb8'
+trelloToken='414df911de9e839c8ab9838c8fa1723107fba5848e5049269d88e5e94a348f31'
+os.environ["TRELLO_API_KEY"]=trelloKey
+os.environ["TRELLO_API_SECRET"]=trelloSecret
+os.environ["TRELLO_TOKEN"]=trelloToken
 # Set up Trello environment variables, if failed here, please see the README.md
 trelloKey = os.environ.get("TRELLO_API_KEY")
 trelloSecret = os.environ.get("TRELLO_API_SECRET")
 trelloToken = os.environ.get("TRELLO_TOKEN")
-slackname_to_trelloname_dict={}
+slackname_to_trelloname = {
+        'simtiaz':'sheikhnasifimtiaz',
+        'gyu9':"guanxuyu",
+        'xfu7':'xiaotingfu1',
+        'vgupta8':'vinay638',
+        'yhu22': 'otto292'}
+
+#TODO: Usecase3 only asks a person about progress. No matter how many cards are due. Later we'll refine it
+
+
 
 client = TrelloClient(
     api_key = trelloKey,
@@ -27,29 +42,7 @@ client = TrelloClient(
     token=trelloToken,
     token_secret=None
 )
-def slackname_to_trelloname(slackname):
-    slackname_to_trelloname_dict={}
-    duecards=get_all_cards_for_usecase1()
-    participants=project_team.get_members()
-    d={}
-    slack=slackapicall.fullnameNname()
 
-    for p in participants:
-        json_obj = client.fetch_json('/members/' + p.id,query_params={'badges': False})
-        #print "dir" ,dir(p)
-        d[p.full_name.lower()]=p.username
-    for trelloname in d.keys():
-        key=None
-        max=0
-        for k in slack.keys():
-            temp=SequenceMatcher(None,k,trelloname).ratio()
-            if temp>max:
-                max=temp
-                key=k
-        tempname=key
-        slackname_to_trelloname_dict[slack[tempname]]=d[trelloname]
-    print slackname_to_trelloname_dict
-    return slackname_to_trelloname_dict[slackname]
 
 def get_all_cards():
     opencards = testboard.open_cards()
@@ -134,14 +127,7 @@ def get_cards_for_UC1_alternate():
     opencards=testboard.open_cards()
     final=[]
     for c  in opencards:
-        flag=True
-        if c.list_labels:
-            for label in c.list_labels:
-                if  label.color=='yellow' or label.color=='sky' or label.color=='black' or label.color=='green':
-                    flag=False
-                    break
-        if isinstance(c.due_date,str) or flag:
-            print "bal" ,c.name, c.due_date, type(c.due_date), c.label_ids
+        if isinstance(c.due_date,str) or ('59fe8ffedde6561bfcb1e95d' not in c.label_ids and '59fe8ff79f194304516028fc' not in c.label_ids and '59bdb4181314a33999a2736d' not in c.label_ids and '59fe8fefedb138ebeb4d1cad' not in c.label_ids):
             final.append(c)
     return final
 def get_all_cards_for_usecase1():
@@ -167,22 +153,15 @@ def get_all_cards_for_usecase1():
             tempHard=temp-datetime.timedelta(hours=48)
             tempMedium=temp-datetime.timedelta(hours=24)
             tempEasy=temp-datetime.timedelta(hours=12)
-            colors=[]
-            print "heelo", c.list_labels
-            if c.list_labels!=None:
-                for label in c.list_labels:
-                    print label.color
-                    colors.append(label.color)
-            print "colors" ,colors
-            #print c.name, c.label_ids,c.due_date, current_time,tempHard,tempMedium
-            if current_time<temp and current_time>tempHard and 'green' not in colors and 'black' in colors:
-                print "hard task", c.name
+            print c.name, c.label_ids,c.due_date, current_time,tempHard,tempMedium
+            if current_time<temp and current_time>tempHard and '59bdb4181314a33999a2736d' not in c.label_ids and '59fe8ffedde6561bfcb1e95d' in c.label_ids:
+                print "hard task"
                 HardCards.append(c)
-            elif current_time<temp and current_time>tempMedium and 'green' not in colors and 'sky' in colors:
-                print "medium task", c.name
+            elif current_time<temp and current_time>tempMedium and '59bdb4181314a33999a2736d' not in c.label_ids and '59fe8ff79f194304516028fc' in c.label_ids:
+                print "medium task"
                 MediumCards.append(c)
-            elif current_time<temp and current_time>tempEasy and 'green' not in colors and 'yellow' in colors:
-                EasyCards.append(c), c.name
+            elif current_time<temp and current_time>tempEasy and '59bdb4181314a33999a2736d' not in c.label_ids:
+                EasyCards.append(c)
     final=[EasyCards,MediumCards,HardCards]
     return final
 
@@ -232,7 +211,7 @@ def var_init():
             break
     boards = project_team.get_boards(project_team)
     for b in boards:
-        if b.name=='Demo Board':
+        if b.name=='Test Board':
             testboard=b
     members_dict=members_dictionary(project_team)
 
@@ -262,14 +241,14 @@ def slackname_with_duecards():
         slackname_with_duecrds[key]=trelloname_with_duecards[n]
     return slackname_with_duecrds
 
-# def slackname_to_trelloname(slackname):
-#     return {
-#         "simtiaz" : "sheikhnasifimtiaz",
-#         "gyu9":"guanxuyu",
-#         "xfu7":"xiaotingfu1",
-#         "vgupta8":"vinay638",
-#         "yhu22": "otto292"
-#     }.get(x)
+def slackname_to_trelloname(slackname):
+    return {
+        "simtiaz" : "sheikhnasifimtiaz",
+        "gyu9":"guanxuyu",
+        "xfu7":"xiaotingfu1",
+        "vgupta8":"vinay638",
+        "yhu22": "otto292"
+    }.get(x)
 
 def slackname_with_duetime(duetime_in_hours):
     trelloname_with_duecards=get_all_names_cards_with_duetime(duetime_in_hours)
@@ -528,10 +507,10 @@ def getPointsOfCard(card_id, cards):
             for label in card.list_labels:
                 if label.color == Complete:
                     completemarker= True
+
             for label in card.list_labels:
-
                 if  completemarker== False:
-
+                    print "incomplete"
                     if label.color == Easy:
                         peformance = peformance - 50
                         break
@@ -554,24 +533,9 @@ def getPointsOfCard(card_id, cards):
     return peformance
 
 
-# member card dict:
-# key: member id
-# value: a list of card of that member
-
-def getMemberCardDict():
-    openCards = getAllOpenCards()
-    members = members_dict.keys()
-    memberCards = {}
-    for member in members:
-        memberCards[member] = []
-
-    for card in openCards:
-        if card.member_ids:
-            for memberId in card.member_ids:
-                memberCards[memberId].append(card)
-    return memberCards
-
-   memberCards = getMemberCardDict() # get member card dict
+def getPerformancePoints(intervalLength): # interval Length should be in hours, usually it should be 24
+    inactivePenalty = -10
+    memberCards = getMemberCardDict() # get member card dict
     #intervalLength = 24 # length of interval, hours
     interval = getInterval(intervalLength)
     performance = {}
@@ -667,6 +631,23 @@ def getAllTargets():
         targetPoints[members_dict[memberID]] = targetPoint
     return targetPoints
 
+# member card dict:
+# key: member id
+# value: a list of card of that member
+
+def getMemberCardDict():
+    openCards = getAllOpenCards()
+    members = members_dict.keys()
+    memberCards = {}
+    for member in members:
+        memberCards[member] = []
+
+    for card in openCards:
+        if card.member_ids:
+            for memberId in card.member_ids:
+                memberCards[memberId].append(card)
+    return memberCards
+
 def updateTargets(intervalLength):
     Easy = "yellow"
     Median = "sky"
@@ -703,10 +684,13 @@ def getAllCardsInNextInterval(cards, intervalLength):
             targetCards.append(card)
     return targetCards
 
+
+
+
 if __name__ == "__main__":
     var_init()
     ''' start experiments from here '''
-    slackname_to_trelloname("xfu7")
+    slackname_with_duetime(24)
 
 print "trellocall initialization start"
 var_init()
