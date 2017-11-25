@@ -525,7 +525,7 @@ def getPointsOfCard(card_id, cards):
                         peformance += 10
                         break
                     if label.color == Median:
-                        peformance += 40
+                        peformance += 30
                         break
                     if label.color == Hard:
                         peformance += 50
@@ -533,21 +533,10 @@ def getPointsOfCard(card_id, cards):
     return peformance
 
 
-def getPerformancePoints():
-    inactivePenalty = -1
-    openCards = getAllOpenCards()
-    members = members_dict.keys()
-    memberCards = {}
-
-    for member in members:
-        memberCards[member] = []
-
-    for card in openCards:
-        if card.member_ids:
-            for memberId in card.member_ids:
-                memberCards[memberId].append(card)
-
-    intervalLength = 24 # length of interval, hours
+def getPerformancePoints(intervalLength): # interval Length should be in hours, usually it should be 24
+    inactivePenalty = -10
+    memberCards = getMemberCardDict() # get member card dict
+    #intervalLength = 24 # length of interval, hours
     interval = getInterval(intervalLength)
     performance = {}
     for memberID in memberCards.keys():
@@ -641,6 +630,62 @@ def getAllTargets():
         targetPoint = db_helper.get_user_target_points(members_dict[memberID])
         targetPoints[members_dict[memberID]] = targetPoint
     return targetPoints
+
+# member card dict:
+# key: member id
+# value: a list of card of that member
+
+def getMemberCardDict():
+    openCards = getAllOpenCards()
+    members = members_dict.keys()
+    memberCards = {}
+    for member in members:
+        memberCards[member] = []
+
+    for card in openCards:
+        if card.member_ids:
+            for memberId in card.member_ids:
+                memberCards[memberId].append(card)
+    return memberCards
+
+def updateTargets(intervalLength):
+    Easy = "yellow"
+    Median = "sky"
+    Hard = "black"
+    memberCards = getMemberCardDict()
+
+    targetDict = {}
+    for memberID in memberCards:
+        targetCards = getAllCardsInNextInterval(memberCards[memberID])
+        points = 0
+        for card in targetCards:
+            for label in card.list_labels:
+                if label.color == Easy:
+                    points += 10
+                    break
+                if label.color == Median:
+                    points += 30
+                    break
+                if label.color == Hard:
+                    points += 50
+                    break
+        targetDict[memberID] = points
+    db_helper.store_target_points(targetDict)
+
+def getAllCardsInNextInterval(cards, intervalLength):
+    startTime = datetime.datetime.utcnow()
+    startTime = endTime.replace(tzinfo=pytz.utc)
+    endTime = startTime + datetime.timedelta(hours = intervalLength)
+
+    targetCards = []
+    for card in cards:
+        dueDate = card.due_date
+        if dueDate <= endTime and dueDate >= startTime:
+            targetCards.append(card)
+    return targetCards
+
+
+
 
 if __name__ == "__main__":
     var_init()

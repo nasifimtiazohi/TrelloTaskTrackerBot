@@ -130,7 +130,7 @@ def add_field_to_allusers(field, value):
   for user in all_users.each():
     db.child("leaderboard/" + user.key()).update({field: value})
 
-add_field_to_allusers("target_points", 100)
+#add_field_to_allusers("target_points", 100)
 
 def get_user_points(user):
   '''
