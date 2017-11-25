@@ -20,8 +20,16 @@ Install ansible in both of the virtual machine
 
 ## In Host Server Virtual Machine
 1. Create an inventory file with the following content
+```
 [nodes]
 18.217.117.252 ansible_ssh_user=ubuntu ansible_ssh_private_key_file=./BotVMkey.pem
+```
+## In a machine that we will deployed
+### Prerequisite: The machine has ansible installed already
+```bash
+sudo apt-get update
+sudo apt-get install ansible 
+```
 
 ## Acceptance test instructions
 
