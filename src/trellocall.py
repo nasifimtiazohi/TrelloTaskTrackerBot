@@ -9,7 +9,7 @@ import pytz
 import slackapicall
 import json
 import emailing
-from db_helper import add_card, get_user_points, store_total_points, get_progress_of_card
+from db_helper import add_card, get_user_points, store_total_points, get_progress_of_card, get_user_points, get_user_target_points, store_target_points
 
 members_dict=None
 project_team=None
@@ -550,7 +550,7 @@ def getPerformancePoints(intervalLength): # interval Length should be in hours, 
         if incompletedCards :
             currentIncompleteCards = getAllIncompletedCardsAtCurrentInterval(incompletedCards, interval[1])
             penalty = getPenalty(currentIncompleteCards)
-        prevPoint = db_helper.get_user_points(members_dict[memberID])
+        prevPoint = get_user_points(members_dict[memberID])
 
         if rewardsAndBouns == 0:
             performance[memberID] = rewardsAndBouns + penalty + prevPoint + inactivePenalty
@@ -559,13 +559,13 @@ def getPerformancePoints(intervalLength): # interval Length should be in hours, 
     memberPerformance = {}
     for memberID in members_dict.keys():
         memberPerformance[members_dict[memberID]] = performance[memberID]
-    db_helper.store_total_points(memberPerformance)
+    store_total_points(memberPerformance)
     return memberPerformance
 
 def getPrevTotalPoint():
     prevPoints = {}
     for memberID in members_dict.keys():
-        prevPoint = db_helper.get_user_points(members_dict[memberID])
+        prevPoint = get_user_points(members_dict[memberID])
         prevPoints[members_dict[memberID]] = prevPoint
     return prevPoints
 
@@ -621,7 +621,7 @@ def getUserIncompleteCardsWithInInterval(userID, endTime):
 def getAllTargets():
     targetPoints = {}
     for memberID in members_dict.keys():
-        targetPoint = db_helper.get_user_target_points(members_dict[memberID])
+        targetPoint = get_user_target_points(members_dict[memberID])
         targetPoints[members_dict[memberID]] = targetPoint
     return targetPoints
 
@@ -650,7 +650,7 @@ def updateTargets(intervalLength):
 
     targetDict = {}
     for memberID in memberCards:
-        targetCards = getAllCardsInNextInterval(memberCards[memberID])
+        targetCards = getAllCardsInNextInterval(memberCards[memberID], intervalLength)
         points = 0
         for card in targetCards:
             for label in card.list_labels:
@@ -663,12 +663,12 @@ def updateTargets(intervalLength):
                 if label.color == Hard:
                     points += 50
                     break
-        targetDict[memberID] = points
-    db_helper.store_target_points(targetDict)
+        targetDict[members_dict[memberID]] = points
+    store_target_points(targetDict)
 
 def getAllCardsInNextInterval(cards, intervalLength):
     startTime = datetime.datetime.utcnow()
-    startTime = endTime.replace(tzinfo=pytz.utc)
+    startTime = startTime.replace(tzinfo=pytz.utc)
     endTime = startTime + datetime.timedelta(hours = intervalLength)
 
     targetCards = []
