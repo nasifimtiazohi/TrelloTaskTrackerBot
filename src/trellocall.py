@@ -15,12 +15,6 @@ members_dict=None
 project_team=None
 testboard=None
 
-trelloKey='dbf6947f87a8dcb83f090731a27e8bd4'
-trelloSecret='f57a6c66081742aa5f6149d329c3581d53231c308e4cc9f78b31230ce13b3bb8'
-trelloToken='414df911de9e839c8ab9838c8fa1723107fba5848e5049269d88e5e94a348f31'
-os.environ["TRELLO_API_KEY"]=trelloKey
-os.environ["TRELLO_API_SECRET"]=trelloSecret
-os.environ["TRELLO_TOKEN"]=trelloToken
 # Set up Trello environment variables, if failed here, please see the README.md
 trelloKey = os.environ.get("TRELLO_API_KEY")
 trelloSecret = os.environ.get("TRELLO_API_SECRET")

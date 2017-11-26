@@ -3,7 +3,8 @@ import pyrebase
 import trellocall
 import operator
 import os
-# import trellocall
+
+# get Firebase API key, authDomain, databaseURL, storageBucket
 apikey = os.getenv('FIREBASE_API_KEY')
 authDomain= os.getenv('FIREBASE_AUTH_DOMAIN')
 databaseURL= os.getenv('FIREBASE_DATABASE_URL')
@@ -16,36 +17,31 @@ config = {
   "storageBucket": storageBucket
 }
 
-
 # init the firebase config
 firebase = pyrebase.initialize_app(config)
 
 # get the db ref
 db = firebase.database()
 
-
 def get_all_info():
   '''
   Get all information from the leaderboard
-
-  Example:
-  get_all_info()
   '''
 
   users = db.child("leaderboard").get()
   print(users.val())
 
-#init list of all cards
-'''
-                    card_info[0]= due_date
-                    card_info[1]= card_name
-                    card_info[2]= progress
-                    card_info[3] = user_name
-                    card_info[4] = card_id
-
-'''
 # only call once at the beginning
 def database_init():
+  '''
+  Initialize the data in firebase and sync the data in trello board
+
+  card_info[0]= due_date
+  card_info[1]= card_name
+  card_info[2]= progress
+  card_info[3] = user_name
+  card_info[4] = card_id
+  '''
   # Init Firebase database everyday
   all_card_info = []
   all_card_info = trellocall.get_all_cards()
@@ -56,32 +52,55 @@ def database_init():
       add_card(str(card_info[0]), str(card_info[1]), str(card_info[2]), str(card_info[3]), str(card_info[4]), "false")
 
 def update_progres(trello_username, card_id):
-   #update progress
-   db.child("leaderboard/" + trello_username+ "/cards/" + card_id).update({'progress': "Completed"})
+  '''
+  Update the card progress according to the user
+
+  Example:
+  update_progres("otto292", "59eb634b9c84cc02182a487b")
+
+  Args:
+      trello_username (string): user id in trello
+      card_id (string): trello card id
+  '''
+  # update card progress
+  db.child("leaderboard/" + trello_username+ "/cards/" + card_id).update({'progress': "Completed"})
 
 def reward_points(trello_username, points):
- # reward points
+  '''
+  Give certain reward points to a user who completes the assigned task
+
+  Example:
+  reward_points("otto292", 20)
+
+  Args:
+      trello_username (string): user id in trello
+      points (int): reward points
+  '''
+  # reward points
   total = get_user_points(trello_username) + points
   db.child("leaderboard/" + trello_username).update({'total_points': total})
 
 def sync_card_info():
+  '''
+  Synchronize the information between trello board and firebase database
+  '''
   all_card_info = []
   all_card_info = trellocall.get_all_cards()
   for card_info in all_card_info:
-    # detect if there are new cards
+    # detect if there are new cards, if no,
     data = {"due_date": str(card_info[0]), "card_name": str(card_info[1]), "progress": str(card_info[2])}
     db.child("leaderboard/" + str(card_info[3]) + "/cards/"+ str(card_info[4])).update(data)
 
 
 def add_card(due_date, card_name, progress, user_name, card_id, is_congrats):
   '''
-  Add card to certain member
-                    card_info[0]= due_date
-                    card_info[1]= card_name
-                    card_info[2]= progress
-                    card_info[3] = user_name
-                    card_info[4] = card_id
-                    card_info[5] = is_congrats
+  Add card to certain member in firebase database
+      card_info[0]= due_date
+      card_info[1]= card_name
+      card_info[2]= progress
+      card_info[3] = user_name
+      card_info[4] = card_id
+      card_info[5] = is_congrats
 
   Example:
   add_card("2017-10-25T16:00:00.000Z", "test add card to firebase via python code", "completed", "otto292", "59eba737418e777a4ac31360", "false")
@@ -99,7 +118,7 @@ def add_card(due_date, card_name, progress, user_name, card_id, is_congrats):
 
 def total_points_init():
   '''
-  Initialize all member's total points
+  Initialize all member's total points in firebase database
   '''
   all_users = db.child("leaderboard/").get()
   for user in all_users.each():
@@ -107,6 +126,16 @@ def total_points_init():
 
 # This function search in firebase database using cardname and return the card id
 def getCardIdbyCardName(user, cardname):
+  '''
+  Search the card by card id for certain user in firebase database
+
+  Example:
+  getCardIdbyCardName("otto292", "Create Mocking data")
+
+  Args:
+      user (string): user id
+      cardname (string): card name in firebase database as well as card name on trello board
+  '''
   # retrieve parent key by child value
   cards = db.child("leaderboard/" + user + "/cards").get()
   for card in cards.each():
@@ -114,16 +143,56 @@ def getCardIdbyCardName(user, cardname):
     card_name_in_db = card_name_in_db.strip().lower()
     if card_name_in_db == cardname.strip().lower():
       return card.key()
+
 def update_congratualtion_status(user, card_id):
+  '''
+  Update the status of card that already posted congratulation message
+
+  Example:
+  update_congratualtion_status("otto292", "59eb634b9c84cc02182a487b")
+
+  Args:
+      user (string): user id
+      card_id (string): card id
+  '''
   db.child("leaderboard/" + user + "/cards/" + card_id).update({'is_congrats': "true"})
 
 def check_if_done(user, card_id):
-  return (db.child("leaderboard/" + user + "/cards/" + card_id +"/is_congrats").get().val())
-def get_progress_of_card(user, card_id):
+  '''
+  Check if the card already posted congratulation message message
 
+  Example:
+  check_if_done("otto292", "59eb634b9c84cc02182a487b")
+
+  Args:
+      user (string): user id
+      card_id (string): card id
+  '''
+  return (db.child("leaderboard/" + user + "/cards/" + card_id +"/is_congrats").get().val())
+
+def get_progress_of_card(user, card_id):
+  '''
+  Get the progress of the card, return "Completed" or "Pending"
+
+  get_progress_of_card("otto292", "59eb634b9c84cc02182a487b")
+
+  Args:
+      user (string): user id
+      card_id (string): card id
+  '''
   return (db.child("leaderboard/" + user + "/cards/" + card_id + "/progress").get().val())
 
 def add_field_to_allusers(field, value):
+  '''
+  Add customized field to a card for all users
+
+  Example:
+  add_field_to_allusers("is_congrats", "false")
+
+  Args:
+      field (string): new field of card
+      value: depends on field type
+  '''
   all_users = db.child("leaderboard/").get()
   for user in all_users.each():
     db.child("leaderboard/" + user.key()).update({field: value})
@@ -284,8 +353,3 @@ def print_leaderboard():
 
   sorted_leaderboard = sorted(leaderboard.items(), key=operator.itemgetter(1), reverse=True)
   print(sorted_leaderboard) # change print to return for later use to export to trello platform
-
-#reward_points("xiaotingfu1", 50)
-#print_leaderboard()
-#print str(get_user_points("xiaotingfu1"))
-#print getCardIdbyCardName("xiaotingfu1", ' fix bugs for use case 3')
