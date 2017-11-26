@@ -108,6 +108,7 @@ def alternateFlow(threadName,delay):
                 mail=slack[key]
                 emailing.sendmail(mail,message)        
         time.sleep(delay)        
-
+import thread
 if __name__=="__main__":
-    print "something"
+    thread.start_new_thread(mainFlow,("UC1-mainflow",60*2,))
+    thread.start_new_thread(alternateFlow,("UC2-alternateflow",60*2,))

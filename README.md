@@ -1,42 +1,35 @@
-# Task Manager BOT #
+# Deployment
 
-Note: The MILESTONE: SERVICE should refer to **service** branch.
-
-Before running our code, please install some packages and setup the
-environment variables, please see [Prerequisite](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/service/src/README.md)
-
-### Link to Screencast for SERVICE Milestone
-[Screencast]()
-
-### Files Related to BOT Milestone
-
-File | Description
----  | ---
+## Lanuch two Amazon EC2 Ubuntu 16.40 Virtual machine for testing:
+The deployment scripts we write will be located in one of the virtual machine and install all the requirement in the second virtual machine and run our bot in the second virtual machine automatically.
 
 
-### Group Members
+document how these configuration management tools and deployment scripts should be run and make sure to include demonstrate running them in your screencast.
 
-Name | Unity ID
---- | ---
-Xiaoting Fu | xfu7
-Vinay Gupta | vgupta8
-Nasif Imtiaz | simtiaz
-Yu-Ching Hu | yhu22
-Guanxu Yu | gyu9
+* ubuntu@ip-172-31-31-155: controller 18.216.182.115
+* ubuntu@ip-172-31-32-179: target machine 18.220.170.51
 
-## Milestone - SERVICE ##
-Our bot runs on the assumption that a team will have their workspace both on "Slack" and "Trello". They use trello to keep track of their tasks, and "Slack" for communication. With necessary permissions, our bot resides in Slack and also can fetch/post data on Trello workspace of the team.
+## deploy_bot.yml
+
+Install ansible in both of the virtual machine
+* ssh -i "BotVMkey.pem" ubuntu@ec2-18-216-182-115.us-east-2.compute.amazonaws.com
+* ssh -i "BotVMkey.pem" ubuntu@ec2-18-220-170-51.us-east-2.compute.amazonaws.com
+* ssh -i "BotVMkey.pem" ubuntu@ec2-18-217-117-252.us-east-2.compute.amazonaws.com (Test) 18.217.117.252
 
 
-### Task Tracking
-[Trello Task Manager](https://trello.com/b/MXYu6ZEy/task-manager-bot)  Used for task tracking like worksheet.
-[Github Issues](https://github.ncsu.edu/yhu22/CSC510_F17_Project/issues) Issues to be solved for the implementation.
 
-[Testing Board](https://trello.com/b/3L2DxAis/test-board) Trello board for us to test the function.
+## In Host Server Virtual Machine
+1. Create an inventory file with the following content
+start with the IP address of the virtual machine
+```
+[nodes]
+18.217.117.252 ansible_ssh_user=ubuntu ansible_ssh_private_key_file=./BotVMkey.pem
+```
+## In a machine that we will deployed
+### Prerequisite: The machine has ansible installed already
+```bash
+sudo apt-get update
+sudo apt-get install ansible 
+```
 
-### Reference
-1. https://api.slack.com/incoming-webhooks
-2. https://github.com/thisbejim/Pyrebase
-3. https://pypi.python.org/pypi/python-firebase/1.2
-4. https://api.slack.com/rtm
-5. https://github.com/slackapi/python-slackclient
+## Acceptance test instructions

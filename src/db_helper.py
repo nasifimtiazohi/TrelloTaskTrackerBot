@@ -2,14 +2,18 @@ from firebase import firebase
 import pyrebase
 import trellocall
 import operator
+import os
 # import trellocall
-
+apikey = os.getenv('FIREBASE_API_KEY')
+authDomain= os.getenv('FIREBASE_AUTH_DOMAIN')
+databaseURL= os.getenv('FIREBASE_DATABASE_URL')
+storageBucket= os.getenv('FIREBASE_STORAGE_BUCKET')
 
 config = {
-  "apiKey": "AIzaSyCC5OzyEqGBcGZkpyUP90qUnyCCJY8SRQ8",
-  "authDomain": "taskmangerbot.firebaseapp.com",
-  "databaseURL": "https://taskmangerbot.firebaseio.com",
-  "storageBucket": "taskmangerbot.appspot.com"
+  "apiKey": apikey,
+  "authDomain": authDomain,
+  "databaseURL": databaseURL,
+  "storageBucket": storageBucket
 }
 
 
@@ -101,11 +105,6 @@ def total_points_init():
   for user in all_users.each():
     db.child("leaderboard/" + user.key() + "/total_points").set(0)
 
-#################################################################################################################
-
-# This function search in firebase database using cardname and return the card id 
-
-#################################################################################################################
 # This function search in firebase database using cardname and return the card id
 def getCardIdbyCardName(user, cardname):
   # retrieve parent key by child value
@@ -115,7 +114,6 @@ def getCardIdbyCardName(user, cardname):
     card_name_in_db = card_name_in_db.strip().lower()
     if card_name_in_db == cardname.strip().lower():
       return card.key()
-  
 def update_congratualtion_status(user, card_id):
   db.child("leaderboard/" + user + "/cards/" + card_id).update({'is_congrats': "true"})
 
