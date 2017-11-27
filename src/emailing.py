@@ -13,4 +13,5 @@ def sendmail(mail,message):
     print r
 
 if __name__=="__main__":
+    #just for testing
     sendmail("sads","SADSD")
