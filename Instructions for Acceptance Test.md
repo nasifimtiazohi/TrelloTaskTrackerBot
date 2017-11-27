@@ -18,7 +18,7 @@ Sky Blue – Medium
 
 Black- Hard
 
-Red label is used to keep track if a task in “ongoing”. Usecase 3 will not take cards with no red labels into account and won’t ask for progress for them even if the due date is set. It only works for the cards which has red labels but not green, hence ongoing! The difficulty of task is a rule we made to reward different points to a member who completed a task. The detailed rule about calculating points is in CalculateGradePrinciples.md 
+Red label is used to keep track if a task in “ongoing”. Usecase 3 will not take cards with no red labels into account and won’t ask for progress for them even if the due date is set. It only works for the cards which has red labels but not green, hence ongoing! The difficulty of task is a rule we made to reward different points to a member who completed a task. The detailed rule about calculating points is in CalculateGradePrinciples.md
 
 However, Usecase 1 only considers due date (as it gets activated when a card approaches due date) and difficulty labels. In absence of those, it will send mails to prompt the user (if any assigned) to fill up the necessary labels.
 
@@ -30,8 +30,8 @@ however to trigger use case 2 manually, there are also 2 commands.
 
 ## Instruction for USECASE 1:
 
-Flow-
-1.	The usecase gets activated per every interval (put interval period)
+### Flow
+1.	This usecase gets activated per every interval (put interval period)
 2.	Bot will read all the cards from trello board which have due date set and difficulty labels set.
 3.	If due date and difficulty labels are set it will go to the main flow (step 5)
 4.	[Alternate flow] If due date and difficulty labels are set, it will send the assigned user (if any) a mail to fill up the necessary labels and go to step 6. If a card even has no members assigned, the bot has nothing to do.
