@@ -239,7 +239,7 @@ def store_total_points(performance):
     # new_total_points = {'total_points': value}
     db.child("leaderboard/" + key).update({'total_points': value})
 
-# modify the value here to test
+# modify the value here to test sotre_total_points function
 # performance = {'guanxuyu': 15, 'otto292': 25, 'xiaotingfu1': 30, 'sheikhnasifimtiaz': 20, 'vinay638': 10}
 # store_total_points(performance)
 

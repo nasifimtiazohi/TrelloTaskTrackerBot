@@ -21,10 +21,11 @@ trelloSecret = os.environ.get("TRELLO_API_SECRET")
 trelloToken = os.environ.get("TRELLO_TOKEN")
 slackname_to_trelloname = {
         'simtiaz':'sheikhnasifimtiaz',
-        'gyu9':"guanxuyu",
+        'gyu9':'guanxuyu',
         'xfu7':'xiaotingfu1',
         'vgupta8':'vinay638',
-        'yhu22': 'otto292'}
+        'yhu22': 'otto292',
+        'bot510project': 'csc510_ta'}
 
 #TODO: Usecase3 only asks a person about progress. No matter how many cards are due. Later we'll refine it
 
@@ -205,7 +206,7 @@ def var_init():
             break
     boards = project_team.get_boards(project_team)
     for b in boards:
-        if b.name=='Test Board':
+        if b.name=='Demo Board':
             testboard=b
     members_dict=members_dictionary(project_team)
 
