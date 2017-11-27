@@ -1,23 +1,4 @@
 import os
-###set up the environment
-os.environ["BOT_TOKEN"]='xoxb-266498254006-btD2n1TcKdi5MY6AKlPGTwnm'
-os.environ["BOT_ID"]='U7UEN7G06'
-trelloKey='dbf6947f87a8dcb83f090731a27e8bd4'
-trelloSecret='f57a6c66081742aa5f6149d329c3581d53231c308e4cc9f78b31230ce13b3bb8'
-trelloToken='414df911de9e839c8ab9838c8fa1723107fba5848e5049269d88e5e94a348f31'
-os.environ["TRELLO_API_KEY"]=trelloKey
-os.environ["TRELLO_API_SECRET"]=trelloSecret
-os.environ["TRELLO_TOKEN"]=trelloToken
-os.environ["GMAIL_ID"]='bot510project@gmail.com'
-os.environ["GMAIL_PASS"]='simtiaz1234'
-os.environ['FIREBASE_API_KEY']="AIzaSyCC5OzyEqGBcGZkpyUP90qUnyCCJY8SRQ8"
-os.environ['FIREBASE_AUTH_DOMAIN']="taskmangerbot.firebaseapp.com"
-os.environ['FIREBASE_DATABASE_URL']="https://taskmangerbot.firebaseio.com"
-os.environ['FIREBASE_STORAGE_BUCKET']="taskmangerbot.appspot.com"
-os.environ["TEAM_NAME"]="510projectteam"
-os.environ["BOARD_NAME"]="Demo Board"
-##end fo setting up environment
-
 from slackclient import SlackClient
 import time
 import trellocall
