@@ -81,6 +81,7 @@ def get_all_cards_with_duedate():
         temp=c.due_date
         if c.due_date:
             temp=temp.replace(tzinfo=pytz.utc)
+            temp-=datetime.timedelta(hours=5)
             if current_time<temp:
                 duecards.append(c)
     ''' only sending the names for now.
@@ -114,6 +115,7 @@ def get_all_cards_with_duetime(timeinhours):
                     print label.color
                     colors.append(label.color)
             temp=temp.replace(tzinfo=pytz.utc)
+            temp-=datetime.timedelta(hours=5)
             temp2=temp-datetime.timedelta(hours=timeinhours)
             if current_time<temp and current_time>temp2 and 'green' not in colors:
                 duecards.append(c)
@@ -148,6 +150,7 @@ def get_all_cards_for_usecase1():
         temp=c.due_date
         if c.due_date:
             temp=temp.replace(tzinfo=pytz.utc)
+            temp-=datetime.timedelta(hours=5)
             tempHard=temp-datetime.timedelta(hours=48)
             tempMedium=temp-datetime.timedelta(hours=24)
             tempEasy=temp-datetime.timedelta(hours=12)
@@ -310,6 +313,7 @@ def get_all_names_cards_with_duetime(timeinhours):
                     print label.color
                     colors.append(label.color)
             temp=temp.replace(tzinfo=pytz.utc)
+            temp-=datetime.timedelta(hours=5)
             temp2=temp-datetime.timedelta(hours=timeinhours)
             if current_time<temp and current_time>temp2 and 'green' not in colors:
                 duecards.append(c)
