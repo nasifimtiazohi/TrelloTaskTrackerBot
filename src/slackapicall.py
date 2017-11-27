@@ -3,19 +3,7 @@ import os
 import json
 import requests
 
-'''
-firsttest   U7F3Z7XJP
-gyu9   U7FMUT4HJ
-simtiaz   U7EK8EBAM
-test_bot   U7MURQ2F6
-trello   U7FBA0CRK
-vgupta8   U7HDGGXKR
-xfu7   U7GLR2L6T
-yhu22   U7FL172BU
-slackbot   USLACKBOT
-'''
 
-''' general   C7EK8ECP3 '''
 
 BOT_ID=os.environ.get("BOT_ID")
 BOT_TOKEN=os.environ.get("BOT_TOKEN")
@@ -58,6 +46,13 @@ def list_channels():
         return call["channels"]
     else:
         return None
+def get_general_channel_id():
+    call= slack_client.api_call("channels.list")
+    channels=call["channels"]
+    for c in channels:
+        if c['name']=="general":
+            return c['id']
+    return None
 def public_channels():
     call= slack_client.api_call("channels.list")
     channels=call["channels"]

@@ -19,12 +19,9 @@ testboard=None
 trelloKey = os.environ.get("TRELLO_API_KEY")
 trelloSecret = os.environ.get("TRELLO_API_SECRET")
 trelloToken = os.environ.get("TRELLO_TOKEN")
-slackname_to_trelloname = {
-        'simtiaz':'sheikhnasifimtiaz',
-        'gyu9':"guanxuyu",
-        'xfu7':'xiaotingfu1',
-        'vgupta8':'vinay638',
-        'yhu22': 'otto292'}
+TeamName= os.environ.get("TEAM_NAME")
+print TeamName
+BoardName=os.environ.get("BOARD_NAME")
 
 #TODO: Usecase3 only asks a person about progress. No matter how many cards are due. Later we'll refine it
 
@@ -111,9 +108,14 @@ def get_all_cards_with_duetime(timeinhours):
     for c in opencards:
         temp=c.due_date
         if c.due_date:
+            colors=[]
+            if c.list_labels!=None:
+                for label in c.list_labels:
+                    print label.color
+                    colors.append(label.color)
             temp=temp.replace(tzinfo=pytz.utc)
             temp2=temp-datetime.timedelta(hours=timeinhours)
-            if current_time<temp and current_time>temp2 and '59bdb4181314a33999a2736d' not in c.label_ids:
+            if current_time<temp and current_time>temp2 and 'green' not in colors:
                 duecards.append(c)
     return duecards
 
@@ -121,7 +123,14 @@ def get_cards_for_UC1_alternate():
     opencards=testboard.open_cards()
     final=[]
     for c  in opencards:
-        if isinstance(c.due_date,str) or ('59fe8ffedde6561bfcb1e95d' not in c.label_ids and '59fe8ff79f194304516028fc' not in c.label_ids and '59bdb4181314a33999a2736d' not in c.label_ids and '59fe8fefedb138ebeb4d1cad' not in c.label_ids):
+        flag=True
+        if c.list_labels:
+            for label in c.list_labels:
+                if  label.color=='yellow' or label.color=='sky' or label.color=='black' or label.color=='green':
+                    flag=False
+                    break
+        if isinstance(c.due_date,str) or flag:
+            print "bal" ,c.name, c.due_date, type(c.due_date), c.label_ids
             final.append(c)
     return final
 def get_all_cards_for_usecase1():
@@ -132,11 +141,6 @@ def get_all_cards_for_usecase1():
     Median = "sky"
     Hard = "black"
     Finished= "green"
-    ''' card labels:
-    black 59fe8ffedde6561bfcb1e95d
-    yellow 59fe8fefedb138ebeb4d1cad
-    sky 59fe8ff79f194304516028fc
-    green 59bdb4181314a33999a2736d '''
     HardCards=[]
     MediumCards=[]
     EasyCards=[]
@@ -147,44 +151,51 @@ def get_all_cards_for_usecase1():
             tempHard=temp-datetime.timedelta(hours=48)
             tempMedium=temp-datetime.timedelta(hours=24)
             tempEasy=temp-datetime.timedelta(hours=12)
-            print c.name, c.label_ids,c.due_date, current_time,tempHard,tempMedium
-            if current_time<temp and current_time>tempHard and '59bdb4181314a33999a2736d' not in c.label_ids and '59fe8ffedde6561bfcb1e95d' in c.label_ids:
-                print "hard task"
+            colors=[]
+            print "heelo", c.list_labels
+            if c.list_labels!=None:
+                for label in c.list_labels:
+                    print label.color
+                    colors.append(label.color)
+            print "colors" ,colors
+            #print c.name, c.label_ids,c.due_date, current_time,tempHard,tempMedium
+            if current_time<temp and current_time>tempHard and 'green' not in colors and 'black' in colors:
+                print "hard task", c.name
                 HardCards.append(c)
-            elif current_time<temp and current_time>tempMedium and '59bdb4181314a33999a2736d' not in c.label_ids and '59fe8ff79f194304516028fc' in c.label_ids:
-                print "medium task"
+            elif current_time<temp and current_time>tempMedium and 'green' not in colors and 'sky' in colors:
+                print "medium task", c.name
                 MediumCards.append(c)
-            elif current_time<temp and current_time>tempEasy and '59bdb4181314a33999a2736d' not in c.label_ids:
-                EasyCards.append(c)
+            elif current_time<temp and current_time>tempEasy and 'green' not in colors and 'yellow' in colors:
+                EasyCards.append(c), c.name
     final=[EasyCards,MediumCards,HardCards]
     return final
 
 
-def print_deadline_messages():
-    message_list=[]
-    lists=testboard.all_lists()
-    for l in lists:
-        if l.name=="task within 1 day deaadline":
-            target_list=l
-            break
-    cards=target_list.list_cards()
-    members = project_team.get_members()
-    #todo: make it a dictionary for easy searching
-    for c in cards:
-        target_card=c
-        message=""
-        #todo:only search for the first member. make it about all
-        mid=target_card.member_id
-        for m in members:
-            if m.id==mid[0]:
-                message+=m.username
-                name=m.username
-                break
-        message+=" is asked to complete " + c.name
-        print message
-        sendmail(name,message)
-        message_list.append(message)
-    return message_list
+# def print_deadline_messages():
+#     message_list=[]
+#     lists=testboard.all_lists()
+#     for l in lists:
+#         if l.name=="task within 1 day deaadline":
+#             target_list=l
+#             break
+#     cards=target_list.list_cards()
+#     members = project_team.get_members()
+#     #todo: make it a dictionary for easy searching
+#     for c in cards:
+#         target_card=c
+#         message=""
+#         #todo:only search for the first member. make it about all
+#         mid=target_card.member_id
+#         for m in members:
+#             if m.id==mid[0]:
+#                 message+=m.username
+#                 name=m.username
+#                 break
+#         message+=" is asked to complete " + c.name
+#         print message
+#         sendmail(name,message)
+#         message_list.append(message)
+#     return message_list
 
 
 def members_dictionary(project_team):
@@ -200,12 +211,12 @@ def var_init():
     global members_dict
     teams=client.list_organizations()
     for t in teams:
-        if t.name=='510projectteam':
+        if t.name==TeamName:
             project_team=t
             break
     boards = project_team.get_boards(project_team)
     for b in boards:
-        if b.name=='Test Board':
+        if b.name==BoardName:
             testboard=b
     members_dict=members_dictionary(project_team)
 
@@ -236,13 +247,28 @@ def slackname_with_duecards():
     return slackname_with_duecrds
 
 def slackname_to_trelloname(slackname):
-    return {
-        "simtiaz" : "sheikhnasifimtiaz",
-        "gyu9":"guanxuyu",
-        "xfu7":"xiaotingfu1",
-        "vgupta8":"vinay638",
-        "yhu22": "otto292"
-    }.get(x)
+    slackname_to_trelloname_dict={}
+    duecards=get_all_cards_for_usecase1()
+    participants=project_team.get_members()
+    d={}
+    slack=slackapicall.fullnameNname()
+
+    for p in participants:
+        json_obj = client.fetch_json('/members/' + p.id,query_params={'badges': False})
+        #print "dir" ,dir(p)
+        d[p.full_name.lower()]=p.username
+    for trelloname in d.keys():
+        key=None
+        max=0
+        for k in slack.keys():
+            temp=SequenceMatcher(None,k,trelloname).ratio()
+            if temp>max:
+                max=temp
+                key=k
+        tempname=key
+        slackname_to_trelloname_dict[slack[tempname]]=d[trelloname]
+    print slackname_to_trelloname_dict
+    return slackname_to_trelloname_dict[slackname]
 
 def slackname_with_duetime(duetime_in_hours):
     trelloname_with_duecards=get_all_names_cards_with_duetime(duetime_in_hours)
@@ -278,9 +304,14 @@ def get_all_names_cards_with_duetime(timeinhours):
     for c in opencards:
         temp=c.due_date
         if c.due_date:
+            colors=[]
+            if c.list_labels!=None:
+                for label in c.list_labels:
+                    print label.color
+                    colors.append(label.color)
             temp=temp.replace(tzinfo=pytz.utc)
             temp2=temp-datetime.timedelta(hours=timeinhours)
-            if current_time<temp and current_time>temp2 and '59bdb4181314a33999a2736d' not in c.label_ids:
+            if current_time<temp and current_time>temp2 and 'green' not in colors:
                 duecards.append(c)
     ''' only sending the names for now.
     In future, we'll send info about each card '''
@@ -296,38 +327,31 @@ def get_all_names_cards_with_duetime(timeinhours):
             namelist_with_duecards[name].append(c)
     return namelist_with_duecards
 
-def print_members_points():
-    teams = client.list_organizations()
-    for team in teams:
-        teamID=team.id
-        #todo: if there's more than one organization?
-    curTeam=client.get_organization(teamID)
-    boards = curTeam.get_boards(curTeam)
-    members = curTeam.get_members()
-    idMembersDict = {}
-    membersPoint = {}
-    for member in members:
-        membersPoint[member.username] = 0
-    for member in members:
-        idMembersDict[member.id] = member.username
-    for board in boards:
-        testBoard=board
-        #todo: if there's more than one board?
-    lists=testBoard.list_lists()
-    for list in lists:
-        if list.name == "Leader Board":
-            cards=list.list_cards()
-            #todo: make it a dictionary for easy searching
-            for card in cards:
-                membersID = card.member_id
-                checkLists = card.fetch_checklists()
-                for checkList in checkLists:
-                    items = checkList.items
-                    for item in items:
-                        points = item["name"].split(' ')[0]
-                        for memberID in membersID:
-                            membersPoint[idMembersDict[memberID]] += int(points)
-    return membersPoint
+# def print_members_points():
+#     curTeam=project_team
+#     boards = curTeam.get_boards(curTeam)
+#     members = curTeam.get_members()
+#     idMembersDict = {}
+#     membersPoint = {}
+#     for member in members:
+#         membersPoint[member.username] = 0
+#     for member in members:
+#         idMembersDict[member.id] = member.username
+#     lists=testBoard.list_lists()
+#     for list in lists:
+#         if list.name == "Leader Board":
+#             cards=list.list_cards()
+#             #todo: make it a dictionary for easy searching
+#             for card in cards:
+#                 membersID = card.member_id
+#                 checkLists = card.fetch_checklists()
+#                 for checkList in checkLists:
+#                     items = checkList.items
+#                     for item in items:
+#                         points = item["name"].split(' ')[0]
+#                         for memberID in membersID:
+#                             membersPoint[idMembersDict[memberID]] += int(points)
+#     return membersPoint
 
 def getInterval(timeInHours):
     endTime = datetime.datetime.utcnow()

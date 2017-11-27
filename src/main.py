@@ -1,4 +1,23 @@
 import os
+###set up the environment
+os.environ["BOT_TOKEN"]='xoxb-266498254006-btD2n1TcKdi5MY6AKlPGTwnm'
+os.environ["BOT_ID"]='U7UEN7G06'
+trelloKey='dbf6947f87a8dcb83f090731a27e8bd4'
+trelloSecret='f57a6c66081742aa5f6149d329c3581d53231c308e4cc9f78b31230ce13b3bb8'
+trelloToken='414df911de9e839c8ab9838c8fa1723107fba5848e5049269d88e5e94a348f31'
+os.environ["TRELLO_API_KEY"]=trelloKey
+os.environ["TRELLO_API_SECRET"]=trelloSecret
+os.environ["TRELLO_TOKEN"]=trelloToken
+os.environ["GMAIL_ID"]='bot510project@gmail.com'
+os.environ["GMAIL_PASS"]='simtiaz1234'
+os.environ['FIREBASE_API_KEY']="AIzaSyCC5OzyEqGBcGZkpyUP90qUnyCCJY8SRQ8"
+os.environ['FIREBASE_AUTH_DOMAIN']="taskmangerbot.firebaseapp.com"
+os.environ['FIREBASE_DATABASE_URL']="https://taskmangerbot.firebaseio.com"
+os.environ['FIREBASE_STORAGE_BUCKET']="taskmangerbot.appspot.com"
+os.environ["TEAM_NAME"]="510projectteam"
+os.environ["BOARD_NAME"]="Demo Board"
+##end fo setting up environment
+
 from slackclient import SlackClient
 import time
 import trellocall
@@ -45,26 +64,18 @@ def handle_command(command, channel, command_userid):
                "* command with numbers, delimited by spaces."
     # preprocess the input command to small case and cast from unicode string to string
     command = str(command).lower()
-    print("Command received: ", command)
-    #nasif: why is this function not printing leaderboard from the database?
+    print("Command received: ", command, "nasif")
     if command.startswith(COMMAND_USECASE_2):
         messages=trellocall.getPrevTotalPoint()
         #trellocall.pushPerformanceToLeaderBoard(messages)
         message = "Individual Performance List"
         slack_client.api_call("chat.postMessage", channel=channel,
                           text=message, as_user=True)
+        #sort it maybe?
         for key in messages.keys():
+            if "bot" in str(key):
+                continue
             message = str(key) + ": " + str(messages[key])
-            if str(key) == 'vinay638':
-                message = str(key) + ":                 " + str(messages[key])
-            if str(key) == 'otto292':
-                message = str(key) + ":                   " + str(messages[key])
-            if str(key) == 'xiaotingfu1':
-                message = str(key) + ":             " + str(messages[key])
-            if str(key) == 'sheikhnasifimtiaz':
-                message = str(key) + ":   " + str(messages[key])
-            if str(key) == 'guanxuyu':
-                message = str(key) + ":                " + str(messages[key])
             slack_client.api_call("chat.postMessage", channel=channel,
                           text=message, as_user=True)
     elif command.startswith(COMMAND_SHOW_TARGET):
@@ -74,26 +85,10 @@ def handle_command(command, channel, command_userid):
         slack_client.api_call("chat.postMessage", channel=channel,
                           text=message, as_user=True)
         for key in messages.keys():
+            if "bot" in str(key):
+                continue
             message = str(key) + ": " + str(messages[key])
-            if str(key) == 'vinay638':
-                message = str(key) + ":                 " + str(messages[key])
-            if str(key) == 'otto292':
-                message = str(key) + ":                   " + str(messages[key])
-            if str(key) == 'xiaotingfu1':
-                message = str(key) + ":             " + str(messages[key])
-            if str(key) == 'sheikhnasifimtiaz':
-                message = str(key) + ":   " + str(messages[key])
-            if str(key) == 'guanxuyu':
-                message = str(key) + ":                " + str(messages[key])
             slack_client.api_call("chat.postMessage", channel=channel,
-                          text=message, as_user=True)
-    elif command in N_RESPONSE_USECASE_3 and channel not in slackapicall.public_channels():
-        #map from command_userid to userid
-       d = slackapicall.list_users_byID()
-       slack_username = d[command_userid]
-       trello_username = trellocall.slackname_to_trelloname(slack_username)
-       message = "<@" + command_userid +"> " +  "has a task pending, please work harder!"
-       slack_client.api_call("chat.postMessage", channel='C7EK8ECP3',
                           text=message, as_user=True)
     elif command in RESET_TOTAL_SCORES and channel not in slackapicall.public_channels():
        print "Reset the leaderboard..."
@@ -117,7 +112,16 @@ def handle_command_for_usecase3(command, channel, command_userid, command_cardna
     response = "Not sure what you mean. Use the *" + EXAMPLE_COMMAND + \
                "* command with numbers, delimited by spaces."
     command = str(command).lower()
-    print("Command Received:", command)
+    print("Command Received:", command, "fu")
+    if command in N_RESPONSE_USECASE_3 and channel not in slackapicall.public_channels():
+        print "dhukse"
+        #map from command_userid to userid
+    #    d = slackapicall.list_users_byID()
+    #    slack_username = d[command_userid]
+    #    trello_username = trellocall.slackname_to_trelloname(slack_username)
+        message = "<@" + command_userid +"> " +  "has a task pending, please work harder!"
+        slack_client.api_call("chat.postMessage", channel=slackapicall.get_general_channel_id(),
+                            text=message, as_user=True)
     if command in P_RESPONSE_USECASE_3 and channel not in slackapicall.public_channels():
        # Get a dictionary which map slack user id to the user name
        slackIdToNameDict = slackapicall.list_users_byID()
@@ -162,12 +166,12 @@ def handle_command_for_usecase3(command, channel, command_userid, command_cardna
                         db_helper.reward_points(trello_username,reward_point)
                         #DO 2: Post congratulation message to this user
                         message1="Congratulations to <@"+ command_userid+"> ," +" for finishing the task before the deadline!"
-                        slack_client.api_call("chat.postMessage", channel='C7EK8ECP3',text=message1, as_user=True)
+                        slack_client.api_call("chat.postMessage", channel=slackapicall.get_general_channel_id(),text=message1, as_user=True)
                         #DO 3: Post performance score to this user
                         #DO 4: Update total point
                         # TypeError: coercing to Unicode: need string or buffer, int found
                         message = "<@" + command_userid + ">" + ", you earned: "+ str(reward_point) + " points for finishing this task. Now, your performance score have been updated to: " + str(db_helper.get_user_points(trello_username))
-                        slack_client.api_call("chat.postMessage", channel='C7EK8ECP3',text=message, as_user=True)
+                        slack_client.api_call("chat.postMessage", channel=slackapicall.get_general_channel_id(),text=message, as_user=True)
 
        else:
             # If cannot find command in the database, prompt user to input again
@@ -215,6 +219,8 @@ def parse_slack_output(slack_rtm_output):
     return None, None, None
 
 if __name__ == "__main__":
+    
+   
     READ_WEBSOCKET_DELAY = 1 # 1 second delay between reading from firehose
     if slack_client.rtm_connect():
         print("Taskbot connected and running!")
