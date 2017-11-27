@@ -12,9 +12,10 @@ document how these configuration management tools and deployment scripts should 
 ## deploy_bot.yml
 
 Install ansible in both of the virtual machine
-* ssh -i "BotVMkey.pem" ubuntu@ec2-18-216-182-115.us-east-2.compute.amazonaws.com
-* ssh -i "BotVMkey.pem" ubuntu@ec2-18-220-170-51.us-east-2.compute.amazonaws.com
-* ssh -i "BotVMkey.pem" ubuntu@ec2-18-217-117-252.us-east-2.compute.amazonaws.com (Test) 18.217.117.252
+* ssh -i "BotVMkey.pem" ubuntu@ec2-18-216-182-115.us-east-2.compute.amazonaws.com (Server, IP: 18.216.182.115)
+* ssh -i "BotVMkey.pem" ubuntu@ec2-18-220-170-51.us-east-2.compute.amazonaws.com (Test, IP: 18.220.170.51)
+* ssh -i "BotVMkey.pem" ubuntu@ec2-18-217-117-252.us-east-2.compute.amazonaws.com (Test, IP: 18.217.117.252)
+* ssh -i "BotVMkey.pem" ubuntu@ec2-18-217-100-87.us-east-2.compute.amazonaws.com (Test, IP: 18.217.100.87)
 
 
 
@@ -23,7 +24,7 @@ Install ansible in both of the virtual machine
 start with the IP address of the virtual machine
 ```
 [nodes]
-18.217.117.252 ansible_ssh_user=ubuntu ansible_ssh_private_key_file=./BotVMkey.pem
+18.217.100.87 ansible_ssh_user=ubuntu ansible_ssh_private_key_file=./BotVMkey.pem
 ```
 
 2. Run deployment code
