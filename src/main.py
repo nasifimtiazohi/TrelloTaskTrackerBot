@@ -11,8 +11,16 @@ import thread
 import db_helper
 
 # Set Slack BOT environment variables, if failed here, please see the README.md
-BOT_ID=os.environ.get("BOT_ID")
-BOT_TOKEN=os.environ.get("BOT_TOKEN")
+f = open("/home/ubuntu/dev/src/token.txt","r")
+token = []
+for l in f:
+  l=l.rstrip('\n')
+  token.append(l)
+
+BOT_ID=token[3]
+BOT_TOKEN=token[2]
+#BOT_ID=os.environ.get("BOT_ID")
+#BOT_TOKEN=os.environ.get("BOT_TOKEN")
 AT_BOT = "<@" + BOT_ID + ">"
 SPLITER = "&gt;"
 EXAMPLE_COMMAND = "do"
@@ -200,8 +208,8 @@ def parse_slack_output(slack_rtm_output):
     return None, None, None
 
 if __name__ == "__main__":
-    
-   
+
+
     READ_WEBSOCKET_DELAY = 1 # 1 second delay between reading from firehose
     if slack_client.rtm_connect():
         print("Taskbot connected and running!")

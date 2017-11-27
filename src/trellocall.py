@@ -15,13 +15,27 @@ members_dict=None
 project_team=None
 testboard=None
 
+f = open("/home/ubuntu/dev/src/token.txt","r")
+token = []
+lines = f.readlines()
+for l in lines:
+  l=l.rstrip('\n')
+  token.append(l)
+
+trelloKey=token[4]
+trelloSecret=token[5]
+trelloToken=token[6]
+TeamName=token[0]
+BoardName=token[1]
+
+
 # Set up Trello environment variables, if failed here, please see the README.md
-trelloKey = os.environ.get("TRELLO_API_KEY")
-trelloSecret = os.environ.get("TRELLO_API_SECRET")
-trelloToken = os.environ.get("TRELLO_TOKEN")
-TeamName= os.environ.get("TEAM_NAME")
-print TeamName
-BoardName=os.environ.get("BOARD_NAME")
+# trelloKey = os.environ.get("TRELLO_API_KEY")
+# trelloSecret = os.environ.get("TRELLO_API_SECRET")
+# trelloToken = os.environ.get("TRELLO_TOKEN")
+# TeamName= os.environ.get("TEAM_NAME")
+# print TeamName
+# BoardName=os.environ.get("BOARD_NAME")
 
 #TODO: Usecase3 only asks a person about progress. No matter how many cards are due. Later we'll refine it
 

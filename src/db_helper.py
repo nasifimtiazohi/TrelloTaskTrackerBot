@@ -4,11 +4,22 @@ import trellocall
 import operator
 import os
 
+f = open("/home/ubuntu/dev/src/token.txt","r")
+token = []
+for l in f:
+  l=l.rstrip('\n')
+  token.append(l)
+
+apikey=token[7]
+authDomain=token[8]
+databaseURL=token[9]
+storageBucket=token[10]
+
 # get Firebase API key, authDomain, databaseURL, storageBucket
-apikey = os.getenv('FIREBASE_API_KEY')
-authDomain= os.getenv('FIREBASE_AUTH_DOMAIN')
-databaseURL= os.getenv('FIREBASE_DATABASE_URL')
-storageBucket= os.getenv('FIREBASE_STORAGE_BUCKET')
+# apikey = os.getenv('FIREBASE_API_KEY')
+# authDomain= os.getenv('FIREBASE_AUTH_DOMAIN')
+# databaseURL= os.getenv('FIREBASE_DATABASE_URL')
+# storageBucket= os.getenv('FIREBASE_STORAGE_BUCKET')
 
 config = {
   "apiKey": apikey,
@@ -117,7 +128,7 @@ def add_card(due_date, card_name, progress, user_name_list, card_id, is_congrats
   '''
   print type(user_name_list),user_name_list
   for user_name in user_name_list:
-    print user_name 
+    print user_name
     data = {"due_date": due_date, "card_name": card_name, "progress": progress, "is_congrats": is_congrats}
     db.child("leaderboard/" + str(user_name) + "/cards/"+ card_id).set(data)
 
