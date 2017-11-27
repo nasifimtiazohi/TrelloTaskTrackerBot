@@ -25,6 +25,11 @@ start with the IP address of the virtual machine
 [nodes]
 18.217.117.252 ansible_ssh_user=ubuntu ansible_ssh_private_key_file=./BotVMkey.pem
 ```
+
+2. Run deployment code
+```
+ansible-playbook -i inventory deploy_bot.yml
+```
 ## In a machine that we will deployed
 ### Prerequisite: The machine has ansible installed already
 ```bash
