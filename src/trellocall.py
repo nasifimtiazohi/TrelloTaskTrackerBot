@@ -1,7 +1,7 @@
 from trello import TrelloClient
 from trello import label as trelloLabel
 from difflib import SequenceMatcher
-# import db_helper
+import db_helper
 import struct
 import datetime
 import os
