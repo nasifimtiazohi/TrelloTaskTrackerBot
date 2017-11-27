@@ -321,14 +321,15 @@ def get_all_names_cards_with_duetime(timeinhours):
     In future, we'll send info about each card '''
     namelist_with_duecards={}
     for c in duecards:
-        mid=c.member_id[0]
+        members=c.member_ids
+        for mid in members:
         name=members_dict[mid]
-        if name not in namelist_with_duecards.keys():
-            l=[]
-            l.append(c)
-            namelist_with_duecards[name]=l
-        else:
-            namelist_with_duecards[name].append(c)
+            if name not in namelist_with_duecards.keys():
+                l=[]
+                l.append(c)
+                namelist_with_duecards[name]=l
+            else:
+                namelist_with_duecards[name].append(c)
     return namelist_with_duecards
 
 # def print_members_points():
