@@ -40,23 +40,27 @@ def get_all_cards():
     all_card_info=[]
     for c in opencards:
         card_info = []
-        for userid in c.member_ids:
-            user_name = members_dict[userid]
-            # 'sheikhnasifimtiaz' is a slack name
-            due_date = c.due
-            card_id = c.id
-            card_name = c.name
-            #points = getPerformancePoints()[user_name]
-            progress = getCardProgress(card_id)
-            #only get the cards with progress
-            if progress != '':
-                card_info.append(due_date)
-                card_info.append(card_name)
-                card_info.append(progress)
-                card_info.append(user_name)
-                card_info.append(card_id)
-                card_info.append(userid)
-                all_card_info.append(card_info)
+        usernames = []
+        # for userid in c.member_ids:
+        #     user_name = members_dict[userid]
+        # 'sheikhnasifimtiaz' is a slack name
+        due_date = c.due
+        card_id = c.id
+        card_name = c.name
+        #points = getPerformancePoints()[user_name]
+        progress = getCardProgress(card_id)
+        #only get the cards with progress
+        if progress != '':
+            card_info.append(due_date)
+            card_info.append(card_name)
+            card_info.append(progress)
+            for userid in c.member_ids:
+                user_name = members_dict[userid]
+                usernames.append(user_name)
+            card_info.append(usernames)
+            card_info.append(card_id)
+            #card_info.append(userid)
+            all_card_info.append(card_info)
     return all_card_info
 
 def get_all_cards_of_user(trello_username):
@@ -713,7 +717,7 @@ def getAllCardsInNextInterval(cards, intervalLength):
 if __name__ == "__main__":
     var_init()
     ''' start experiments from here '''
-    slackname_with_duetime(24)
+    print get_all_names_cards_with_duetime(24)
 
 print "trellocall initialization start"
 var_init()
