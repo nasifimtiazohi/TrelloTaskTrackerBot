@@ -1,0 +1,12 @@
+# Slack account for TA
+Account:bot510project@gmail.com
+Password:csc510
+
+# Trello account for TA
+Account:bot510project@gmail.com
+Password:csc510ta
+
+# To see our Firebase database
+# Need to login the Gmail below
+Account:simtiaz1234
+Password:simtiaz1234
