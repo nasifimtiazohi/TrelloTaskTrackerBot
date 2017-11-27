@@ -16,6 +16,7 @@ Install ansible in both of the virtual machine
 * ssh -i "BotVMkey.pem" ubuntu@ec2-18-220-170-51.us-east-2.compute.amazonaws.com (Test, IP: 18.220.170.51)
 * ssh -i "BotVMkey.pem" ubuntu@ec2-18-217-117-252.us-east-2.compute.amazonaws.com (Test, IP: 18.217.117.252)
 * ssh -i "BotVMkey.pem" ubuntu@ec2-18-217-100-87.us-east-2.compute.amazonaws.com (Test, IP: 18.217.100.87)
+* 13.59.3.151
 
 
 
