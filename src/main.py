@@ -11,6 +11,9 @@ import thread
 import db_helper
 
 # Set Slack BOT environment variables, if failed here, please see the README.md
+print(os.environ.get('BOT_TOKEN'))
+print(os.environ.get('BOT_ID'))
+
 BOT_ID=os.environ.get("BOT_ID")
 BOT_TOKEN=os.environ.get("BOT_TOKEN")
 AT_BOT = "<@" + BOT_ID + ">"
