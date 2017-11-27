@@ -6,17 +6,17 @@ If any one wants to open a new profile in both slack and trello, these should be
 
 2.	The Trello Board has one card for each task.  There are labels for each card which have specific meanings for our bot-
 
-red- to do
+* red- to do
 
-green- finished
+* green- finished
 
-yellow- easy
+* yellow- easy
 
-sky – medium
+* sky – medium
 
-black- difficult
+* black- difficult
 
-Red labeled is used to keep track if a task in “ongoing”. Usecase 3 will not take cards with no red labels into account and won’t ask for progress for them even if the due date is set. It only works for the cards which has red labels but not green, hence ongoing!
+Red label is used to keep track if a task in “ongoing”. Usecase 3 will not take cards with no red labels into account and won’t ask for progress for them even if the due date is set. It only works for the cards which has red labels but not green, hence ongoing!
 
 However, Usecase 1 only considers due date (as it gets activated when a card approaches due date) and difficulty labels. In absence of those, it will send mails to prompt the user (if any assigned) to fill up the necessary labels.
 
@@ -28,8 +28,8 @@ however to trigger use case 2 manually, there are also 2 commands.
 
 ## Instruction for USECASE 1:
 
-Flow-	
-1.	The usecase gets activated per every interval (put interval period)
+### Flow	
+1.	This usecase gets activated per every interval (put interval period)
 2.	Bot will read all the cards from trello board which have due date set and difficulty labels set.
 3.	If due date and difficulty labels are set it will go to the main flow (step 5)
 4.	[Alternate flow] If due date and difficulty labels are set, it will send the assigned user (if any) a mail to fill up the necessary labels and go to step 6. If a card even has no members assigned, the bot has nothing to do.
@@ -41,5 +41,20 @@ When the next time the bot(thread for usecase 1) gets activated, it will check f
 
 To check USECASE 1, the TAs can set up different cards with different due time and difficulty labels. If the bot sends mail for a card which follows the criteria, the usecase works. Then if the user has taken proper action, the bot will stop sending mails. Otherwise new mails will come at every interval period.
 
-
- 
+## Instruction for Usecase 3
+### Implementation Details
+This usecase get all the cards about to due and ask for input of user and respond to user input accordingly.
+* If user complete the task, we will do the following things
+     1. We will update his progress (="completed") in database and also update the points to his total points (reward)
+     2. We will update trello, mark the card as DONE automatically
+     3. we will send congraculation message in public channel, so user's teammate can find their motivation of working harder
+* If user ignore our reminder, or he provide an negative reponse,
+     we will do the following things:
+     1. We will update his progress (="pending")in database and also update the points to his total points (penality)
+     2. Keep sending the reminder
+### Step to step instructions
+1. Open the following website: https://510taskmanagerbot.slack.com
+2. Login as CSC510_TA account
+3. Go to Apps-> taskbot, if you receive message from taskbot
+4. Respond negatively, In input box, input "@taskbot > not yet": you will receive a message as reminder in "general" channel
+4. Respond postively, 
