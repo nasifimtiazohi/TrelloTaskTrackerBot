@@ -57,4 +57,5 @@ This usecase get all the cards about to due and ask for input of user and respon
 2. Login as CSC510_TA account
 3. Go to Apps-> taskbot, if you receive message from taskbot
 4. Respond negatively, In input box, input "@taskbot > not yet": you will receive a message as reminder in "general" channel
-4. Respond postively, 
+5. Respond postively, In input box, input "@taskbot > completed" : you will receive a congratulation message in "general" channel and also be informed of your points in total.
+
