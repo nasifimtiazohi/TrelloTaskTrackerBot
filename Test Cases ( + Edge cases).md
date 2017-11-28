@@ -20,6 +20,7 @@
 | 17 | 3 |@taskbot done > invalid-input | Handle the exception of invalid input |Does not handle the exception of invalid input and waits for next thread execution| Fail  |
 | 18 | 3 |@taskbot done > already_completed_card_and_in_public_channel | Handle the exception of invalid input |Does not handle the exception of invalid input and gives runtime error and crashes| Fail  |
 | 19 | 3 | Try case sensitive inputs {@taskbot done > tast1}  | Perform all tasks  |Perform all tasks | Pass  |
+| 20 | 2 |  |  |   |
 
 
 
