@@ -60,17 +60,17 @@ To check USECASE 1, the TAs can set up different cards with different due time a
 ## Instruction for Usecase 3
 ### Implementation Details
 This usecase get all the cards about to due and ask for input of user and respond to user input accordingly.
-* If user complete the task, we will do the following things
+* If the user completes the task, we will do the following things
      1. We will update his progress (="completed") in database and also update the points to his total points (reward)
-     2. We will update trello, mark the card as DONE automatically
-     3. we will send congraculation message in public channel, so user's teammate can find their motivation of working harder
-* If user ignore our reminder, or he provide an negative reponse,
+     2. We will update trello board as well, mark the card as DONE(become green label) automatically
+     3. we will send congratulation message in public channel, so user's teammate can find their motivation of working harder to beat others
+* If the user ignores our reminder, or he provide an negative response,
      we will do the following things:
-     1. We will update his progress (="pending")in database and also update the points to his total points (penality)
+     1. We will update his progress (="pending")in database and also update the points to his total points (deduct his/her total points -- penality)
      2. Keep sending the reminder
 ### Step to step instructions
 1. Open the following website: https://510taskmanagerbot.slack.com
-2. Login as CSC510_TA account
+2. Login as CSC510_TA account (described in TA_account_info.txt)
 3. Go to Apps-> taskbot, if you receive message from taskbot
 4. Respond negatively, In input box, input "@taskbot > not yet": you will receive a message as reminder in "general" channel
-5. Respond postively, In input box, input "@taskbot > completed" : you will receive a congratulation message in "general" channel and also be informed of your points in total.
+5. Respond positively, In input box, input "@taskbot > completed" : you will receive a congratulation message in "general" channel and also be informed of your points in total.
