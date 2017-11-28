@@ -3,6 +3,8 @@
 ## Lanuch two Amazon EC2 Ubuntu 16.40 Virtual machine for testing:
 The deployment scripts we write will be located in one of the virtual machine and install all the requirement in the second virtual machine and run our bot in the second virtual machine automatically.
 
+### Link to Screencast for SERVICE Milestone
+[Intro](https://drive.google.com/a/ncsu.edu/file/d/1LtsbSFsaZhQ-AYc5esdJFXA481XKAjUg/view?usp=sharing)
 
 document how these configuration management tools and deployment scripts should be run and make sure to include demonstrate running them in your screencast.
 
