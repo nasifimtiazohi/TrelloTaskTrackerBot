@@ -11,16 +11,16 @@ import thread
 import db_helper
 
 # Set Slack BOT environment variables, if failed here, please see the README.md
-f = open("/home/ubuntu/dev/src/token.txt","r")
-token = []
-for l in f:
-  l=l.rstrip('\n')
-  token.append(l)
+# f = open("/home/ubuntu/dev/src/token.txt","r")
+# token = []
+# for l in f:
+#   l=l.rstrip('\n')
+#   token.append(l)
 
-BOT_ID=token[3]
-BOT_TOKEN=token[2]
-#BOT_ID=os.environ.get("BOT_ID")
-#BOT_TOKEN=os.environ.get("BOT_TOKEN")
+# BOT_ID=token[3]
+# BOT_TOKEN=token[2]
+BOT_ID=os.environ.get("BOT_ID")
+BOT_TOKEN=os.environ.get("BOT_TOKEN")
 AT_BOT = "<@" + BOT_ID + ">"
 SPLITER = "&gt;"
 EXAMPLE_COMMAND = "do"
@@ -123,8 +123,7 @@ def handle_command_for_usecase3(command, channel, command_userid, command_cardna
               for slack_name in users_with_cards.keys():
                 userid=slackapicall.fullname_to_id(slack_name)
                 cardlist=users_with_cards[slack_name]
-                message= "<@"+command_userid+"> ," +" has a task pending":  ", please work harder!"
-                i = 0
+                message= "<@"+command_userid+"> ," +" has a task pending"
                 for card in cardlist:
                     if card_id == card.id:
                        message+= card.name + ", please work harder!"
