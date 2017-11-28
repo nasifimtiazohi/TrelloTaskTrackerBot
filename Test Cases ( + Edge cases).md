@@ -5,6 +5,7 @@
 | 2 | 1 |New card - To do, Hard, within 36 hours | Send email notifications on existing data plus the new card |Send email notifications on existing data plus the new card | Pass  |
 | 3 | 1 |New card - To do, Hard, Last year date | Send email notifications on existing data and not the new card |Send email notifications on existing data and not the new card| Pass  |
 | 4 | 1 |New card - To do, Last year  | Send email notifications to input information for this card  |Send email notifications  to input information for this card | Pass  |
+| 5 | 1 |New card - To do, Easy  | Send email notifications to input information for this card  |Send email notifications  to input information for this card | Pass  |
 
 
 
