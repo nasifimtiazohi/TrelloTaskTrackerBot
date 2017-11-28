@@ -75,5 +75,5 @@
            key_file="/home/ubuntu/.ssh/id_rsa"
       become: yes
     - name: Run Task Manager Bot
-      command: bash -lc "python dev/src/main.py"
+      command: bash -lc "nohup python dev/src/main.py"
       become: yes
