@@ -101,26 +101,38 @@ def handle_command_for_usecase3(command, channel, command_userid, command_cardna
     response = "Not sure what you mean. Use the *" + EXAMPLE_COMMAND + \
                "* command with numbers, delimited by spaces."
     command = str(command).lower()
-    print("Command Received:", command, "fu")
+    # print("Command Received:", command, "fu")
+    
+    # Get a dictionary which map slack user id to the user name
+    slackIdToNameDict = slackapicall.list_users_byID()
+    # Get Slack user name by slack user id
+    slack_username = slackIdToNameDict[command_userid]
+    # Get trello name from slack name
+    trello_username = trellocall.slackname_to_trelloname(slack_username)
+    # map from command_userid to trello_username
+    print "Debug: trello_username: " + trello_username
+    print "Debug: command_cardname: " + command_cardname
+   
     if command in N_RESPONSE_USECASE_3 and channel not in slackapicall.public_channels():
-        print "dhukse"
-        #map from command_userid to userid
-    #    d = slackapicall.list_users_byID()
-    #    slack_username = d[command_userid]
-    #    trello_username = trellocall.slackname_to_trelloname(slack_username)
-        message = "<@" + command_userid +"> " +  "has a task pending, please work harder!"
-        slack_client.api_call("chat.postMessage", channel=slackapicall.get_general_channel_id(),
+       # IMPORTANT: Search from database and Map
+       # Init Database before searching it
+       db_helper.database_init()
+       card_id = db_helper.getCardIdbyCardName(trello_username, command_cardname)
+       if card_id != None:
+              users_with_cards=trellocall.slackname_with_duetime(20)
+              for slack_name in users_with_cards.keys():
+                userid=slackapicall.fullname_to_id(slack_name)
+                cardlist=users_with_cards[slack_name]
+                message= "<@"+command_userid+"> ," +" has a task pending":  ", please work harder!"
+                i = 0
+                for card in cardlist:
+                    if card_id == card.id:
+                       message+= card.name + ", please work harder!"
+                       slack_client.api_call("chat.postMessage", channel=slackapicall.get_general_channel_id(),
                             text=message, as_user=True)
-    if command in P_RESPONSE_USECASE_3 and channel not in slackapicall.public_channels():
-       # Get a dictionary which map slack user id to the user name
-       slackIdToNameDict = slackapicall.list_users_byID()
-       # Get Slack user name by slack user id
-       slack_username = slackIdToNameDict[command_userid]
-       # Get trello name from slack name
-       trello_username = trellocall.slackname_to_trelloname(slack_username)
-       # map from command_userid to trello_username
-       print "Debug: trello_username: " + trello_username
-       print "Debug: command_cardname: " + command_cardname
+                          
+        #message = "<@" + command_userid +"> " +  "has a task pending, please work harder!"
+    elif command in P_RESPONSE_USECASE_3 and channel not in slackapicall.public_channels():
        # IMPORTANT: Search from database and Map
        # Init Database before searching it
        db_helper.database_init()
