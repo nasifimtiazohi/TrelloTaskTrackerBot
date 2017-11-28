@@ -1,6 +1,7 @@
 
 | #  | Use Case | Input  | Output | Expected Output  | Result |
 | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
+| 1 | 1 |No new input | Send email notifications on existing data  |Send email notifications on existing data | Pass  |
 
 
 
