@@ -238,6 +238,7 @@ if __name__ == "__main__":
         except:
             print "thread could not be started"
         while True:
+                READ_WEBSOCKET_DELAY = 1
                 command, channel, command_userid= parse_slack_output(slack_client.rtm_read())
                 if command and channel and command_userid:
                     if SPLITER in command:
