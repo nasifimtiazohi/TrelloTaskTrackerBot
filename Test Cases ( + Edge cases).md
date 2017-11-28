@@ -13,6 +13,7 @@
 | 10 | 3 |No input  | Database, Trello, Slack connected  |Database, Trello, Slack connected | Pass  |
 | 11 | 3 |@taskbot done > tast1  | Update Database  |Update Database | Pass  |
 | 12 | 3 |@taskbot done > tast1  | Update Trello label |Update Trello label | Pass  |
+| 13 | 3 |@taskbot done > tast1  | Send congratulations message plus scores earned on general window in slack |Send congratulations message plus scores earned on general window in slack | Pass  |
 
 
 
