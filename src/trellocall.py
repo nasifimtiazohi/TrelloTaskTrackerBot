@@ -15,13 +15,27 @@ members_dict=None
 project_team=None
 testboard=None
 
+f = open("/home/ubuntu/dev/src/token.txt","r")
+token = []
+lines = f.readlines()
+for l in lines:
+  l=l.rstrip('\n')
+  token.append(l)
+
+trelloKey=token[4]
+trelloSecret=token[5]
+trelloToken=token[6]
+TeamName=token[0]
+BoardName=token[1]
+
+
 # Set up Trello environment variables, if failed here, please see the README.md
-trelloKey = os.environ.get("TRELLO_API_KEY")
-trelloSecret = os.environ.get("TRELLO_API_SECRET")
-trelloToken = os.environ.get("TRELLO_TOKEN")
-TeamName= os.environ.get("TEAM_NAME")
-print TeamName
-BoardName=os.environ.get("BOARD_NAME")
+# trelloKey = os.environ.get("TRELLO_API_KEY")
+# trelloSecret = os.environ.get("TRELLO_API_SECRET")
+# trelloToken = os.environ.get("TRELLO_TOKEN")
+# TeamName= os.environ.get("TEAM_NAME")
+# print TeamName
+# BoardName=os.environ.get("BOARD_NAME")
 
 #TODO: Usecase3 only asks a person about progress. No matter how many cards are due. Later we'll refine it
 
@@ -40,23 +54,27 @@ def get_all_cards():
     all_card_info=[]
     for c in opencards:
         card_info = []
-        for userid in c.member_ids:
-            user_name = members_dict[userid]
-            # 'sheikhnasifimtiaz' is a slack name
-            due_date = c.due
-            card_id = c.id
-            card_name = c.name
-            #points = getPerformancePoints()[user_name]
-            progress = getCardProgress(card_id)
-            #only get the cards with progress
-            if progress != '':
-                card_info.append(due_date)
-                card_info.append(card_name)
-                card_info.append(progress)
-                card_info.append(user_name)
-                card_info.append(card_id)
-                card_info.append(userid)
-                all_card_info.append(card_info)
+        usernames = []
+        # for userid in c.member_ids:
+        #     user_name = members_dict[userid]
+        # 'sheikhnasifimtiaz' is a slack name
+        due_date = c.due
+        card_id = c.id
+        card_name = c.name
+        #points = getPerformancePoints()[user_name]
+        progress = getCardProgress(card_id)
+        #only get the cards with progress
+        if progress != '':
+            card_info.append(due_date)
+            card_info.append(card_name)
+            card_info.append(progress)
+            for userid in c.member_ids:
+                user_name = members_dict[userid]
+                usernames.append(user_name)
+            card_info.append(usernames)
+            card_info.append(card_id)
+            #card_info.append(userid)
+            all_card_info.append(card_info)
     return all_card_info
 
 def get_all_cards_of_user(trello_username):
@@ -321,14 +339,15 @@ def get_all_names_cards_with_duetime(timeinhours):
     In future, we'll send info about each card '''
     namelist_with_duecards={}
     for c in duecards:
-        mid=c.member_id[0]
-        name=members_dict[mid]
-        if name not in namelist_with_duecards.keys():
-            l=[]
-            l.append(c)
-            namelist_with_duecards[name]=l
-        else:
-            namelist_with_duecards[name].append(c)
+        members=c.member_ids
+        for mid in members:
+            name=members_dict[mid]
+            if name not in namelist_with_duecards.keys():
+                l=[]
+                l.append(c)
+                namelist_with_duecards[name]=l
+            else:
+                namelist_with_duecards[name].append(c)
     return namelist_with_duecards
 
 # def print_members_points():
@@ -712,7 +731,7 @@ def getAllCardsInNextInterval(cards, intervalLength):
 if __name__ == "__main__":
     var_init()
     ''' start experiments from here '''
-    slackname_with_duetime(24)
+    print get_all_names_cards_with_duetime(24)
 
 print "trellocall initialization start"
 var_init()

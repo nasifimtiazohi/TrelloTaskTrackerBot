@@ -4,11 +4,22 @@ import trellocall
 import operator
 import os
 
+f = open("/home/ubuntu/dev/src/token.txt","r")
+token = []
+for l in f:
+  l=l.rstrip('\n')
+  token.append(l)
+
+apikey=token[7]
+authDomain=token[8]
+databaseURL=token[9]
+storageBucket=token[10]
+
 # get Firebase API key, authDomain, databaseURL, storageBucket
-apikey = os.getenv('FIREBASE_API_KEY')
-authDomain= os.getenv('FIREBASE_AUTH_DOMAIN')
-databaseURL= os.getenv('FIREBASE_DATABASE_URL')
-storageBucket= os.getenv('FIREBASE_STORAGE_BUCKET')
+# apikey = os.getenv('FIREBASE_API_KEY')
+# authDomain= os.getenv('FIREBASE_AUTH_DOMAIN')
+# databaseURL= os.getenv('FIREBASE_DATABASE_URL')
+# storageBucket= os.getenv('FIREBASE_STORAGE_BUCKET')
 
 config = {
   "apiKey": apikey,
@@ -39,17 +50,18 @@ def database_init():
   card_info[0]= due_date
   card_info[1]= card_name
   card_info[2]= progress
-  card_info[3] = user_name
+  card_info[3] = user_name list
   card_info[4] = card_id
   '''
   # Init Firebase database everyday
   all_card_info = []
   all_card_info = trellocall.get_all_cards()
   for card_info in all_card_info:
+    print "card info",type(card_info)
     if card_info[2] == "Completed":
-      add_card(str(card_info[0]), str(card_info[1]), str(card_info[2]), str(card_info[3]), str(card_info[4]), "true")
+      add_card(str(card_info[0]), str(card_info[1]), str(card_info[2]), card_info[3], str(card_info[4]), "true")
     elif card_info[2] == "Pending":
-      add_card(str(card_info[0]), str(card_info[1]), str(card_info[2]), str(card_info[3]), str(card_info[4]), "false")
+      add_card(str(card_info[0]), str(card_info[1]), str(card_info[2]), card_info[3], str(card_info[4]), "false")
 
 def update_progres(trello_username, card_id):
   '''
@@ -89,10 +101,11 @@ def sync_card_info():
   for card_info in all_card_info:
     # detect if there are new cards, if no,
     data = {"due_date": str(card_info[0]), "card_name": str(card_info[1]), "progress": str(card_info[2])}
-    db.child("leaderboard/" + str(card_info[3]) + "/cards/"+ str(card_info[4])).update(data)
+    for names in card_info[3]:
+      db.child("leaderboard/" + str(names) + "/cards/"+ str(card_info[4])).update(data)
 
 
-def add_card(due_date, card_name, progress, user_name, card_id, is_congrats):
+def add_card(due_date, card_name, progress, user_name_list, card_id, is_congrats):
   '''
   Add card to certain member in firebase database
       card_info[0]= due_date
@@ -113,8 +126,11 @@ def add_card(due_date, card_name, progress, user_name, card_id, is_congrats):
       card_id (string): card id
       is_congrats (string): has been post congrats message or not
   '''
-  data = {"due_date": due_date, "card_name": card_name, "progress": progress, "is_congrats": is_congrats}
-  db.child("leaderboard/" + user_name + "/cards/"+ card_id).set(data)
+  print type(user_name_list),user_name_list
+  for user_name in user_name_list:
+    print user_name
+    data = {"due_date": due_date, "card_name": card_name, "progress": progress, "is_congrats": is_congrats}
+    db.child("leaderboard/" + str(user_name) + "/cards/"+ card_id).set(data)
 
 def total_points_init():
   '''

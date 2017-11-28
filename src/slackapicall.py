@@ -3,10 +3,17 @@ import os
 import json
 import requests
 
+f = open("/home/ubuntu/dev/src/token.txt","r")
+token = []
+for l in f:
+  l=l.rstrip('\n')
+  token.append(l)
 
+BOT_ID=token[3]
+BOT_TOKEN=token[2]
 
-BOT_ID=os.environ.get("BOT_ID")
-BOT_TOKEN=os.environ.get("BOT_TOKEN")
+# BOT_ID=os.environ.get("BOT_ID")
+# BOT_TOKEN=os.environ.get("BOT_TOKEN")
 
 #print BOT_TOKEN
 slack_client= SlackClient(BOT_TOKEN)
@@ -23,7 +30,7 @@ def fullname_to_id(fullname):
         profile=c['profile']
         d[profile['real_name'].lower()]=c['id']
     return d[fullname]
-    
+
 
 def open_im(user_id):
     f=True
