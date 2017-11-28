@@ -238,21 +238,20 @@ if __name__ == "__main__":
         except:
             print "thread could not be started"
         while True:
-                READ_WEBSOCKET_DELAY = 1
-                command, channel, command_userid= parse_slack_output(slack_client.rtm_read())
-                if command and channel and command_userid:
-                    if SPLITER in command:
-                        #use case 3
-                        command_cardname = command.split(SPLITER)[1].strip().lower()
-                        command = command.split(SPLITER)[0].strip().lower()
-                        print "command: " + command
-                        print "command cardname: " + command_cardname
-                        print "command userid: " + command_userid
-                        handle_command_for_usecase3(command, channel, command_userid, command_cardname)
-                    else:
-                        #use case 2, no need for further parse of string
-                        handle_command(command, channel, command_userid)
-              #usecase3_final_function()
-        time.sleep(READ_WEBSOCKET_DELAY)
+            command, channel, command_userid= parse_slack_output(slack_client.rtm_read())
+            if command and channel and command_userid:
+                if SPLITER in command:
+                    #use case 3
+                    command_cardname = command.split(SPLITER)[1].strip().lower()
+                    command = command.split(SPLITER)[0].strip().lower()
+                    print "command: " + command
+                    print "command cardname: " + command_cardname
+                    print "command userid: " + command_userid
+                    handle_command_for_usecase3(command, channel, command_userid, command_cardname)
+                else:
+                    #use case 2, no need for further parse of string
+                    handle_command(command, channel, command_userid)
+            #usecase3_final_function()
+            time.sleep(READ_WEBSOCKET_DELAY)
     else:
         print ("Connection failed. Invalid Slack token or bot ID?")
