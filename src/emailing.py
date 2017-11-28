@@ -1,17 +1,17 @@
 import smtplib
 import os
 
-f = open("/home/ubuntu/dev/src/token.txt","r")
-token = []
-for l in f:
-  l=l.rstrip('\n')
-  token.append(l)
+# f = open("/home/ubuntu/dev/src/token.txt","r")
+# token = []
+# for l in f:
+#   l=l.rstrip('\n')
+#   token.append(l)
 
-gmailid=token[11]
-gmailpass=token[12]
+# gmailid=token[11]
+# gmailpass=token[12]
 
-# gmailid=os.environ.get("GMAIL_ID")
-# gmailpass=os.environ.get("GMAIL_PASS")
+gmailid=os.environ.get("GMAIL_ID")
+gmailpass=os.environ.get("GMAIL_PASS")
 
 def sendmail(mail,message):
     smtpObj= smtplib.SMTP('smtp.gmail.com',587)
