@@ -2,7 +2,7 @@
 
 1.	The corresponding slack profile and trello profile need to be matched. One way of matching could have been the mail address of both profile. However, there lies two problems in this way. 1) Trello tokens doesn’t return mail id of other members 2) Any slack user can change his/her mail id at any time.
 So, we did a name matching between slack full name and trello full name. The names shouldn’t be exactly the same, but a reasonable match should be there. (like “sheikh Nasif Imtiaz” in trello and “Nasif Imtiaz Ohi” in slack matches).
-If any one wants to open a new profile in both slack and trello, these should be kept in mind.
+If anyone wants to open a new profile in both slack and trello, these should be kept in mind.
 
 2.	The Trello Board has one card for each task.  There are labels for each card which have specific meanings for our Slack bot:
 
@@ -18,13 +18,13 @@ Sky Blue – Medium
 
 Black- Hard
 
-Red label is used to keep track if a task in “ongoing”. Usecase 3 will not take cards with no red labels into account and won’t ask for progress for them even if the due date is set. It only works for the cards which has red labels but not green, hence ongoing! The difficulty of task is a rule we made to reward different points to a member who completed a task. The detailed rule about calculating points is in CalculateGradePrinciples.md
+Red label represents a task in “ongoing”; Green label means a task is done. Usecase 3 will not take cards without red label into account and will not ask for progress for them even if the due date is set. It only works for the cards which has red labels but not green, hence ongoing! The difficulty of task is a rule we made to give different reward points to a member who completed a task. The detailed rule about calculating points and how we categorize the task in different level described in CalculateGradePrinciples.md
 
 However, Usecase 1 only considers due date (as it gets activated when a card approaches due date) and difficulty labels. In absence of those, it will send mails to prompt the user (if any assigned) to fill up the necessary labels.
 
-For cards which doesn’t have any members assigned, our bot doesn’t do anything about that.
+For cards which doesn’t have any members assigned, our bot doesn’t do anything about that, this is a responsibility for a user to set corresponding labels.
 
-3.	All of our usecases are meant to run automatically at certain intervals for which we have implement threading. The threading delays are -
+3.	All of our use cases are meant to run automatically at certain intervals for which we have implement threading. The threading delays are -
 ****put threading delay*****
 however to trigger use case 2 manually, there are also 2 commands.
 
@@ -56,6 +56,3 @@ To check USECASE 1, the TAs can set up different cards with different due time a
 ### Usage instructions
 1. TAs can set up different cards with different due time and difficulty labels.
 2. Invoke usecase2 by typing "@taskbot show leaderboard" and "@taskbot show targets board" in the slack taskbot channel.
-
-
-
