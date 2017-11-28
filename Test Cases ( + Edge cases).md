@@ -18,6 +18,7 @@
 | 15 | 3 |@taskbot >  | Handle the exception of invalid input |Handle the exception of invalid input | Pass  |
 | 16 | 3 |@taskbot task1  | Handle the exception of invalid input |Handle the exception of invalid input | Pass  |
 | 17 | 3 |@taskbot done > invalid-input | Handle the exception of invalid input |Does not handle the exception of invalid input and waits for next thread execution| Fail  |
+| 18 | 3 |@taskbot done > already_completed_card_and_in_public_channel | Handle the exception of invalid input |Does not handle the exception of invalid input and gives runtime error and crashes| Fail  |
 
 
 
