@@ -41,4 +41,21 @@ if a card is hard(black) and has due time within 48 hours, it will send the user
 6.	A user has to take an action for the sent mails. For alternate flow, the user must fill up both the due time and difficulty labels. And for main flow, the use must label the card green to mark “finished”.
 When the next time the bot(thread for usecase 1) gets activated, it will check for all things again. If the user has taken proper steps, it will not send any more mail. If there’s no action, the bot will keep sending mails again. {hence, nagging reminder}
 
+### Usage instructions
 To check USECASE 1, the TAs can set up different cards with different due time and difficulty labels. If the bot sends mail for a card which follows the criteria, the usecase works. Then if the user has taken proper action, the bot will stop sending mails. Otherwise new mails will come at every interval period.
+
+## Instruction for USECASE 2:
+### Main Flow
+1. It will keep track of time and will get activated after certain intervals.
+2. It will evaluate all members’ performance based on current information available according to its logic system and calculate score & rewards.
+3. It will update the leaderboard for the whole team.
+4. It will set new targets for each member and set up new competition weekly.
+### Alternative Flow
+1. In absence of adequate information for any user, it will add penalties(minimal) for inactivity to his/her score in the leaderboard.
+
+### Usage instructions
+1. TAs can set up different cards with different due time and difficulty labels.
+2. Invoke usecase2 by typing "@taskbot show leaderboard" and "@taskbot show targets board" in the slack taskbot channel.
+
+
+
