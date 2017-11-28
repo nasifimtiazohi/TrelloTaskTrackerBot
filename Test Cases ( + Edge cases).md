@@ -7,6 +7,7 @@
 | 4 | 1 |New card - To do, Last year  | Send email notifications to input information for this card  |Send email notifications  to input information for this card | Pass  |
 | 5 | 1 |New card - To do, Easy  | Send email notifications to input information for this card  |Send email notifications  to input information for this card | Pass  |
 | 6 | 1 |New card - To do, Hard, Easy, Medium, Last year  | Send email notifications based on label medium  for this card |Send email notifications  based on label medium for this card | Pass  |
+| 7 | 1 |New card - To do, Easy  | Send email notifications to input information for this card  |Send email notifications  to input information for this card | Pass  |
 
 
 
