@@ -3,12 +3,40 @@
 # Install Packages V
 # export tokens and to linux path permanantly V
 # Clone Github V
-# (Github ssh key is located in this cotrol machine) 
-# Run Task Manager Bot
+# (Github ssh key is located in this cotrol machine) V
+# Run Task Manager Bot V
+  environment:
+     TEAM_NAME: 510projectteam
+     BOARD_NAME: 'Demo Board'
+     BOT_TOKEN: xoxb-266498254006-btD2n1TcKdi5MY6AKlPGTwnm
+     BOT_ID: U7UEN7G06 
+     TRELLO_API_KEY: dbf6947f87a8dcb83f090731a27e8bd4
+     TRELLO_API_SECRET: f57a6c66081742aa5f6149d329c3581d53231c308e4cc9f78b31230ce13b3bb8
+     TRELLO_TOKEN: 414df911de9e839c8ab9838c8fa1723107fba5848e5049269d88e5e94a348f31
+     FIREBASE_API_KEY: AIzaSyCC5OzyEqGBcGZkpyUP90qUnyCCJY8SRQ8
+     FIREBASE_AUTH_DOMAIN: taskmangerbot.firebaseapp.com
+     FIREBASE_DATABASE_URL: https://taskmangerbot.firebaseio.com
+     FIREBASE_STORAGE_BUCKET: taskmangerbot.appspot.com
+     GMAIL_ID: bot510project@gmail.com
+     GMAIL_PASS: simtiaz1234
   vars:
     dest_dir: /home/ubuntu/dev
     gh_repo: git@github.ncsu.edu:yhu22/CSC510_F17_Project.git
-    gh_branch: 77d848d7cff464c9217b509e426ca8926437ee34
+    gh_branch: tmp_screencast
+    envVars:
+        - TEAM_NAME
+        - BOARD_NAME
+        - BOT_TOKEN
+        - BOT_ID
+        - TRELLO_API_KEY
+        - TRELLO_API_SECRET
+        - TRELLO_TOKEN
+        - FIREBASE_API_KEY
+        - FIREBASE_AUTH_DOMAIN
+        - FIREBASE_DATABASE_URL
+        - FIREBASE_STORAGE_BUCKET
+        - GMAIL_ID
+        - GMAIL_PASS
     packages:
       - git
       - python-pip
@@ -23,23 +51,6 @@
       - python-firebase
 
   tasks:
-    - name: Create env setting file
-      command: touch /etc/profile.d/set_bot_env.sh
-      become: yes
-    - name: Set environment Variables
-      lineinfile:
-        dest: /etc/profile.d/set_bot_env.sh
-        line: "export TEAM_NAME=510projectteam export BOARD_NAME='Demo Board' export BOT_TOKEN=xoxb-266498254006-btD2n1TcKdi5MY6AKlPGTwnm export BOT_ID=U7UEN7G06  export TRELLO_API_KEY=dbf6947f87a8dcb83f090731a27e8bd4 export TRELLO_API_SECRET=f57a6c66081742aa5f6149d329c3581d53231c308e4cc9f78b31230ce13b3bb8 export TRELLO_TOKEN=414df911de9e839c8ab9838c8fa1723107fba5848e5049269d88e5e94a348f31 export FIREBASE_API_KEY=AIzaSyCC5OzyEqGBcGZkpyUP90qUnyCCJY8SRQ8 export FIREBASE_AUTH_DOMAIN=taskmangerbot.firebaseapp.com export FIREBASE_DATABASE_URL=https://taskmangerbot.firebaseio.com export FIREBASE_STORAGE_BUCKET=taskmangerbot.appspot.com export GMAIL_ID=bot510project@gmail.com export GMAIL_PASS=simtiaz1234"
-        insertafter: 'EOF'
-        state: present
-      become: yes
-    - name: Copy setting.sh File for sourcing
-      copy:
-        src: /home/ubuntu/setting.sh
-        dest: /home/ubuntu/setting.sh
-    - name: Source the .bashrc file
-      command: bash -lc "source .bashrc"
-      become: yes
     - name: Install packages
       apt:
         pkg: "{{ item }}"
@@ -50,7 +61,6 @@
     - debug:
         msg: "{{ item }}"
       with_items: "{{packages}}"
-
     - name: PIP install python packages
       pip:
         name: "{{ item }}"
@@ -74,6 +84,13 @@
            accept_hostkey=yes
            key_file="/home/ubuntu/.ssh/id_rsa"
       become: yes
+    - name: Test Env
+      command: python -c "import os; print os.environ.get('{{ item }}')"
+      #command: python -c "import os; print os.environ.get('{{ item }}')" > envTest.out
+      with_items: envVars
+      register: output
+    - debug: var=item.stdout
+      with_items: output.results
     - name: Run Task Manager Bot
       command: bash -lc "nohup python dev/src/main.py"
       become: yes
