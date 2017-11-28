@@ -1,7 +1,7 @@
 
-Compilation - Failed
+Compilation - ~~Failed~~ Passed
 
-Error in line 126 - Funtion handle_command_for_usecase3
+~~Error in line 126 - Funtion handle_command_for_usecase3~~
 
 | #  | Use Case | Input  | Output | Expected Output  | Result |
 | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
