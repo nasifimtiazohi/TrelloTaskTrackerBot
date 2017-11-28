@@ -79,7 +79,7 @@ def handle_command(command, channel, command_userid):
             message = str(key) + ": " + str(messages[key])
             slack_client.api_call("chat.postMessage", channel=channel,
                           text=message, as_user=True)
-    elif command in RESET_TOTAL_SCORES and channel not in slackapicall.public_channels():
+    elif command in RESET_TOTAL_SCORES:
        print "Reset the leaderboard..."
        db_helper.total_points_init()
        db_helper.print_leaderboard()
@@ -177,6 +177,12 @@ def handle_command_for_usecase3(command, channel, command_userid, command_cardna
             # If cannot find command in the database, prompt user to input again
             message = "Well, your status is: " + command + ", however, the task you input seems incorrect, please try again..."
             slack_client.api_call("chat.postMessage", channel=channel,text=message, as_user=True)
+    elif channel in slackapicall.public_channels():
+        message = "Public channel is not for updating your task progress. Please go in private channel with me!"
+        slack_client.api_call("chat.postMessage", channel=channel,text=message, as_user=True)
+    else:
+        message = "Not sure what you mean!"
+        slack_client.api_call("chat.postMessage", channel=channel,text=message, as_user=True)
 
 def usecase3_final_function(threadName, delay):
     while True:
