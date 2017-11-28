@@ -3,9 +3,11 @@
 We utilize [Ansible] (https://www.ansible.com/) as our configuration management tool. We launched a Amazon EC2 Ubutu 16.04 VM as the central server which is responsible for automate deployment of the machines that within its network.
 For the purpose of testing, we launched two "clean" Amazon EC2 VMs (instance of Ubutu 16.04) that are to be deployed by our central VM. Following is our step-by-step deployment instruction.
 
+### Screencast of Deploy
+[Deploy screencast](https://drive.google.com/a/ncsu.edu/file/d/1jg4_1M-GvJWhXSGRqDPPpnCsYviEYymH/view?usp=sharing)
 
-### Introduction of our project
-[Intro](https://drive.google.com/a/ncsu.edu/file/d/1LtsbSFsaZhQ-AYc5esdJFXA481XKAjUg/view?usp=sharing)
+### Introduction of Project
+[Introduction video](https://drive.google.com/a/ncsu.edu/file/d/1LtsbSFsaZhQ-AYc5esdJFXA481XKAjUg/view?usp=sharing)
 
 ## 1. Lanuch Amazon EC2 Ubuntu 16.40 VM:
 If you are using a macOS, go to the directory that contain the file "BotVMkey.pem", then run one of the following command to ssh into the virtal machine:
