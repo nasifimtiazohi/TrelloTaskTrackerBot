@@ -17,6 +17,7 @@
 | 14 | 3 |@taskbot done  | Handle the exception of invalid input |Handle the exception of invalid input | Pass  |
 | 15 | 3 |@taskbot >  | Handle the exception of invalid input |Handle the exception of invalid input | Pass  |
 | 16 | 3 |@taskbot task1  | Handle the exception of invalid input |Handle the exception of invalid input | Pass  |
+| 17 | 3 |@taskbot done > invalid-input | Handle the exception of invalid input |Does not handle the exception of invalid input and waits for next thread execution| Fail  |
 
 
 
