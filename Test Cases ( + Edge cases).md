@@ -11,6 +11,7 @@
 | 8 | 1 |Change thread time to 60 * 1  | Send email notifications every 60 * 1 time unit  |Send email notifications  every 60 * 1 time unit | Pass  |
 | 9 | 3 |No input  | Send slack notification reminding the number of pending tasks and ask for status  |Send slack notification reminding the number of pending tasks and ask for status | Pass  |
 | 10 | 3 |No input  | Database, Trello, Slack connected  |Database, Trello, Slack connected | Pass  |
+| 11 | 3 |@taskbot done > tast1  | Update Database  |Update Database | Pass  |
 
 
 
