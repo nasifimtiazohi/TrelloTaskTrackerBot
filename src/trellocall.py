@@ -707,6 +707,8 @@ def getAllCardsInNextInterval(cards, intervalLength):
     targetCards = []
     for card in cards:
         dueDate = card.due_date
+        if type(dueDate) == str:
+            continue
         if dueDate <= endTime and dueDate >= startTime:
             targetCards.append(card)
     return targetCards
