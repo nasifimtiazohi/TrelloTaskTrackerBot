@@ -6,6 +6,8 @@ If anyone wants to open a new profile in both slack and trello, these should be 
 
 2.	The Trello Board has one card for each task.  There are labels for each card which have specific meanings for our Slack bot:
 
+***We have based all calculations based on labels in Trello to ensure the use of labels for the bot. To mark a card complete, we considered only "green label", not the default checkbox in trello. Hence, to mark a card complete and stop getting messages in Usecase 1 and 3 or get points in usecase 2, one has to label it green.***
+
      **Progress of Task:**
 
      *Red label - to do (task not finished yet)*
@@ -27,19 +29,20 @@ If anyone wants to open a new profile in both slack and trello, these should be 
      For cards which doesn’t have any members assigned, our bot doesn’t do anything about that, this is a responsibility for a user to set corresponding labels.
 
 3.	All of our use cases are meant to run automatically at certain intervals for which we have implement threading. The threading delays are -
-****put threading delay*****
+one hour for usecase 1 and 3, and one day for usecase 2
+
 however to trigger use case 2 manually, there are also 2 commands.
 
 ## Instruction for USECASE 1:
 
 ### Main Flow
-1.	This usecase gets activated per every interval (put interval period)
+1.	This usecase gets activated per every interval (one hour)
 2.	Bot will read all the cards from trello board which have due date set and difficulty labels set.
 3.	If due date and difficulty labels are set it will go to the main flow (step 5)
-4.	[Alternate flow] If due date and difficulty labels are set, it will send the assigned user (if any) a mail to fill up the necessary labels and go to step 6. If a card even has no members assigned, the bot has nothing to do.
-5.	[Main flow], if a card is easy(yellow) and has due time within 12 hours, it will send the user a mail.
-if a card is medium(sky) and has due time within 24 hours, it will send the user a mail.
-if a card is hard(black) and has due time within 48 hours, it will send the user a mail.
+4.	[Alternate flow] If an unfinished(not labelled green) card does not have due date and difficulty labels set, it will send the assigned user (if any) a mail to fill up the necessary labels and go to step 6. If a card even has no members assigned, the bot has nothing to do.
+5.	[Main flow], if a card is easy(yellow) and has due time within 12 hours and not finished(not labelled green), it will send the user a mail.
+if a card is medium(sky) and has due time within 24 hours and not finished(not labelled green), it will send the user a mail.
+if a card is hard(black) and has due time within 48 hours and not finished(not labelled green), it will send the user a mail.
 6.	A user has to take an action for the sent mails. For alternate flow, the user must fill up both the due time and difficulty labels. And for main flow, the use must label the card green to mark “finished”.
 When the next time the bot(thread for usecase 1) gets activated, it will check for all things again. If the user has taken proper steps, it will not send any more mail. If there’s no action, the bot will keep sending mails again. {hence, nagging reminder}
 
