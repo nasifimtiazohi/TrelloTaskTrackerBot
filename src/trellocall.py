@@ -711,6 +711,12 @@ def getAllCardsInNextInterval(cards, intervalLength):
             targetCards.append(card)
     return targetCards
 
+def initPerformancePoint():
+    initialPoint = {}
+    for memberID in members_dict.keys():
+        initialPoint[members_dict[memberID]] = 0
+    store_total_points(initialPoint)    
+
 
 
 
