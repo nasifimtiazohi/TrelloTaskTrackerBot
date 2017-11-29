@@ -98,7 +98,7 @@ def handle_command(command, channel, command_userid):
 #                                                                                        #
 ##########################################################################################
 def handle_command_for_usecase3(command, channel, command_userid, command_cardname):
-    response = "Not sure what you mean. Use the ptoper commands... "
+    response = "Not sure what you mean. Use the proper commands... "
     command = str(command).lower()
     # print("Command Received:", command, "fu")
     
