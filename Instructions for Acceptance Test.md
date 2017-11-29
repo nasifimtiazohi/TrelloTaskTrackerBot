@@ -56,7 +56,7 @@ To check USECASE 1, the TAs can set up different cards with different due time a
 1. In absence of adequate information for any user, it will add penalties(minimal) for inactivity to his/her score in the leaderboard.
 
 ### Usage instructions
-1. TAs can set up different cards with different due time and difficulty labels.
+1. TAs can set up different cards with different due time and difficulty labels. ([Demo Board](https://trello.com/b/5LYE5kJE))
 2. Invoke usecase2 by typing "@taskbot show leaderboard" and "@taskbot show targets board" in the slack taskbot channel.
 
 ## Instruction for Usecase 3
@@ -74,5 +74,7 @@ This usecase get all the cards about to due and ask for input of user and respon
 1. Open the following website: https://510taskmanagerbot.slack.com
 2. Login as CSC510_TA account (described in [TA_account_info.txt](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/TA_account_info.txt))
 3. Go to Apps-> taskbot, if you receive message from taskbot
-4. Respond negatively, In input box, input "@taskbot > not yet": you will receive a message as reminder in "general" channel
-5. Respond positively, In input box, input "@taskbot > completed" : you will receive a congratulation message in "general" channel and also be informed of your points in total.
+4. Respond **negatively**, In input box, input "@taskbot > not yet": you will receive a message as reminder in "general" channel
+5. Respond **positively**, In input box, input "@taskbot > completed" : you will receive a congratulation message in "general" channel and also be informed of your points in total.
+
+(Label of card will change according to user's input command)
