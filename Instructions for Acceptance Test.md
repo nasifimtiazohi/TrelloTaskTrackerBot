@@ -72,7 +72,7 @@ This usecase get all the cards about to due and ask for input of user and respon
      2. Keep sending the reminder
 ### Step to step instructions
 1. Open the following website: https://510taskmanagerbot.slack.com
-2. Login as CSC510_TA account (described in TA_account_info.txt)
+2. Login as CSC510_TA account (described in [TA_account_info.txt](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/TA_account_info.txt))
 3. Go to Apps-> taskbot, if you receive message from taskbot
 4. Respond negatively, In input box, input "@taskbot > not yet": you will receive a message as reminder in "general" channel
 5. Respond positively, In input box, input "@taskbot > completed" : you will receive a congratulation message in "general" channel and also be informed of your points in total.
