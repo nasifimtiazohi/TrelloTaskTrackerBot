@@ -8,7 +8,7 @@
   environment:
      TEAM_NAME: 510projectteam
      BOARD_NAME: 'Demo Board'
-     BOT_TOKEN: xoxb-266498254006-btD2n1TcKdi5MY6AKlPGTwnm
+     BOT_TOKEN: xoxb-266498254006-nLVi9gotROgDosCDowr6eGut
      BOT_ID: U7UEN7G06 
      TRELLO_API_KEY: dbf6947f87a8dcb83f090731a27e8bd4
      TRELLO_API_SECRET: f57a6c66081742aa5f6149d329c3581d53231c308e4cc9f78b31230ce13b3bb8
@@ -22,7 +22,7 @@
   vars:
     dest_dir: /home/ubuntu/dev
     gh_repo: git@github.ncsu.edu:yhu22/CSC510_F17_Project.git
-    gh_branch: tmp_screencast
+    gh_branch: master
     envVars:
         - TEAM_NAME
         - BOARD_NAME
@@ -39,6 +39,8 @@
         - GMAIL_PASS
     packages:
       - git
+      - npm
+      - nodejs
       - python-pip
       - python-setuptools
       - git-core
@@ -91,6 +93,28 @@
       register: output
     - debug: var=item.stdout
       with_items: output.results
-    - name: Run Task Manager Bot
-      command: bash -lc "nohup python dev/src/main.py"
+
+    - name: verify npm is installed
+      command: npm --version
+      register: npm_v
+    - debug: 
+        msg: "npm version: {{ npm_v }}"
+    - name: Create SymbolicLink for nodejs
       become: yes
+      command: bash -lc "cd /home/ubuntu/dev/src && npm install && ln -s /usr/bin/nodejs /usr/bin/node"
+    - name: Install forever
+      npm: name=forever global=yes state=present
+      become: yes
+
+    - name: Run Task Manager Bot
+      command: nohup forever -c python dev/src/main.py
+      become: yes
+      register: bot_output
+    - debug: 
+        msg: "{{ bot_output.stdout }}"
+    - name: Clean up
+      command: rm /usr/bin/node
+      become: yes
+
+
+
