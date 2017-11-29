@@ -186,9 +186,9 @@ Our project is integrating Trello board with the Slack, the Slack BOT will fetch
 
 We have two virtual machine to demo our project. One as a server, and the other as target VM.
 
-**The detailed description step by step is in [Acceptance Instruction](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/deploy/Instructions%20for%20Acceptance%20Test.md).** 
+**The detailed description step by step is in [Acceptance Instruction](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/Instructions%20for%20Acceptance%20Test.md).** 
 
-Before running our BOT, some packages are required to be installed. Please see [Prerequisite Installation](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/deploy/src/README.md).
+Before running our BOT, some packages are required to be installed. Please see [Prerequisite Installation](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/src/README.md).
 
 ## Exploratory Testing and Code Inspection
 [Test Cases](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/Test%20Cases%20(%20%2B%20Edge%20cases).md)
