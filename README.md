@@ -1,6 +1,6 @@
 # Deployment
 
-We utilize [Ansible] (https://www.ansible.com/) as our configuration management tool. We launched a Amazon EC2 Ubutu 16.04 VM as the central server which is responsible for automate deployment of the machines that within its network.
+We utilize [Ansible](https://www.ansible.com/) as our configuration management tool. We launched a Amazon EC2 Ubutu 16.04 VM as the central server which is responsible for automate deployment of the machines that within its network.
 For the purpose of testing, we launched two "clean" Amazon EC2 VMs (instance of Ubutu 16.04) that are to be deployed by our central VM. Following is our step-by-step deployment instruction.
 
 ### Screencast of Deploy
@@ -37,7 +37,7 @@ Now you should have the following two files in your user directory
 [nodes]
 13.59.3.151 ansible_ssh_user=ubuntu ansible_ssh_private_key_file=./BotVMkey.pem
 ```
-### 5. Create and edit the deployment script: [deploy.yml](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/deploy/deploy.yml)
+### 5. Create and edit the deployment script: [deploy.yml](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/deploy.yml)
 
 
 ```
@@ -48,24 +48,39 @@ We will do the following tasks:
 #### Set Environment Variables
 
 ```yml
-   tasks:
-    - name: Create env setting file
-      command: touch /etc/profile.d/set_bot_env.sh
-      become: yes
-    - name: Set environment Variables
-      lineinfile:
-        dest: /etc/profile.d/set_bot_env.sh
-        line: "export TEAM_NAME=510projectteam export BOARD_NAME='Demo Board' export BOT_TOKEN=xoxb-266498254006-btD2n1TcKdi5MY6AKlPGTwnm export BOT_ID=U7UEN7G06  export TRELLO_API_KEY=dbf6947f87a8dcb83f090731a27e8bd4 export TRELLO_API_SECRET=f57a6c66081742aa5f6149d329c3581d53231c308e4cc9f78b31230ce13b3bb8 export TRELLO_TOKEN=414df911de9e839c8ab9838c8fa1723107fba5848e5049269d88e5e94a348f31 export FIREBASE_API_KEY=AIzaSyCC5OzyEqGBcGZkpyUP90qUnyCCJY8SRQ8 export FIREBASE_AUTH_DOMAIN=taskmangerbot.firebaseapp.com export FIREBASE_DATABASE_URL=https://taskmangerbot.firebaseio.com export FIREBASE_STORAGE_BUCKET=taskmangerbot.appspot.com export GMAIL_ID=bot510project@gmail.com export GMAIL_PASS=simtiaz1234"
-        insertafter: 'EOF'
-        state: present
-      become: yes
-    - name: Copy setting.sh File for sourcing
-      copy:
-        src: /home/ubuntu/setting.sh
-        dest: /home/ubuntu/setting.sh
-    - name: Source the .bashrc file
-      command: bash -lc "source .bashrc"
-      become: yes
+   environment:
+     TEAM_NAME: 510projectteam
+     BOARD_NAME: 'Demo Board'
+     BOT_TOKEN: xoxb-266498254006-nLVi9gotROgDosCDowr6eGut
+     BOT_ID: U7UEN7G06 
+     TRELLO_API_KEY: dbf6947f87a8dcb83f090731a27e8bd4
+     TRELLO_API_SECRET: f57a6c66081742aa5f6149d329c3581d53231c308e4cc9f78b31230ce13b3bb8
+     TRELLO_TOKEN: 414df911de9e839c8ab9838c8fa1723107fba5848e5049269d88e5e94a348f31
+     FIREBASE_API_KEY: AIzaSyCC5OzyEqGBcGZkpyUP90qUnyCCJY8SRQ8
+     FIREBASE_AUTH_DOMAIN: taskmangerbot.firebaseapp.com
+     FIREBASE_DATABASE_URL: https://taskmangerbot.firebaseio.com
+     FIREBASE_STORAGE_BUCKET: taskmangerbot.appspot.com
+     GMAIL_ID: bot510project@gmail.com
+     GMAIL_PASS: simtiaz1234
+   
+   vars:
+    dest_dir: /home/ubuntu/dev
+    gh_repo: git@github.ncsu.edu:yhu22/CSC510_F17_Project.git
+    gh_branch: master
+    envVars:
+        - TEAM_NAME
+        - BOARD_NAME
+        - BOT_TOKEN
+        - BOT_ID
+        - TRELLO_API_KEY
+        - TRELLO_API_SECRET
+        - TRELLO_TOKEN
+        - FIREBASE_API_KEY
+        - FIREBASE_AUTH_DOMAIN
+        - FIREBASE_DATABASE_URL
+        - FIREBASE_STORAGE_BUCKET
+        - GMAIL_ID
+        - GMAIL_PASS
 ```
 
 #### Install Packages
@@ -73,6 +88,8 @@ We will do the following tasks:
   vars:
     packages:
       - git
+      - npm
+      - nodejs
       - python-pip
       - python-setuptools
       - git-core
@@ -127,6 +144,22 @@ We will do the following tasks:
 
 ```
 
+#### Verify npm is installed and install forever in case of program crash
+```yml
+    - name: verify npm is installed
+      command: npm --version
+      register: npm_v
+    - debug: 
+        msg: "npm version: {{ npm_v }}"
+    - name: Create SymbolicLink for nodejs
+      become: yes
+      command: bash -lc "cd /home/ubuntu/dev/src && npm install && ln -s /usr/bin/nodejs /usr/bin/node"
+    - name: Install forever
+      npm: name=forever global=yes state=present
+      become: yes
+```
+
+
 (Github ssh key is located in this cotrol machine)
 #### Run Task Manager Bot
 ```yml
@@ -147,11 +180,16 @@ sudo apt-get install ansible
 ansible-playbook -i inventory deploy.yml
 ```
 
-## Our results:
-
-
 
 ## Acceptance test instructions
 Our project is integrating Trello board with the Slack, the Slack BOT will fetch the card information from Trello board and store them in the firebase database. Here, we provide [TA_account_info.txt](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/deploy/TA_account_info.txt) for TA to access our Demo Trello Board and our Slack Channel. (Firebase account included for the purpose to check database schema)
 
-We have two virtual machine to demo our project. The detailed description step by step is in [Acceptance Instruction](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/deploy/Instructions%20for%20Acceptance%20Test.md).
+We have two virtual machine to demo our project. The detailed description step by step is in [Acceptance Instruction](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/deploy/Instructions%20for%20Acceptance%20Test.md). Some packages also required to install before running our code. Please see [Prerequisite Installation](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/deploy/src/README.md).
+
+## Exploratory Testing and Code Inspection
+[Test Cases](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/Test%20Cases%20(%20%2B%20Edge%20cases).md)
+
+## Task Tracking
+[Trello Board -- Task Manager](https://trello.com/b/MXYu6ZEy)
+
+[Demo Board for TA to test](https://trello.com/b/5LYE5kJE)
