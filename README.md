@@ -184,7 +184,11 @@ ansible-playbook -i inventory deploy.yml
 ## Acceptance test instructions
 Our project is integrating Trello board with the Slack, the Slack BOT will fetch the card information from Trello board and store them in the firebase database. Here, we provide [TA_account_info.txt](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/deploy/TA_account_info.txt) for TA to access our Demo Trello Board and our Slack Channel. (Firebase account included for the purpose to check database schema)
 
-We have two virtual machine to demo our project. The detailed description step by step is in [Acceptance Instruction](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/deploy/Instructions%20for%20Acceptance%20Test.md). Some packages also required to install before running our code. Please see [Prerequisite Installation](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/deploy/src/README.md).
+We have two virtual machine to demo our project. One as a server, and the other as target VM.
+
+**The detailed description step by step is in [Acceptance Instruction](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/deploy/Instructions%20for%20Acceptance%20Test.md).** 
+
+Before running our BOT, some packages are required to be installed. Please see [Prerequisite Installation](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/deploy/src/README.md).
 
 ## Exploratory Testing and Code Inspection
 [Test Cases](https://github.ncsu.edu/yhu22/CSC510_F17_Project/blob/master/Test%20Cases%20(%20%2B%20Edge%20cases).md)
