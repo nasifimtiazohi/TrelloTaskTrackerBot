@@ -4,22 +4,22 @@ import trellocall
 import operator
 import os
 
-f = open("/home/ubuntu/dev/src/token.txt","r")
-token = []
-for l in f:
-  l=l.rstrip('\n')
-  token.append(l)
+# f = open("/home/ubuntu/dev/src/token.txt","r")
+# token = []
+# for l in f:
+#   l=l.rstrip('\n')
+#   token.append(l)
 
-apikey=token[7]
-authDomain=token[8]
-databaseURL=token[9]
-storageBucket=token[10]
+# apikey=token[7]
+# authDomain=token[8]
+# databaseURL=token[9]
+# storageBucket=token[10]
 
 # get Firebase API key, authDomain, databaseURL, storageBucket
-# apikey = os.getenv('FIREBASE_API_KEY')
-# authDomain= os.getenv('FIREBASE_AUTH_DOMAIN')
-# databaseURL= os.getenv('FIREBASE_DATABASE_URL')
-# storageBucket= os.getenv('FIREBASE_STORAGE_BUCKET')
+apikey = os.getenv('FIREBASE_API_KEY')
+authDomain= os.getenv('FIREBASE_AUTH_DOMAIN')
+databaseURL= os.getenv('FIREBASE_DATABASE_URL')
+storageBucket= os.getenv('FIREBASE_STORAGE_BUCKET')
 
 config = {
   "apiKey": apikey,
