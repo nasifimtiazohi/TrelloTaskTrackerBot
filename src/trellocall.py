@@ -10,7 +10,7 @@ import slackapicall
 import json
 import emailing
 from db_helper import add_card, get_user_points, store_total_points, get_progress_of_card, get_user_points, get_user_target_points, store_target_points
-
+from datetime import datetime as dt
 members_dict=None
 project_team=None
 testboard=None
@@ -363,10 +363,23 @@ def get_all_names_cards_with_duetime(timeinhours):
 #     return membersPoint
 
 def getInterval(timeInHours):
-    endTime = datetime.datetime.utcnow()
+    today = datetime.datetime.utcnow()
+    weekday = today.weekday()
+    monday_delta = datetime.timedelta(weekday)
+    sunday_delta = datetime.timedelta(7 - weekday)
+    monday = today - monday_delta
+    next_monday = today + sunday_delta
+    
+    monday = dt.combine(monday, dt.min.time())
+    monday = monday.replace(tzinfo=pytz.utc)
+    next_monday = dt.combine(next_monday, dt.min.time())
+    next_monday = next_monday.replace(tzinfo=pytz.utc)
+
+    '''endTime = datetime.datetime.utcnow()
     endTime = endTime.replace(tzinfo=pytz.utc)
-    startTime = endTime - datetime.timedelta(hours = timeInHours)
-    return (startTime, endTime)
+    startTime = endTime - datetime.timedelta(hours = timeInHours)'''
+
+    return (monday, next_monday)
 
 def getAllOpenCards():
     return testboard.open_cards()
@@ -700,9 +713,13 @@ def updateTargets(intervalLength):
     store_target_points(targetDict)
 
 def getAllCardsInNextInterval(cards, intervalLength):
-    startTime = datetime.datetime.utcnow()
+    timeline = getInterval(intervalLength)
+    startTime = timeline[0]
+    endTime = timeline[1]
+
+    '''startTime = datetime.datetime.utcnow()
     startTime = startTime.replace(tzinfo=pytz.utc)
-    endTime = startTime + datetime.timedelta(hours = intervalLength)
+    endTime = startTime + datetime.timedelta(hours = intervalLength)'''
 
     targetCards = []
     for card in cards:

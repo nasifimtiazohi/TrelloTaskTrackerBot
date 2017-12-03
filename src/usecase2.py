@@ -15,15 +15,15 @@ import db_helper
 def mainFlow(threadName, delay):
     dayCount = 0
     members_dict = trellocall.members_dict
+    trellocall.initPerformancePoint()
     while True:
         dayCount += 1
         trellocall.getPerformancePoints(24) # get performance every day
         trellocall.updateTargets(24*7) # seven days
-        trellocall.initPerformancePoint()
         if dayCount == 7:
             currentTargets = trellocall.getAllTargets()
             prevTotalPoints = trellocall.getPrevTotalPoint()
-            trellocall.updateTargets(24)
+            trellocall.updateTargets(24*7)
             dayCount = 0
             trellocall.initPerformancePoint()
         time.sleep(24*60*60) # sleep one day
