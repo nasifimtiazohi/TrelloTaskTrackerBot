@@ -38,4 +38,15 @@ We are able to handle unexpected commands, for example if user input "@taskbot d
 3. 
 ### Reflection on Development Process and Project
 
+#### Design 
+
+We have two phases for this stage. One is project design, which means we need to decide what we want for this bot, what functions and services should our bot have. The other one  is how we design our basic software architecture. For project design, we have some meetings to talk about it. And I think we really did a good job at this part. We start from a basic idea -- task manager, then we extend its functions by exploring current functions in Trello. Next, we analize what we can do better by collaborate Trello and Slack. And finally we dicided to enable those primary features above. For the second part, software architecture, we designed basic components of our bot and how they interact with each other. In sum, I think we really did a good at this phase.
+
+#### Bot 
+
+
+#### Service
+
+#### Deploy
+
 ### Limitations and Future Work
