@@ -28,7 +28,31 @@ On the other hand, from the lecture, we know that the average working hours are 
 Besides, we all need some tools to help us tracking many tasks. Our BOT also has a function that will send the user a reminder email for pending task and it just like an annoying alarm clock did not go off if you don't complete your task.
 
 ### Primary Features
+Nowadays, since collaboration between programmers become more and more common. Online development platform like Github, group discussion forum like Slack and Task Management tool like Trello emerged. However, none of these tools can promote group work in a simple manner. Therefore, the lack of task mangement tool for software developer and also engineers motivate our project. We design a task management bot that reside in Slack group forum (running as a server deamon) detecting new changes from Trello team board and send message or request message accordingly.
 
+There are four significant features of our bot:
+1. Integrate Trello and Slack
+As we know Slack and Trello are two different platform, by integrating these two platform, our bot is able to fetch and update data from Trello and post a summary of the information in Slack.
+2. User-friendly
+We are able to handle unexpected commands, for example if user input "@taskbot done > " without a task name, our bot will prompt user to give a proper command
+There are several cases of error we can handle.
+1) User given the command that are not listed in our command set, we will prompt user to input again
+
+
+2)
+3. 
+4.
 ### Reflection on Development Process and Project
+
+#### Design 
+
+We have two phases for this stage. One is project design, which means we need to decide what we want for this bot, what functions and services should our bot have. The other one  is how we design our basic software architecture. For project design, we have some meetings to talk about it. And I think we really did a good job at this part. We start from a basic idea -- task manager, then we extend its functions by exploring current functions in Trello. Next, we analize what we can do better by collaborate Trello and Slack. And finally we dicided to enable those primary features above. For the second part, software architecture, we designed basic components of our bot and how they interact with each other. In sum, I think we really did a good at this phase.
+
+#### Bot 
+
+
+#### Service
+
+#### Deploy
 
 ### Limitations and Future Work
