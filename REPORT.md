@@ -34,8 +34,14 @@ There are four significant features of our bot:
 1. Integrate Trello and Slack
 As we know Slack and Trello are two different platform, by integrating these two platform, our bot is able to fetch and update data from Trello and post a summary of the information in Slack.
 2. User-friendly
-We are able to handle unexpected commands, for example if user input "@taskbot done > " without a task name, our bot will respond with handle
+We are able to handle unexpected commands, for example if user input "@taskbot done > " without a task name, our bot will prompt user to give a proper command
+There are several cases of error we can handle.
+1) User given the command that are not listed in our command set, we will prompt user to input again
+
+
+2)
 3. 
+4.
 ### Reflection on Development Process and Project
 
 ### Limitations and Future Work
