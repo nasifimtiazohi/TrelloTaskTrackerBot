@@ -144,8 +144,10 @@ def handle_command_for_usecase3(command, channel, command_userid, command_cardna
        if card_id != None:
             print "Debug: card_id: " + card_id
             users_with_cards=trellocall.slackname_with_duetime(24)
+
             for slack_name in users_with_cards.keys():
-                userid=slackapicall.fullname_to_id(slack_name)
+                print "slack name" + slack_name
+                userid=slackapicall.name_to_id(slack_name)
                 cardlist=users_with_cards[slack_name]
                 # find the user of the card
                 for card in cardlist:
