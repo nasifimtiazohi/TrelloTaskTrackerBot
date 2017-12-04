@@ -179,8 +179,9 @@ def handle_command_for_usecase3(command, channel, command_userid, command_cardna
                         slack_client.api_call("chat.postMessage", channel=slackapicall.get_general_channel_id(),text=message, as_user=True)
             elif db_helper.get_progress_of_card(trello_username, card_id) == "Completed" and db_helper.check_if_done(trello_username, card_id) == "true":
                 # The user has completed the task and is congratulated, don't congras again
-                
-
+                 message = "Either you or your team mate have completed this task: " + ", we have your record, no need to report again! "
+                 slack_client.api_call("chat.postMessage", channel=channel,text=message, as_user=True)
+                    
        else:
             # If cannot find command in the database, prompt user to input again
             message = "Well, your status is: " + command + ", however, the task you input seems incorrect, please try again..."
