@@ -136,9 +136,10 @@ def handle_command_for_usecase3(command, channel, command_userid, command_cardna
     elif command in P_RESPONSE_USECASE_3 and channel not in slackapicall.public_channels():
        # IMPORTANT: Search from database and Map
        # Init Database before searching it
-       db_helper.database_init()
+       db_helper.database_init() 
        card_id = db_helper.getCardIdbyCardName(trello_username, command_cardname)
        #DO 0: Update database Set progress to "Completed"
+       #TODO: Update database to set each person of the same card's progress as complete
        print "DO 0: Update database Set progress to Completed"
        if card_id != None:
             print "Debug: card_id: " + card_id
@@ -155,6 +156,8 @@ def handle_command_for_usecase3(command, channel, command_userid, command_cardna
                     duecardlist=users_with_duecards[user]
             # BUG: duecard info is not updated after the label is updated
             trellocall.completeCards(card_id,duecardlist)
+            # When one member mark the card as complete, our member shall also not get notification, since this card is complete
+            db_helper.database_init() 
             # TODO: get all cards of the user twice
             users_with_duecards2=trellocall.trelloname_with_duetime(20)
             time.sleep(2)
@@ -174,6 +177,9 @@ def handle_command_for_usecase3(command, channel, command_userid, command_cardna
                         # TypeError: coercing to Unicode: need string or buffer, int found
                         message = "<@" + command_userid + ">" + ", you earned: "+ str(reward_point) + " points for finishing this task. Now, your performance score have been updated to: " + str(db_helper.get_user_points(trello_username))
                         slack_client.api_call("chat.postMessage", channel=slackapicall.get_general_channel_id(),text=message, as_user=True)
+            elif db_helper.get_progress_of_card(trello_username, card_id) == "Completed" and db_helper.check_if_done(trello_username, card_id) == "true":
+                # The user has completed the task and is congratulated, don't congras again
+                
 
        else:
             # If cannot find command in the database, prompt user to input again
@@ -183,7 +189,7 @@ def handle_command_for_usecase3(command, channel, command_userid, command_cardna
         message = "Public channel is not for updating your task progress. Please go in private channel with me!"
         slack_client.api_call("chat.postMessage", channel=channel,text=message, as_user=True)
     else:
-        message = "Not sure what you mean!"
+        message = "Not sure what you mean! Use the proper commands..."
         slack_client.api_call("chat.postMessage", channel=channel,text=message, as_user=True)
 
 def usecase3_final_function(threadName, delay):
