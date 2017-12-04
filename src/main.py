@@ -151,7 +151,7 @@ def handle_command_for_usecase3(command, channel, command_userid, command_cardna
                 for card in cardlist:
                     if card_id == card.id:
                         ### 
-                        trello_username =slackname_to_trelloname[slack_name]
+                        trello_username =trellocall.slackname_to_trelloname[slack_name]
                         db_helper.update_progres(trello_username, card_id)
                         #DO 4: update trello label
                         print "DO 4: update trello label"
