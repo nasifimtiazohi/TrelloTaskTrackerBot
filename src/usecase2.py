@@ -1,6 +1,7 @@
 import trellocall
 import time
 import db_helper
+import datetime
 
 # slackname_to_trelloname = []
 # slackname_to_trelloname = {
@@ -15,18 +16,15 @@ import db_helper
 def mainFlow(threadName, delay):
     dayCount = 0
     members_dict = trellocall.members_dict
+    trellocall.initPerformancePoint()
+    trellocall.updateTargets(24*7) # seven days
     while True:
         dayCount += 1
         trellocall.getPerformancePoints(24) # get performance every day
-        trellocall.updateTargets(24*7) # seven days
-        trellocall.initPerformancePoint()
-        if dayCount == 7:
-            currentTargets = trellocall.getAllTargets()
-            prevTotalPoints = trellocall.getPrevTotalPoint()
-            trellocall.updateTargets(24)
-            dayCount = 0
+        currentUTCtime = datetime.datetime.utcnow()
+        if currentUTCtime.weekday() == 0:
+            trellocall.updateTargets(24*7)
             trellocall.initPerformancePoint()
         time.sleep(24*60*60) # sleep one day
-
 
 db_helper.sync_card_info()

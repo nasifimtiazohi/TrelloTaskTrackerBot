@@ -56,11 +56,11 @@ To check USECASE 1, the TAs can set up different cards with different due time a
 3. It will update the leaderboard for the whole team.
 4. It will set new targets for each member and set up new competition weekly.
 ### Alternative Flow
-1. In absence of adequate information for any user, it will add penalties(minimal) for inactivity to his/her score in the leaderboard.
+1. In absence of adequate information for any user, it will add penalties(minimal) for inactivity to his/her score in the leaderboard. The leaderboard score will get update everyday
 
 ### Usage instructions
 1. TAs can set up different cards with different due time and difficulty labels. ([Demo Board](https://trello.com/b/5LYE5kJE))
-2. Invoke usecase2 by typing "@taskbot show leaderboard" and "@taskbot show targets board" in the slack taskbot channel.
+2. Invoke usecase2 by typing "@taskbot show leaderboard" and "@taskbot show targets board" in the slack taskbot channel. The target will get update everyweek.
 
 ## Instruction for Usecase 3
 ### Implementation Details

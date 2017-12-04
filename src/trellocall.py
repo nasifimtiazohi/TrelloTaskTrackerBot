@@ -10,7 +10,7 @@ import slackapicall
 import json
 import emailing
 from db_helper import add_card, get_user_points, store_total_points, get_progress_of_card, get_user_points, get_user_target_points, store_target_points
-
+from datetime import datetime as dt
 members_dict=None
 project_team=None
 testboard=None
@@ -363,10 +363,28 @@ def get_all_names_cards_with_duetime(timeinhours):
 #     return membersPoint
 
 def getInterval(timeInHours):
-    endTime = datetime.datetime.utcnow()
+    # this is the interval for the week.
+    '''today = datetime.datetime.utcnow()
+    weekday = today.weekday()
+    monday_delta = datetime.timedelta(weekday)
+    sunday_delta = datetime.timedelta(7 - weekday)
+    monday = today - monday_delta
+    next_monday = today + sunday_delta
+    
+    monday = dt.combine(monday, dt.min.time())
+    monday = monday.replace(tzinfo=pytz.utc)
+    next_monday = dt.combine(next_monday, dt.min.time())
+    next_monday = next_monday.replace(tzinfo=pytz.utc)'''
+
+    # this is the interval for one day
+    today = datetime.datetime.utcnow().date()
+    today_begin = dt.combine(today, dt.min.time())
+    today_begin = today_begin.replace(tzinfo=pytz.utc)
+    today_end = today_begin + datetime.timedelta(hours = 24)
+    return (today_begin, today_end)
+    '''endTime = datetime.datetime.utcnow()
     endTime = endTime.replace(tzinfo=pytz.utc)
-    startTime = endTime - datetime.timedelta(hours = timeInHours)
-    return (startTime, endTime)
+    startTime = endTime - datetime.timedelta(hours = timeInHours)'''
 
 def getAllOpenCards():
     return testboard.open_cards()
@@ -699,10 +717,28 @@ def updateTargets(intervalLength):
         targetDict[members_dict[memberID]] = points
     store_target_points(targetDict)
 
+def getWeekInterval():
+    today = datetime.datetime.utcnow()
+    weekday = today.weekday()
+    monday_delta = datetime.timedelta(weekday)
+    sunday_delta = datetime.timedelta(7 - weekday)
+    monday = today - monday_delta
+    next_monday = today + sunday_delta
+    
+    monday = dt.combine(monday, dt.min.time())
+    monday = monday.replace(tzinfo=pytz.utc)
+    next_monday = dt.combine(next_monday, dt.min.time())
+    next_monday = next_monday.replace(tzinfo=pytz.utc)
+    return (monday, next_monday)
+
 def getAllCardsInNextInterval(cards, intervalLength):
-    startTime = datetime.datetime.utcnow()
+    timeline = getWeekInterval()
+    startTime = timeline[0]
+    endTime = timeline[1]
+
+    '''startTime = datetime.datetime.utcnow()
     startTime = startTime.replace(tzinfo=pytz.utc)
-    endTime = startTime + datetime.timedelta(hours = intervalLength)
+    endTime = startTime + datetime.timedelta(hours = intervalLength)'''
 
     targetCards = []
     for card in cards:
@@ -713,10 +749,48 @@ def getAllCardsInNextInterval(cards, intervalLength):
             targetCards.append(card)
     return targetCards
 
-def initPerformancePoint():
-    initialPoint = {}
+def getInitPerformance(): # interval Length should be in hours, usually it should be 24
+    inactivePenalty = -10
+    memberCards = getMemberCardDict() # get member card dict
+    #intervalLength = 24 # length of interval, hours
+
+    dayInterval = getInterval(24)
+    weekInterval = getWeekInterval()
+    interval = (weekInterval[0], dayInterval[0])
+    performance = {}
+    for memberID in memberCards.keys():
+        cards = memberCards[memberID]
+        completedCards = None
+        incompletedCards = None
+
+        completedCards = getAllCompletedCards(memberCards[memberID])
+        incompletedCards = getAllIncompletedCards(memberCards[memberID])
+
+        rewardsAndBouns = 0
+        penalty = 0
+
+        if completedCards :
+            currentCompletedCards = getAllCompletedCardsAtCurrentInterval(completedCards, interval)
+            rewardsAndBouns = getRewardsAndBonus(currentCompletedCards)
+        if incompletedCards :
+            currentIncompleteCards = getAllIncompletedCardsAtCurrentInterval(incompletedCards, interval[1])
+            penalty = getPenalty(currentIncompleteCards)
+        prevPoint = get_user_points(members_dict[memberID])
+
+        if rewardsAndBouns == 0:
+            performance[memberID] = rewardsAndBouns + penalty + prevPoint + inactivePenalty
+        else:
+            performance[memberID] = rewardsAndBouns + penalty + prevPoint
+    memberPerformance = {}
     for memberID in members_dict.keys():
-        initialPoint[members_dict[memberID]] = 0
+        memberPerformance[members_dict[memberID]] = performance[memberID]
+    store_total_points(memberPerformance)
+    return memberPerformance
+
+def initPerformancePoint():
+    initialPoint = getInitPerformance()
+    '''for memberID in members_dict.keys():
+        initialPoint[members_dict[memberID]] = 0'''
     store_total_points(initialPoint)    
 
 
