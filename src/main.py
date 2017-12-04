@@ -244,7 +244,7 @@ if __name__ == "__main__":
             thread.start_new_thread(usecase1.mainFlow,("UC1-mainflow",60*60,))
             thread.start_new_thread(usecase1.alternateFlow,("UC2-alternateflow",60*60,))
             thread.start_new_thread(usecase2.mainFlow, ("Usecase2", 24*60*60))
-            thread.start_new_thread(usecase3_final_function,("Usecase3",60*1))
+            thread.start_new_thread(usecase3_final_function,("Usecase3",60*60))
         except:
             print "thread could not be started"
         while True:

@@ -116,7 +116,7 @@ def get_all_cards_with_duetime(timeinhours):
             colors=[]
             if c.list_labels!=None:
                 for label in c.list_labels:
-                    print label.color
+                    #print label.color
                     colors.append(label.color)
             temp=temp.replace(tzinfo=pytz.utc)
             temp-=datetime.timedelta(hours=5)
@@ -162,15 +162,15 @@ def get_all_cards_for_usecase1():
             print "heelo", c.list_labels
             if c.list_labels!=None:
                 for label in c.list_labels:
-                    print label.color
+                    #print label.color
                     colors.append(label.color)
-            print "colors" ,colors
+            #print "colors" ,colors
             #print c.name, c.label_ids,c.due_date, current_time,tempHard,tempMedium
             if current_time<temp and current_time>tempHard and 'green' not in colors and 'black' in colors:
-                print "hard task", c.name
+                #print "hard task", c.name
                 HardCards.append(c)
             elif current_time<temp and current_time>tempMedium and 'green' not in colors and 'sky' in colors:
-                print "medium task", c.name
+                #print "medium task", c.name
                 MediumCards.append(c)
             elif current_time<temp and current_time>tempEasy and 'green' not in colors and 'yellow' in colors:
                 EasyCards.append(c), c.name
@@ -314,7 +314,7 @@ def get_all_names_cards_with_duetime(timeinhours):
             colors=[]
             if c.list_labels!=None:
                 for label in c.list_labels:
-                    print label.color
+                    #print label.color
                     colors.append(label.color)
             temp=temp.replace(tzinfo=pytz.utc)
             temp-=datetime.timedelta(hours=5)
