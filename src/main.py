@@ -117,14 +117,15 @@ def handle_command_for_usecase3(command, channel, command_userid, command_cardna
        db_helper.database_init()
        card_id = db_helper.getCardIdbyCardName(trello_username, command_cardname)
        if card_id != None:
-              users_with_cards=trellocall.slackname_with_duetime(20)
+              users_with_cards=trellocall.slackname_with_duetime(24)
+              
               for slack_name in users_with_cards.keys():
                 userid=slackapicall.fullname_to_id(slack_name)
                 cardlist=users_with_cards[slack_name]
                 # find the user of the card
                 for card in cardlist:
                     if card_id == card.id:
-                       message= "<@"+command_userid+"> ," +" has a task pending: " + card.name + " , please work harder!"
+                       message= "<@"+slack_name+"> ," +" has a task pending: " + card.name + " , please work harder!"
                        slack_client.api_call("chat.postMessage", channel=slackapicall.get_general_channel_id(),
                             text=message, as_user=True)
        else:
@@ -148,7 +149,7 @@ def handle_command_for_usecase3(command, channel, command_userid, command_cardna
             print "DO 4: update trello label"
             # get the list of due cards of this user
             duecardlist = []
-            users_with_duecards=trellocall.trelloname_with_duetime(20)
+            users_with_duecards=trellocall.trelloname_with_duetime(24)
             for user in users_with_duecards.keys():
                 if user == trello_username:
                     print "inside if 1: " + user
@@ -159,7 +160,7 @@ def handle_command_for_usecase3(command, channel, command_userid, command_cardna
             # When one member mark the card as complete, our member shall also not get notification, since this card is complete
             db_helper.database_init() 
             # TODO: get all cards of the user twice
-            users_with_duecards2=trellocall.trelloname_with_duetime(20)
+            users_with_duecards2=trellocall.trelloname_with_duetime(24)
             time.sleep(2)
             cardlist = trellocall.get_all_cards_of_user(trello_username)
 
