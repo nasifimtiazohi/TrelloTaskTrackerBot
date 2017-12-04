@@ -1,7 +1,8 @@
 # Task Manager BOT Final Report #
 
 ### Screencast of Task Manager BOT
-[Screencast](https://drive.google.com/a/ncsu.edu/file/d/1DSNOAnb9GNwX-kY-Ejr5I1xG2Oc6z8lm/view?usp=sharing)
+[Screencast](https://youtu.be/wMjgotF9bms)
+[Back up -- Google Drive](https://drive.google.com/a/ncsu.edu/file/d/1Z6jOHjFYegSNIk4OWrxmOFTh8Nenw0hN/view?usp=sharing)
 
 ### Group Members
 
