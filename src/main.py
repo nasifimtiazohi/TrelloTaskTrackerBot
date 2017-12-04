@@ -122,10 +122,10 @@ def handle_command_for_usecase3(command, channel, command_userid, command_cardna
                 userid=slackapicall.fullname_to_id(slack_name)
                 cardlist=users_with_cards[slack_name]
                 # find the user of the card
-                message= "<@"+slack_name+"> ," +" has a task pending: "
                 for card in cardlist:
                     if card_id == card.id:
-                       message+= card.name + " , please work harder!"
+                       card.member_ids
+                       message= "<@"+command_userid+"> ," +" has a task pending: " + card.name + " , please work harder!"
                        slack_client.api_call("chat.postMessage", channel=slackapicall.get_general_channel_id(),
                             text=message, as_user=True)
        else:
@@ -165,12 +165,19 @@ def handle_command_for_usecase3(command, channel, command_userid, command_cardna
             cardlist = trellocall.get_all_cards_of_user(trello_username)
 
             if db_helper.get_progress_of_card(trello_username, card_id) == "Completed" and db_helper.check_if_done(trello_username, card_id) == "false":
+                        # # for each user
+                        # memberlist = []
+                        # for card in cardlist:
+                        #     if card_id == card.id:
+                        #         for memberid in card.member_ids:
+                        #             trellocall.[memberid]
                         #DO 1: Update performance point
                         db_helper.update_congratualtion_status(trello_username, card_id) # set is_congratulated to "true"
                         reward_point =  trellocall.getPointsOfCard(card_id, cardlist) # update point in database
                         print "reward_point: " + str(reward_point)
                         db_helper.reward_points(trello_username,reward_point)
                         #DO 2: Post congratulation message to this user
+                        
                         message1="Congratulations to <@"+ command_userid+"> ," +" for finishing the task before the deadline!"
                         slack_client.api_call("chat.postMessage", channel=slackapicall.get_general_channel_id(),text=message1, as_user=True)
                         #DO 3: Post performance score to this user
