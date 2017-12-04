@@ -25,6 +25,7 @@ def name_to_id(username):
 def fullname_to_id(fullname):
     d={}
     call= slack_client.api_call("users.list")
+    print (call)
     users=call['members']
     for c in users:
         profile=c['profile']

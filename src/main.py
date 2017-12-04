@@ -113,6 +113,8 @@ def handle_command_for_usecase3(command, channel, command_userid, command_cardna
        if card_id != None:
               users_with_cards=trellocall.slackname_with_duetime(24)
               for slack_name in users_with_cards.keys():
+                # TODO: Fix bug here
+                # Slack user id 
                 userid=slackapicall.fullname_to_id(slack_name)
                 cardlist=users_with_cards[slack_name]
                 # find the user of the card
@@ -206,17 +208,17 @@ def usecase3_final_function(threadName, delay):
                             text=response, as_user=True)
         time.sleep(delay)
 
-def usecase3_post_congratuation_message(channel, userid):
-    #Post congraduate message
-    #Post only once after the user finished
-    #Post to the specific person who respond
-    dm_channels=usecase3.post_public_message()
-    for d in dm_channels:
-        print "Testing: "+ d[0]+  " and " + userid
-        if userid == d[0]:
-            response=d[4]
-            print "The channel is" + channel
-            slack_client.api_call("chat.postMessage", channel=channel, text=response, as_user=True)
+# def usecase3_post_congratuation_message(channel, userid):
+#     #Post congraduate message
+#     #Post only once after the user finished
+#     #Post to the specific person who respond
+#     dm_channels=usecase3.post_public_message()
+#     for d in dm_channels:
+#         print "Testing: "+ d[0]+  " and " + userid
+#         if userid == d[0]:
+#             response=d[4]
+#             print "The channel is" + channel
+#             slack_client.api_call("chat.postMessage", channel=channel, text=response, as_user=True)
 
 def parse_slack_output(slack_rtm_output):
     """
