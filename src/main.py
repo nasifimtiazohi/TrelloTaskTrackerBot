@@ -121,7 +121,8 @@ def handle_command_for_usecase3(command, channel, command_userid, command_cardna
               for slack_name in users_with_cards.keys():
                 userid=slackapicall.fullname_to_id(slack_name)
                 cardlist=users_with_cards[slack_name]
-                message= "<@"+command_userid+"> ," +" has a task pending: "
+                # find the user of the card
+                message= "<@"+slack_name+"> ," +" has a task pending: "
                 for card in cardlist:
                     if card_id == card.id:
                        message+= card.name + " , please work harder!"
