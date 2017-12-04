@@ -27,8 +27,8 @@ EXAMPLE_COMMAND = "do"
 COMMAND_USECASE_2 = "show leaderboard"
 COMMAND_SHOW_TARGET = "show targets board"
 COMMAND_USECASE_3 = "usecase 3"
-P_RESPONSE_USECASE_3 = ['done', '1', 'finished', 'completed', "i'm done", "yes", "of course", "i finished", "yep"]
-N_RESPONSE_USECASE_3 = ['pending', '0', 'not yet', 'incomplete', 'wait', 'almost', 'no', 'nah', "i haven't"]
+P_RESPONSE_USECASE_3 = ['done', '1', 'finish','finished', 'completed', "i'm done", "yes", "of course", "i finished", "yep", 'yeah']
+N_RESPONSE_USECASE_3 = ['pending', '0', 'not yet', 'incomplete', 'wait', 'almost', 'no', 'nah', "i haven't", 'nope']
 RESET_TOTAL_SCORES = "reset leaderboard"
 
 #slack_client = SlackClient(os.environ.get("BOT_TOKEN"))
@@ -49,8 +49,7 @@ def handle_command(command, channel, command_userid):
         are valid commands. If so, then acts on the commands. If not,
         returns back what it needs for clarification.
     """
-    response = "Not sure what you mean. Use the *" + EXAMPLE_COMMAND + \
-               "* command with numbers, delimited by spaces."
+    response = "Not sure what you mean. Use the proper commands... "
     # preprocess the input command to small case and cast from unicode string to string
     command = str(command).lower()
     print("Command received: ", command, "nasif")
@@ -122,12 +121,16 @@ def handle_command_for_usecase3(command, channel, command_userid, command_cardna
               for slack_name in users_with_cards.keys():
                 userid=slackapicall.fullname_to_id(slack_name)
                 cardlist=users_with_cards[slack_name]
-                message= "<@"+command_userid+"> ," +" has a task pending"
+                message= "<@"+command_userid+"> ," +" has a task pending: "
                 for card in cardlist:
                     if card_id == card.id:
-                       message+= card.name + ", please work harder!"
+                       message+= card.name + " , please work harder!"
                        slack_client.api_call("chat.postMessage", channel=slackapicall.get_general_channel_id(),
                             text=message, as_user=True)
+       else:
+            # If cannot find command in the database, prompt user to input again
+            message = "Well, your status is: " + command + ", however, the task you input seems incorrect, please try again..."
+            slack_client.api_call("chat.postMessage", channel=channel,text=message, as_user=True)
                           
         #message = "<@" + command_userid +"> " +  "has a task pending, please work harder!"
     elif command in P_RESPONSE_USECASE_3 and channel not in slackapicall.public_channels():
@@ -233,7 +236,7 @@ if __name__ == "__main__":
             thread.start_new_thread(usecase1.mainFlow,("UC1-mainflow",60*60,))
             thread.start_new_thread(usecase1.alternateFlow,("UC2-alternateflow",60*60,))
             thread.start_new_thread(usecase2.mainFlow, ("Usecase2", 24*60*60))
-            thread.start_new_thread(usecase3_final_function,("Usecase3",60*60))
+            thread.start_new_thread(usecase3_final_function,("Usecase3",60* 5))
         except:
             print "thread could not be started"
         while True:
