@@ -138,10 +138,14 @@ def handle_command_for_usecase3(command, channel, command_userid, command_cardna
        if card_id != None:
             print "Debug: card_id: " + card_id
             users_with_cards=trellocall.slackname_with_duetime(24)
+            # Get Slack user name by slack user id
+            slack_name = slackIdToNameDict[command_userid]
+            # Get trello name from slack name
+            trello_name = trellocall.slackname_to_trelloname(slack_name)
             duecardlist = []
             users_with_duecards=trellocall.trelloname_with_duetime(24)
             for user in users_with_duecards.keys():
-                if user == trello_username:
+                if user == trello_name:
                     print "inside if 1: " + user
                     #Get all cards belong to this user
                     duecardlist=users_with_duecards[user]
