@@ -131,7 +131,7 @@ def handle_command_for_usecase3(command, channel, command_userid, command_cardna
        # IMPORTANT: Search from database and Map
        # Init Database before searching it
        db_helper.database_init() 
-       card_id = db_helper.getCardIdbyCardName(trello_username, command_cardname)
+       card_id = db_helper.getCardIdbyCardName(trello_name, command_cardname)
        #DO 0: Update database Set progress to "Completed"
        #TODO: Update database to set each person of the same card's progress as complete
        print "DO 0: Update database Set progress to Completed"
