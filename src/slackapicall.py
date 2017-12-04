@@ -26,9 +26,11 @@ def fullname_to_id(fullname):
     d={}
     call= slack_client.api_call("users.list")
     print (call)
-    if 'members' in call.keys():
+    k='members'
+    if k in call.keys():
         print("debug: it eneter here")
-        users=call['members']
+        users=call[k]
+        print("debug: it also came here")
         for c in users:
             profile=c['profile']
             d[profile['real_name'].lower()]=c['id']

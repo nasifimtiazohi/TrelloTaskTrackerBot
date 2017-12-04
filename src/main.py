@@ -115,6 +115,7 @@ def handle_command_for_usecase3(command, channel, command_userid, command_cardna
               for slack_name in users_with_cards.keys():
                 # TODO: Fix bug here
                 # Slack user id 
+                print ("debug: which name?",slack_name)
                 userid=slackapicall.fullname_to_id(slack_name)
                 cardlist=users_with_cards[slack_name]
                 # find the user of the card
