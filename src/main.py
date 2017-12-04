@@ -177,7 +177,6 @@ def handle_command_for_usecase3(command, channel, command_userid, command_cardna
                                     message1="Congratulations to <@"+ userid+"> ," +" for finishing the task before the deadline!"
                                     slack_client.api_call("chat.postMessage", channel=slackapicall.get_general_channel_id(),text=message1, as_user=True)
                                     #DO 3: Post performance score to this user
-                                    #DO 4: Update total point
                                     message = "<@" + userid + ">" + ", you earned: "+ str(reward_point) + " points for finishing this task. Now, your performance score have been updated to: " + str(db_helper.get_user_points(trello_username))
                                     slack_client.api_call("chat.postMessage", channel=slackapicall.get_general_channel_id(),text=message, as_user=True)
                         elif db_helper.get_progress_of_card(trello_username, card_id) == "Completed" and db_helper.check_if_done(trello_username, card_id) == "true":
@@ -247,7 +246,7 @@ if __name__ == "__main__":
             thread.start_new_thread(usecase1.mainFlow,("UC1-mainflow",60*60,))
             thread.start_new_thread(usecase1.alternateFlow,("UC2-alternateflow",60*60,))
             thread.start_new_thread(usecase2.mainFlow, ("Usecase2", 24*60*60))
-            thread.start_new_thread(usecase3_final_function,("Usecase3",60*60))
+            thread.start_new_thread(usecase3_final_function,("Usecase3",60*3))
         except:
             print "thread could not be started"
         while True:
