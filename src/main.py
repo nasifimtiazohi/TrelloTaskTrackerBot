@@ -101,15 +101,6 @@ def handle_command_for_usecase3(command, channel, command_userid, command_cardna
     command = str(command).lower()
     # print("Command Received:", command, "fu")
     
-    # Get a dictionary which map slack user id to the user name
-    slackIdToNameDict = slackapicall.list_users_byID()
-    # Get Slack user name by slack user id
-    slack_username = slackIdToNameDict[command_userid]
-    # Get trello name from slack name
-    trello_username = trellocall.slackname_to_trelloname(slack_username)
-    # map from command_userid to trello_username
-    print "Debug: trello_username: " + trello_username
-    print "Debug: command_cardname: " + command_cardname
    
     if command in N_RESPONSE_USECASE_3 and channel not in slackapicall.public_channels():
        # IMPORTANT: Search from database and Map
@@ -146,13 +137,20 @@ def handle_command_for_usecase3(command, channel, command_userid, command_cardna
             users_with_cards=trellocall.slackname_with_duetime(24)
             for slack_name in users_with_cards.keys():
                 print "slack_name" + slack_name
-                #userid=slackapicall.fullname_to_id(slack_name)
+                userid=slackapicall.fullname_to_id(slack_name)
                 cardlist=users_with_cards[slack_name]
+                # Get a dictionary which map slack user id to the user name
+                slackIdToNameDict = slackapicall.list_users_byID()
+                # Get Slack user name by slack user id
+                slack_username = slackIdToNameDict[userid]
+                # Get trello name from slack name
+                trello_username = trellocall.slackname_to_trelloname(slack_username)
+                # map from command_userid to trello_username
+                print "Debug: trello_username: " + trello_username
+                print "Debug: command_cardname: " + command_cardname
                 # find the user of the card
                 for card in cardlist:
                     if card_id == card.id:
-                        ### 
-                        trello_username =trellocall.slackname_to_trelloname(slack_name)
                         db_helper.update_progres(trello_username, card_id)
                         # get the list of due cards of this user
                         duecardlist = []
