@@ -138,21 +138,22 @@ def handle_command_for_usecase3(command, channel, command_userid, command_cardna
        if card_id != None:
             print "Debug: card_id: " + card_id
             users_with_cards=trellocall.slackname_with_duetime(24)
+            
             for slack_name in users_with_cards.keys():
-                print "slack_name: " + slack_name
-                userid=slackapicall.fullname_to_id(slack_name)
-                cardlist=users_with_cards[slack_name]
-                # Get Slack user name by slack user id
-                slack_username = slackIdToNameDict[userid]
-                # Get trello name from slack name
-                trello_username = trellocall.slackname_to_trelloname(slack_username)
-                # map from command_userid to trello_username
-                print "Debug: trello_username: " + trello_username
-                print "Debug: command_cardname: " + command_cardname
-                # find the user of the card
-                for card in cardlist:
-                    if card_id == card.id:
-                        db_helper.update_progres(trello_username, card_id)
+                        print "slack_name: " + slack_name
+                        userid=slackapicall.fullname_to_id(slack_name)
+                        cardlist=users_with_cards[slack_name]
+                        # Get Slack user name by slack user id
+                        slack_username = slackIdToNameDict[userid]
+                        # Get trello name from slack name
+                        trello_username = trellocall.slackname_to_trelloname(slack_username)
+                        # map from command_userid to trello_username
+                        print "Debug: trello_username: " + trello_username
+                        print "Debug: command_cardname: " + command_cardname
+                        # find the user of the card
+                        # for card in cardlist:
+                        #     if card_id == card.id:
+                        db_helper.update_progres(trello_username, card_id) #set progress to completed
                         # get the list of due cards of this user
                         duecardlist = []
                         users_with_duecards=trellocall.trelloname_with_duetime(24)
@@ -170,12 +171,6 @@ def handle_command_for_usecase3(command, channel, command_userid, command_cardna
                         time.sleep(2)
                         cardlist = trellocall.get_all_cards_of_user(trello_username)
                         if db_helper.get_progress_of_card(trello_username, card_id) == "Completed" and db_helper.check_if_done(trello_username, card_id) == "false":
-                                    # # for each user
-                                    # memberlist = []
-                                    # for card in cardlist:
-                                    #     if card_id == card.id:
-                                    #         for memberid in card.member_ids:
-                                    #             trellocall.[memberid]
                                     #DO 1: Update performance point
                                     db_helper.update_congratualtion_status(trello_username, card_id) # set is_congratulated to "true"
                                     reward_point =  trellocall.getPointsOfCard(card_id, cardlist) # update point in database
