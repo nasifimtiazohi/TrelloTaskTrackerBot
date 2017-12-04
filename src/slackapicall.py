@@ -26,11 +26,13 @@ def fullname_to_id(fullname):
     d={}
     call= slack_client.api_call("users.list")
     print (call)
-    users=call['members']
-    for c in users:
-        profile=c['profile']
-        d[profile['real_name'].lower()]=c['id']
-    return d[fullname]
+    if 'members' in call.keys():
+        print("debug: it eneter here")
+        users=call['members']
+        for c in users:
+            profile=c['profile']
+            d[profile['real_name'].lower()]=c['id']
+        return d[fullname]
 
 
 def open_im(user_id):
