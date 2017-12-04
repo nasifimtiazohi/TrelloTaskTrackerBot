@@ -195,6 +195,7 @@ def handle_command_for_usecase3(command, channel, command_userid, command_cardna
 
 def usecase3_final_function(threadName, delay):
     while True:
+        print "in usecase 3"
         dm_channels=usecase3.check_progress()
         for directMessage in dm_channels:
             channel=directMessage[2]
