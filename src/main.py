@@ -99,14 +99,17 @@ def handle_command(command, channel, command_userid):
 def handle_command_for_usecase3(command, channel, command_userid, command_cardname):
     response = "Not sure what you mean. Use the proper commands... "
     command = str(command).lower()
-    # print("Command Received:", command, "fu")
-    
-   
+    # print("Command Received:", command, "fu"
+    slackIdToNameDict = slackapicall.list_users_byID()
+                # Get Slack user name by slack user id
+    slack_username = slackIdToNameDict[command_userid]
+                # Get trello name from slack name
+    trello_name = trellocall.slackname_to_trelloname(slack_username)
     if command in N_RESPONSE_USECASE_3 and channel not in slackapicall.public_channels():
        # IMPORTANT: Search from database and Map
        # Init Database before searching it
        db_helper.database_init()
-       card_id = db_helper.getCardIdbyCardName(trello_username, command_cardname)
+       card_id = db_helper.getCardIdbyCardName(trello_name, command_cardname)
        if card_id != None:
               users_with_cards=trellocall.slackname_with_duetime(24)
               for slack_name in users_with_cards.keys():
@@ -136,11 +139,9 @@ def handle_command_for_usecase3(command, channel, command_userid, command_cardna
             print "Debug: card_id: " + card_id
             users_with_cards=trellocall.slackname_with_duetime(24)
             for slack_name in users_with_cards.keys():
-                print "slack_name" + slack_name
+                print "slack_name: " + slack_name
                 userid=slackapicall.fullname_to_id(slack_name)
                 cardlist=users_with_cards[slack_name]
-                # Get a dictionary which map slack user id to the user name
-                slackIdToNameDict = slackapicall.list_users_byID()
                 # Get Slack user name by slack user id
                 slack_username = slackIdToNameDict[userid]
                 # Get trello name from slack name
