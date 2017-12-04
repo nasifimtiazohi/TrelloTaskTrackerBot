@@ -124,7 +124,6 @@ def handle_command_for_usecase3(command, channel, command_userid, command_cardna
                 # find the user of the card
                 for card in cardlist:
                     if card_id == card.id:
-                       card.member_ids
                        message= "<@"+command_userid+"> ," +" has a task pending: " + card.name + " , please work harder!"
                        slack_client.api_call("chat.postMessage", channel=slackapicall.get_general_channel_id(),
                             text=message, as_user=True)
