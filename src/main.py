@@ -138,8 +138,18 @@ def handle_command_for_usecase3(command, channel, command_userid, command_cardna
        if card_id != None:
             print "Debug: card_id: " + card_id
             users_with_cards=trellocall.slackname_with_duetime(24)
-            
+            duecardlist = []
+            users_with_duecards=trellocall.trelloname_with_duetime(24)
+            for user in users_with_duecards.keys():
+                if user == trello_username:
+                    print "inside if 1: " + user
+                    #Get all cards belong to this user
+                    duecardlist=users_with_duecards[user]
+            #DO 4: update trello label
+            print "DO 4: update trello label"
+            trellocall.completeCards(card_id,duecardlist) # When one member mark the card as complete, our member shall also not get notification, since this card is complete
             for slack_name in users_with_cards.keys():
+                # get a list of user of this card
                         print "slack_name: " + slack_name
                         userid=slackapicall.fullname_to_id(slack_name)
                         cardlist=users_with_cards[slack_name]
@@ -155,19 +165,19 @@ def handle_command_for_usecase3(command, channel, command_userid, command_cardna
                         #     if card_id == card.id:
                         db_helper.update_progres(trello_username, card_id) #set progress to completed
                         # get the list of due cards of this user
-                        duecardlist = []
-                        users_with_duecards=trellocall.trelloname_with_duetime(24)
-                        for user in users_with_duecards.keys():
-                            if user == trello_username:
-                                print "inside if 1: " + user
-                                #Get all cards belong to this user
-                                duecardlist=users_with_duecards[user]
-                        #DO 4: update trello label
-                        print "DO 4: update trello label"
-                        trellocall.completeCards(card_id,duecardlist) # When one member mark the card as complete, our member shall also not get notification, since this card is complete
-                        db_helper.database_init() 
+                        # duecardlist = []
+                        # users_with_duecards=trellocall.trelloname_with_duetime(24)
+                        # for user in users_with_duecards.keys():
+                        #     if user == trello_username:
+                        #         print "inside if 1: " + user
+                        #         #Get all cards belong to this user
+                        #         duecardlist=users_with_duecards[user]
+                        # #DO 4: update trello label
+                        # print "DO 4: update trello label"
+                        # trellocall.completeCards(card_id,duecardlist) # When one member mark the card as complete, our member shall also not get notification, since this card is complete
+                        # # db_helper.database_init() 
                         # TODO: get all cards of the user twice
-                        users_with_duecards2=trellocall.trelloname_with_duetime(24)
+                        #users_with_duecards2=trellocall.trelloname_with_duetime(24)
                         time.sleep(2)
                         cardlist = trellocall.get_all_cards_of_user(trello_username)
                         if db_helper.get_progress_of_card(trello_username, card_id) == "Completed" and db_helper.check_if_done(trello_username, card_id) == "false":
@@ -177,16 +187,16 @@ def handle_command_for_usecase3(command, channel, command_userid, command_cardna
                                     print "reward_point: " + str(reward_point)
                                     db_helper.reward_points(trello_username,reward_point)
                                     #DO 2: Post congratulation message to this user
-                                    message1="Congratulations to <@"+ slack_name+"> ," +" for finishing the task before the deadline!"
+                                    message1="Congratulations to <@"+ userid+"> ," +" for finishing the task before the deadline!"
                                     slack_client.api_call("chat.postMessage", channel=slackapicall.get_general_channel_id(),text=message1, as_user=True)
                                     #DO 3: Post performance score to this user
                                     #DO 4: Update total point
-                                    message = "<@" + slack_name + ">" + ", you earned: "+ str(reward_point) + " points for finishing this task. Now, your performance score have been updated to: " + str(db_helper.get_user_points(trello_username))
+                                    message = "<@" + userid + ">" + ", you earned: "+ str(reward_point) + " points for finishing this task. Now, your performance score have been updated to: " + str(db_helper.get_user_points(trello_username))
                                     slack_client.api_call("chat.postMessage", channel=slackapicall.get_general_channel_id(),text=message, as_user=True)
-                        # elif db_helper.get_progress_of_card(trello_username, card_id) == "Completed" and db_helper.check_if_done(trello_username, card_id) == "true":
-                        #     # The user has completed the task and is congratulated, don't congras again
-                        #     message = "Either you or your team mate have completed this task: " + ", we have your record, no need to report again! "
-                        #     slack_client.api_call("chat.postMessage", channel=channel,text=message, as_user=True)
+                        elif db_helper.get_progress_of_card(trello_username, card_id) == "Completed" and db_helper.check_if_done(trello_username, card_id) == "true":
+                            # The user has completed the task and is congratulated, don't congras again
+                            message = "Either you or your team mate have completed this task: " + ", we have your record, no need to report again! "
+                            slack_client.api_call("chat.postMessage", channel=channel,text=message, as_user=True)
                     
        else:
             # If cannot find command in the database, prompt user to input again
