@@ -189,7 +189,7 @@ def handle_command_for_usecase3(command, channel, command_userid, command_cardna
                                     print "reward_point: " + str(reward_point)
                                     db_helper.reward_points(trello_username,reward_point)
                                     #DO 2: Post congratulation message to this user
-                                    message1="Congratulations to <@"+ userid+"> ," +" for finishing the task before the deadline!"
+                                    message1="Congratulations to <@"+ trello_username+"> ," +" for finishing the task before the deadline!"
                                     slack_client.api_call("chat.postMessage", channel=slackapicall.get_general_channel_id(),text=message1, as_user=True)
                                     #DO 3: Post performance score to this user
                                     message = "<@" + trello_username + ">" + ", you earned: "+ str(reward_point) + " points for finishing this task. Now, your performance score have been updated to: " + str(db_helper.get_user_points(trello_username))
