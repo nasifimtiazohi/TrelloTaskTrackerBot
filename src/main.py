@@ -116,14 +116,23 @@ def handle_command_for_usecase3(command, channel, command_userid, command_cardna
                 # TODO: Fix bug here
                 # Slack user id 
                 print ("debug: which name?",slack_name)
-                userid=slackapicall.fullname_to_id(slack_name)
-                cardlist=users_with_cards[slack_name]
-                # find the user of the card
-                for card in cardlist:
-                    if card_id == card.id:
-                       message= "<@"+userid+"> ," +" has a task pending: " + card.name + " , please work harder!"
-                       slack_client.api_call("chat.postMessage", channel=slackapicall.get_general_channel_id(),
-                            text=message, as_user=True)
+                try:
+                    userid=slackapicall.fullname_to_id(slack_name)
+                    cardlist=users_with_cards[slack_name]
+                    # find the user of the card
+                    for card in cardlist:
+                         if card_id == card.id:
+                            message= "<@"+userid+"> ," +" has a task pending: " + card.name + " , please work harder!"
+                            slack_client.api_call("chat.postMessage", channel=slackapicall.get_general_channel_id(),
+                                    text=message, as_user=True)
+                except:
+                    cardlist=users_with_cards[slack_name]
+                    # find the user of the card
+                    for card in cardlist:
+                        if card_id == card.id:
+                            message= slack_name+" has a task pending: " + card.name + " , please work harder!"
+                            slack_client.api_call("chat.postMessage", channel=slackapicall.get_general_channel_id(),
+                                    text=message, as_user=True)
        else:
             # If cannot find command in the database, prompt user to input again
             message = "Well, your status is: " + command + ", however, the task you input seems incorrect, please try again..."
