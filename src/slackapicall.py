@@ -25,7 +25,7 @@ def name_to_id(username):
 def fullname_to_id(fullname):
     d={}
     call= slack_client.api_call("users.list")
-    print (call)
+    #print (call)
     k='members'
     if k in call.keys():
         print("debug: it eneter here")
