@@ -115,5 +115,5 @@ def nameNmail():
 
 
 
-if __name__== "__main__":
-    print fullnameNname()
+# if __name__== "__main__":
+#     print fullnameNname()

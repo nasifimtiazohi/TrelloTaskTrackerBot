@@ -164,24 +164,7 @@ def handle_command_for_usecase3(command, channel, command_userid, command_cardna
                         # map from command_userid to trello_username
                         print "Debug: trello_username: " + trello_username
                         print "Debug: command_cardname: " + command_cardname
-                        # find the user of the card
-                        # for card in cardlist:
-                        #     if card_id == card.id:
                         db_helper.update_progres(trello_username, card_id) #set progress to completed
-                        # get the list of due cards of this user
-                        # duecardlist = []
-                        # users_with_duecards=trellocall.trelloname_with_duetime(24)
-                        # for user in users_with_duecards.keys():
-                        #     if user == trello_username:
-                        #         print "inside if 1: " + user
-                        #         #Get all cards belong to this user
-                        #         duecardlist=users_with_duecards[user]
-                        # #DO 4: update trello label
-                        # print "DO 4: update trello label"
-                        # trellocall.completeCards(card_id,duecardlist) # When one member mark the card as complete, our member shall also not get notification, since this card is complete
-                        # # db_helper.database_init() 
-                        # TODO: get all cards of the user twice
-                        #users_with_duecards2=trellocall.trelloname_with_duetime(24)
                         time.sleep(2)
                         cardlist = trellocall.get_all_cards_of_user(trello_username)
                         if db_helper.get_progress_of_card(trello_username, card_id) == "Completed" and db_helper.check_if_done(trello_username, card_id) == "false":
