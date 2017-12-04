@@ -109,6 +109,7 @@ def handle_command_for_usecase3(command, channel, command_userid, command_cardna
        # IMPORTANT: Search from database and Map
        # Init Database before searching it
        db_helper.database_init()
+       print ("debug latest:",trello_name,command_cardname)
        card_id = db_helper.getCardIdbyCardName(trello_name, command_cardname)
        if card_id != None:
               users_with_cards=trellocall.slackname_with_duetime(24)

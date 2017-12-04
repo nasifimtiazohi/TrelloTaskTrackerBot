@@ -155,7 +155,7 @@ def getCardIdbyCardName(user, cardname):
   # retrieve parent key by child value
   cards = db.child("leaderboard/" + user + "/cards").get()
   for card in cards.each():
-    card_name_in_db = db.child("leaderboard/" + user + "/cards/"+ card.key()+ "/card_name").get().val()
+    card_name_in_db = str(db.child("leaderboard/" + user + "/cards/"+ card.key()+ "/card_name").get().val())
     card_name_in_db = card_name_in_db.strip().lower()
     if card_name_in_db == cardname.strip().lower():
       return card.key()
