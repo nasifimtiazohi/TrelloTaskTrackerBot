@@ -163,8 +163,7 @@ def handle_command_for_usecase3(command, channel, command_userid, command_cardna
                                 duecardlist=users_with_duecards[user]
                         #DO 4: update trello label
                         print "DO 4: update trello label"
-                        trellocall.completeCards(card_id,duecardlist)
-                        # When one member mark the card as complete, our member shall also not get notification, since this card is complete
+                        trellocall.completeCards(card_id,duecardlist) # When one member mark the card as complete, our member shall also not get notification, since this card is complete
                         db_helper.database_init() 
                         # TODO: get all cards of the user twice
                         users_with_duecards2=trellocall.trelloname_with_duetime(24)
@@ -189,10 +188,10 @@ def handle_command_for_usecase3(command, channel, command_userid, command_cardna
                                     #DO 4: Update total point
                                     message = "<@" + slack_name + ">" + ", you earned: "+ str(reward_point) + " points for finishing this task. Now, your performance score have been updated to: " + str(db_helper.get_user_points(trello_username))
                                     slack_client.api_call("chat.postMessage", channel=slackapicall.get_general_channel_id(),text=message, as_user=True)
-                        elif db_helper.get_progress_of_card(trello_username, card_id) == "Completed" and db_helper.check_if_done(trello_username, card_id) == "true":
-                            # The user has completed the task and is congratulated, don't congras again
-                            message = "Either you or your team mate have completed this task: " + ", we have your record, no need to report again! "
-                            slack_client.api_call("chat.postMessage", channel=channel,text=message, as_user=True)
+                        # elif db_helper.get_progress_of_card(trello_username, card_id) == "Completed" and db_helper.check_if_done(trello_username, card_id) == "true":
+                        #     # The user has completed the task and is congratulated, don't congras again
+                        #     message = "Either you or your team mate have completed this task: " + ", we have your record, no need to report again! "
+                        #     slack_client.api_call("chat.postMessage", channel=channel,text=message, as_user=True)
                     
        else:
             # If cannot find command in the database, prompt user to input again
