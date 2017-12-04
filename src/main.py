@@ -150,12 +150,13 @@ def handle_command_for_usecase3(command, channel, command_userid, command_cardna
        print "DO 0: Update database Set progress to Completed"
        if card_id != None:
             print "Debug: card_id: " + card_id
-            users_with_cards=trellocall.slackname_with_duetime(24)
+            #users_with_cards=trellocall.slackname_with_duetime(24)
             # Get Slack user name by slack user id
             slack_name = slackIdToNameDict[command_userid]
             # Get trello name from slack name
             trello_name = trellocall.slackname_to_trelloname(slack_name)
             duecardlist = []
+
             users_with_duecards=trellocall.trelloname_with_duetime(24)
             for user in users_with_duecards.keys():
                 if user == trello_name:
@@ -165,15 +166,16 @@ def handle_command_for_usecase3(command, channel, command_userid, command_cardna
             #DO 4: update trello label
             print "DO 4: update trello label"
             trellocall.completeCards(card_id,duecardlist) # When one member mark the card as complete, our member shall also not get notification, since this card is complete
-            for slack_name in users_with_cards.keys():
+            
+            for trello_username in users_with_duecards.keys():
                 # get a list of user of this card
-                        print "slack_name: " + slack_name
-                        userid=slackapicall.fullname_to_id(slack_name)
-                        cardlist=users_with_cards[slack_name]
+                        print "trello_name: " + trello_username
+                        #userid=slackapicall.fullname_to_id(slack_name)
+                        cardlist=users_with_duecards[trello_username]
                         # Get Slack user name by slack user id
-                        slack_username = slackIdToNameDict[userid]
+                        #slack_username = slackIdToNameDict[userid]
                         # Get trello name from slack name
-                        trello_username = trellocall.slackname_to_trelloname(slack_username)
+                        #trello_username = trellocall.slackname_to_trelloname(slack_username)
                         # map from command_userid to trello_username
                         print "Debug: trello_username: " + trello_username
                         print "Debug: command_cardname: " + command_cardname
@@ -190,7 +192,7 @@ def handle_command_for_usecase3(command, channel, command_userid, command_cardna
                                     message1="Congratulations to <@"+ userid+"> ," +" for finishing the task before the deadline!"
                                     slack_client.api_call("chat.postMessage", channel=slackapicall.get_general_channel_id(),text=message1, as_user=True)
                                     #DO 3: Post performance score to this user
-                                    message = "<@" + userid + ">" + ", you earned: "+ str(reward_point) + " points for finishing this task. Now, your performance score have been updated to: " + str(db_helper.get_user_points(trello_username))
+                                    message = "<@" + trello_username + ">" + ", you earned: "+ str(reward_point) + " points for finishing this task. Now, your performance score have been updated to: " + str(db_helper.get_user_points(trello_username))
                                     slack_client.api_call("chat.postMessage", channel=slackapicall.get_general_channel_id(),text=message, as_user=True)
                         elif db_helper.get_progress_of_card(trello_username, card_id) == "Completed" and db_helper.check_if_done(trello_username, card_id) == "true":
                             # The user has completed the task and is congratulated, don't congras again
